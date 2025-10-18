@@ -1,0 +1,149 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
+
+class GoogleAuthController extends Controller
+{
+    public function redirect()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function callback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+            
+            Log::info('Google User Data:', [
+                'id' => $googleUser->getId(),
+                'name' => $googleUser->getName(),
+                'email' => $googleUser->getEmail(),
+                'avatar' => $googleUser->getAvatar(),
+            ]);
+
+            // Cek apakah user sudah ada berdasarkan email ATAU google_id
+            $user = User::where('email', $googleUser->getEmail())
+                        ->orWhere('google_id', $googleUser->getId())
+                        ->first();
+
+            if (!$user) {
+                Log::info('Creating new user...');
+                
+                // Buat user baru
+                $user = User::create([
+                    'name' => $googleUser->getName(),
+                    'email' => $googleUser->getEmail(),
+                    'google_id' => $googleUser->getId(),
+                    'avatar' => $googleUser->getAvatar(),
+                    'password' => Hash::make(Str::random(24)),
+                ]);
+
+                Log::info('New user created:', ['user_id' => $user->id]);
+            } else {
+                Log::info('User found, updating Google data...', ['user_id' => $user->id]);
+                
+                // Update user dengan data Google terbaru
+                $user->update([
+                    'google_id' => $googleUser->getId(),
+                    'avatar' => $googleUser->getAvatar(),
+                    'name' => $googleUser->getName(), // Update nama juga
+                ]);
+                
+                Log::info('User updated successfully');
+            }
+            
+            // Login user
+            Auth::login($user);
+            
+            Log::info('User logged in successfully', [
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email
+            ]);
+
+            return redirect('/')->with('success', 'Login berhasil! Selamat datang ' . $user->name . '!');
+            
+        } catch (\Exception $e) {
+            Log::error('Google Auth Error: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+            
+            return redirect('/')
+                ->with('error', 'Login dengan Google gagal: ' . $e->getMessage());
+        }
+    }
+
+    // Method untuk handle login manual
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            
+            return redirect('/')->with('success', 'Login berhasil! Selamat datang ' . Auth::user()->name . '!');
+        }
+
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->withInput();
+    }
+
+    // Method untuk handle registrasi manual
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'avatar' => 'https://ui-avatars.com/api/?name=' . urlencode($request->name) . '&color=2D4F2B&background=81C784',
+        ]);
+
+        Auth::login($user);
+
+        return redirect('/')->with('success', 'Registrasi berhasil! Selamat datang ' . $user->name . '!');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        return redirect('/')->with('success', 'Logout berhasil! Sampai jumpa lagi.');
+    }
+
+    // Method untuk show login form (untuk form biasa)
+    public function showLoginForm()
+    {
+        // Redirect ke home dan buka modal login
+        return redirect('/')->with('open_modal', 'login');
+    }
+
+    // Method untuk show registration form (untuk form biasa)
+    public function showRegistrationForm()
+    {
+        // Redirect ke home dan buka modal register
+        return redirect('/')->with('open_modal', 'register');
+    }
+}

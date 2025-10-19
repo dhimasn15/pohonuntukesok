@@ -361,17 +361,6 @@
                         </select>
                     </div>
 
-                    <div class="mb-6">
-                        <label class="block text-gray-700 mb-2">Lokasi Penanaman</label>
-                        <select id="plant-location" class="w-full p-3 border border-gray-300 rounded-lg">
-                            <option value="kalimantan">Kalimantan</option>
-                            <option value="sulawesi">Sulawesi</option>
-                            <option value="jawa">Jawa</option>
-                            <option value="papua">Papua</option>
-                            <option value="bali">Bali & Nusa Tenggara</option>
-                        </select>
-                    </div>
-
                     <div class="bg-lightbg p-6 rounded-xl mb-6">
                         <div class="flex justify-between items-center mb-2">
                             <span class="font-semibold">Total Donasi:</span>

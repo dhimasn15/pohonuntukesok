@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Models\Campaign;
 
 // Authentication Routes
 Route::get('/login', [GoogleAuthController::class, 'showLoginForm'])->name('login');
@@ -31,18 +34,35 @@ Route::get('/debug-user', function () {
     return response()->json(['error' => 'Not authenticated']);
 });
 
-// Your existing routes
+
+
+
+// Campaign Routes
+Route::get('/kampanye', [CampaignController::class, 'index'])->name('kampanye');
+Route::get('/kampanye/{campaign}', [CampaignController::class, 'show'])->name('kampanye.show');
+
+// Protected Campaign Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/buat', [CampaignController::class, 'create'])->name('buat');
+    Route::post('/buat', [CampaignController::class, 'store'])->name('campaign.store');
+});
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/', function () {
-    return view('home');
+    $popularCampaigns = Campaign::where('status', 'active')
+        ->with('user')
+        ->latest()
+        ->take(3)
+        ->get();
+
+    return view('home', compact('popularCampaigns'));
 })->name('home');
+
 
 Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/buat', function () {
-    return view('buat');
-})->name('buat');
 
 Route::get('/donasi', function () {
     return view('donasi');
@@ -52,6 +72,4 @@ Route::get('/blog', function () {
     return view('blog');
 })->name('blog');
 
-Route::get('/kampanye', function () {
-    return view('kampanye');
-})->name('kampanye');
+// Note: removed duplicate closure routes for /buat and /kampanye so controller methods are used.

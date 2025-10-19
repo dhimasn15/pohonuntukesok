@@ -11,11 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('google_id')->nullable()->after('password');
-            $table->string('avatar')->nullable()->after('google_id');
-            $table->string('password')->nullable()->change(); // Ubah password jadi nullable
-        });
+        // Add columns only if they do not already exist to make this migration safe to re-run
+        if (!Schema::hasColumn('users', 'google_id')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('google_id')->nullable()->after('password');
+            });
+        }
+
+        if (!Schema::hasColumn('users', 'avatar')) {
+            Schema::table('users', function (Blueprint $table) {
+                // place avatar after google_id if google_id exists, otherwise just add nullable string
+                $table->string('avatar')->nullable()->after(Schema::hasColumn('users', 'google_id') ? 'google_id' : 'password');
+            });
+        }
+
+        // Make password nullable only if the column exists and the change() operation is supported
+        if (Schema::hasColumn('users', 'password')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('password')->nullable()->change(); // Ubah password jadi nullable
+            });
+        }
     }
 
     /**
@@ -23,9 +38,23 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['google_id', 'avatar']);
-            $table->string('password')->nullable(false)->change(); // Kembalikan ke not nullable
-        });
+        // Drop columns only if they exist
+        if (Schema::hasColumn('users', 'google_id') || Schema::hasColumn('users', 'avatar')) {
+            Schema::table('users', function (Blueprint $table) {
+                if (Schema::hasColumn('users', 'google_id')) {
+                    $table->dropColumn('google_id');
+                }
+                if (Schema::hasColumn('users', 'avatar')) {
+                    $table->dropColumn('avatar');
+                }
+            });
+        }
+
+        // Revert password nullable change if column exists
+        if (Schema::hasColumn('users', 'password')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('password')->nullable(false)->change(); // Kembalikan ke not nullable
+            });
+        }
     }
 };

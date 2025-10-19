@@ -637,139 +637,100 @@
     </section>
 
         <!-- Campaign Highlights with Enhanced Design -->
-        <section class="py-16 subtle-pattern relative overflow-hidden">
-            <!-- Background Decoration -->
-            <div class="absolute inset-0 opacity-50">
-                <div class="organic-shape w-[800px] h-[800px] opacity-5 -top-1/4 -right-1/4" style="animation-delay: -5s;"></div>
-                <div class="organic-shape w-[600px] h-[600px] opacity-5 -bottom-1/4 -left-1/4" style="animation-delay: -2s;"></div>
-            </div>
-            
-            <div class="container mx-auto px-4 relative z-10">
-                <h2 data-aos="fade-up" class="text-3xl md:text-4xl font-extrabold text-center text-primary mb-12 relative">
-                    Kampanye Terpopuler
-                    <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-accent mt-4"></span>
-                </h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Campaign 1 -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="relative overflow-hidden h-48">
-                            <img src="https://lindungihutan.com/public/corporatree/assets/lokasi/teluk_benoa_badung_bali.webp" alt="Hutan Mangrove" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                            <div class="absolute top-4 right-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold">
-                                Aktif
-                            </div>
+        <!-- Campaign Highlights with Enhanced Design -->
+<section class="py-16 subtle-pattern relative overflow-hidden">
+    <!-- Background Decoration -->
+    <div class="absolute inset-0 opacity-50">
+        <div class="organic-shape w-[800px] h-[800px] opacity-5 -top-1/4 -right-1/4" style="animation-delay: -5s;"></div>
+        <div class="organic-shape w-[600px] h-[600px] opacity-5 -bottom-1/4 -left-1/4" style="animation-delay: -2s;"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <h2 data-aos="fade-up" class="text-3xl md:text-4xl font-extrabold text-center text-primary mb-12 relative">
+            Kampanye Terpopuler
+            <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-accent mt-4"></span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach($popularCampaigns as $campaign)
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-aos="zoom-in" data-aos-delay="{{ $loop->iteration * 100 }}">
+                <div class="relative overflow-hidden h-48">
+                    @if($campaign->image)
+                        <img src="{{ asset('storage/' . $campaign->image) }}" 
+                             alt="{{ $campaign->title }}" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                    @else
+                        <div class="w-full h-full bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center">
+                            <i class="fas fa-tree text-6xl text-green-300"></i>
                         </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-gray-500 text-sm"><i class="fas fa-calendar-alt mr-1"></i> 30 Hari Lagi</span>
-                            </div>
-                            <h3 class="text-xl font-bold text-primary mb-3">Hutan Mangrove Bali</h3>
-                            <p class="text-gray-600 mb-4">
-                                Bantu kami menanam 10.000 pohon mangrove untuk mencegah abrasi pantai di Bali.
-                            </p>
-                            
-                            <div class="mb-4">
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="font-bold text-green-700">75% Terkumpul</span>
-                                    <span>7,500/10,000 pohon</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-primary h-2 rounded-full progress-bar" style="width: 75%"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="flex justify-between items-center text-sm text-gray-600">
-                                <span><i class="fas fa-users mr-1"></i> 1,234 Donatur</span>
-                                <a href="#" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-700 transition-colors shimmer-btn">
-                                    Donasi
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Campaign 2 -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="relative overflow-hidden h-48">
-                            <img src="https://lindungihutan.com/public/corporatree/assets/lokasi/teluk_benoa_badung_bali.webp" alt="Hutan Kalimantan" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                            <div class="absolute top-4 right-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold">
-                                Aktif
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-gray-500 text-sm"><i class="fas fa-calendar-alt mr-1"></i> 45 Hari Lagi</span>
-                            </div>
-                            <h3 class="text-xl font-bold text-primary mb-3">Reboisasi Kalimantan</h3>
-                            <p class="text-gray-600 mb-4">
-                                Dukung penanaman 5.000 pohon di lahan kritis Kalimantan untuk restorasi ekosistem.
-                            </p>
-                            
-                            <div class="mb-4">
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="font-bold text-green-700">50% Terkumpul</span>
-                                    <span>2,500/5,000 pohon</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-primary h-2 rounded-full progress-bar" style="width: 50%"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="flex justify-between items-center text-sm text-gray-600">
-                                <span><i class="fas fa-users mr-1"></i> 876 Donatur</span>
-                                <a href="#" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-700 transition-colors shimmer-btn">
-                                    Donasi
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Campaign 3 -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="relative overflow-hidden h-48">
-                            <img src="https://lindungihutan.com/public/corporatree/assets/lokasi/teluk_benoa_badung_bali.webp" alt="Kebun Rakyat" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                            <div class="absolute top-4 right-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold">
-                                Aktif
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-gray-500 text-sm"><i class="fas fa-calendar-alt mr-1"></i> 60 Hari Lagi</span>
-                            </div>
-                            <h3 class="text-xl font-bold text-primary mb-3">Kebun Rakyat Jawa</h3>
-                            <p class="text-gray-600 mb-4">
-                                Wujudkan kebun produktif untuk masyarakat desa di Jawa Barat dengan tanaman buah.
-                            </p>
-                            
-                            <div class="mb-4">
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="font-bold text-green-700">30% Terkumpul</span>
-                                    <span>1,500/5,000 pohon</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-primary h-2 rounded-full progress-bar" style="width: 30%"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="flex justify-between items-center text-sm text-gray-600">
-                                <span><i class="fas fa-users mr-1"></i> 543 Donatur</span>
-                                <a href="#" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-700 transition-colors shimmer-btn">
-                                    Donasi
-                                </a>
-                            </div>
-                        </div>
+                    @endif
+                    <div class="absolute top-4 right-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold">
+                        {{ $campaign->status_badge['text'] }}
                     </div>
                 </div>
-                
-                <div class="text-center mt-12">
-                    <a href="#" class="group inline-block px-8 py-3 bg-primary text-white font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:bg-green-700 shimmer-btn">
-                        <span class="inline-block group-hover:animate-bounce-slow">
-                            Lihat Semua Kampanye
-                            <i class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-2"></i>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-gray-500 text-sm">
+                            <i class="fas fa-calendar-alt mr-1"></i> {{ $campaign->days_left }} Hari Lagi
                         </span>
-                    </a>
+                        <span class="text-gray-500 text-sm">
+                            <i class="fas fa-map-marker-alt mr-1"></i> {{ $campaign->location }}
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">{{ $campaign->title }}</h3>
+                    <p class="text-gray-600 mb-4">
+                        {{ Str::limit($campaign->description, 100) }}
+                    </p>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="font-bold text-green-700">{{ $campaign->progress_percentage }}% Terkumpul</span>
+                            <span>{{ number_format($campaign->current_trees) }}/{{ number_format($campaign->target_trees) }} pohon</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-primary h-2 rounded-full progress-bar" style="width: {{ $campaign->progress_percentage }}%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center text-sm text-gray-600">
+                        <span><i class="fas fa-users mr-1"></i> {{ number_format($campaign->total_donors) }} Donatur</span>
+                        @if($campaign->status === 'active')
+                            <a href="{{ route('kampanye.show', $campaign) }}" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-700 transition-colors shimmer-btn">
+                                Donasi
+                            </a>
+                        @else
+                            <button class="px-4 py-2 bg-gray-300 text-gray-600 rounded-lg cursor-not-allowed" disabled>
+                                {{ $campaign->status === 'completed' ? 'Selesai' : 'Menunggu' }}
+                            </button>
+                        @endif
+                    </div>
                 </div>
             </div>
-        </section>
+            @endforeach
+
+            @if($popularCampaigns->isEmpty())
+            <!-- Fallback jika tidak ada kampanye -->
+            <div class="col-span-full text-center py-12">
+                <i class="fas fa-tree text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-2xl font-bold text-gray-600 mb-2">Belum ada kampanye</h3>
+                <p class="text-gray-500 mb-6">Jadilah yang pertama membuat kampanye penanaman pohon!</p>
+                <a href="{{ route('buat') }}" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-green-700 transition-colors">
+                    Buat Kampanye Pertama
+                </a>
+            </div>
+            @endif
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="{{ route('kampanye') }}" class="group inline-block px-8 py-3 bg-primary text-white font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:bg-green-700 shimmer-btn">
+                <span class="inline-block group-hover:animate-bounce-slow">
+                    Lihat Semua Kampanye
+                    <i class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-2"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+</section>
 
         <!-- How It Works -->
         <section class="py-16 bg-gray-50 relative overflow-hidden">

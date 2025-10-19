@@ -520,26 +520,23 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Team Member 1 -->
                 <div class="team-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400" 
+                        <img src="" 
                              alt="Founder" 
                              class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">Dhimas Nurhidayat</h3>
-                        <p class="text-accent mb-4">Founder & CEO</p>
+                        <h3 class="text-xl font-bold text-primary mb-2">Firah Dzahabiyyah</h3>
+                        <p class="text-accent mb-4">CEO</p>
                         <p class="text-gray-600 text-sm mb-4">
-                            Pecinta lingkungan dengan pengalaman 10 tahun di bidang konservasi alam.
+                            NIM: 2023081050
                         </p>
                         <div class="flex space-x-3">
-                            <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="fab fa-linkedin-in text-xs"></i>
-                            </a>
-                            <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="fab fa-twitter text-xs"></i>
+                           <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                                <i class="fab fa-instagram text-xs"></i>
                             </a>
                         </div>
                     </div>
@@ -553,15 +550,13 @@
                              class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">Sarah Wijaya</h3>
-                        <p class="text-accent mb-4">Program Manager</p>
+                        <h3 class="text-xl font-bold text-primary mb-2">Dhimas Nurhidayat</h3>
+                        <p class="text-accent mb-4">Tech Lead</p>
                         <p class="text-gray-600 text-sm mb-4">
-                            Ahli kehutanan dengan spesialisasi dalam reboisasi dan ekosistem hutan.
+                            NIM: 2023071066
                         </p>
                         <div class="flex space-x-3">
-                            <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="fab fa-linkedin-in text-xs"></i>
-                            </a>
+                           
                             <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
                                 <i class="fab fa-instagram text-xs"></i>
                             </a>
@@ -572,50 +567,24 @@
                 <!-- Team Member 3 -->
                 <div class="team-card" data-aos="zoom-in" data-aos-delay="300">
                     <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400" 
+                        <img src="" 
                              alt="Tech Lead" 
                              class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">Ahmad Fauzi</h3>
-                        <p class="text-accent mb-4">Tech Lead</p>
+                        <h3 class="text-xl font-bold text-primary mb-2">Leonardo</h3>
+                        <p class="text-accent mb-4">CMO</p>
                         <p class="text-gray-600 text-sm mb-4">
-                            Pengembang platform digital dengan fokus pada solusi teknologi hijau.
+                            NIM: 2023071078
                         </p>
                         <div class="flex space-x-3">
-                            <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="fab fa-github text-xs"></i>
-                            </a>
-                            <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="fab fa-twitter text-xs"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team Member 4 -->
-                <div class="team-card" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400" 
-                             alt="Community Manager" 
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">Maya Sari</h3>
-                        <p class="text-accent mb-4">Community Manager</p>
-                        <p class="text-gray-600 text-sm mb-4">
-                            Ahli komunikasi yang menghubungkan relawan dan komunitas lingkungan.
-                        </p>
-                        <div class="flex space-x-3">
-                            <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                           <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
                                 <i class="fab fa-instagram text-xs"></i>
                             </a>
-                            <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="fab fa-facebook-f text-xs"></i>
-                            </a>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </section>

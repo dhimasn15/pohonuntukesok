@@ -1,12 +1,15 @@
 <?php
+// app/Http/Controllers/HomeController.php
 
 namespace App\Http\Controllers;
 
-abstract class Controller
+use App\Models\Campaign;
+use Illuminate\Http\Request;
+
+class HomeController extends Controller
 {
     public function index()
     {
-          // Ambil kampanye aktif terbaru (3 kampanye)
         $popularCampaigns = Campaign::where('status', 'active')
             ->with('user')
             ->latest()

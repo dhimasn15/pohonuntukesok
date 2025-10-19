@@ -30,35 +30,49 @@ class GoogleAuthController extends Controller
                 'avatar' => $googleUser->getAvatar(),
             ]);
 
-            // Cek apakah user sudah ada berdasarkan email ATAU google_id
-            $user = User::where('email', $googleUser->getEmail())
-                        ->orWhere('google_id', $googleUser->getId())
-                        ->first();
+            // Cek apakah user sudah ada berdasarkan email
+            $user = User::where('email', $googleUser->getEmail())->first();
 
             if (!$user) {
                 Log::info('Creating new user...');
                 
-                // Buat user baru
+                // Buat user baru dengan avatar dari Google
                 $user = User::create([
                     'name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
-                    'avatar' => $googleUser->getAvatar(),
+                    'avatar' => $googleUser->getAvatar(), // Simpan avatar dari Google
                     'password' => Hash::make(Str::random(24)),
                 ]);
 
-                Log::info('New user created:', ['user_id' => $user->id]);
+                Log::info('New user created:', [
+                    'user_id' => $user->id, 
+                    'avatar' => $user->avatar,
+                    'name' => $user->name
+                ]);
             } else {
-                Log::info('User found, updating Google data...', ['user_id' => $user->id]);
-                
-                // Update user dengan data Google terbaru
-                $user->update([
-                    'google_id' => $googleUser->getId(),
-                    'avatar' => $googleUser->getAvatar(),
-                    'name' => $googleUser->getName(), // Update nama juga
+                Log::info('User found, updating Google data...', [
+                    'user_id' => $user->id,
+                    'current_avatar' => $user->avatar
                 ]);
                 
-                Log::info('User updated successfully');
+                // Update user dengan data Google terbaru
+                $updateData = [
+                    'google_id' => $googleUser->getId(),
+                    'name' => $googleUser->getName(),
+                ];
+                
+                // Update avatar hanya jika dari Google dan belum ada
+                if ($googleUser->getAvatar() && empty($user->avatar)) {
+                    $updateData['avatar'] = $googleUser->getAvatar();
+                }
+                
+                $user->update($updateData);
+                
+                Log::info('User updated successfully', [
+                    'new_avatar' => $user->avatar,
+                    'avatar_updated' => isset($updateData['avatar'])
+                ]);
             }
             
             // Login user
@@ -67,7 +81,8 @@ class GoogleAuthController extends Controller
             Log::info('User logged in successfully', [
                 'user_id' => $user->id,
                 'name' => $user->name,
-                'email' => $user->email
+                'email' => $user->email,
+                'avatar' => $user->avatar
             ]);
 
             return redirect('/')->with('success', 'Login berhasil! Selamat datang ' . $user->name . '!');
@@ -111,11 +126,21 @@ class GoogleAuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
+        // Generate avatar dari UI Avatars
+        $avatarUrl = 'https://ui-avatars.com/api/?name=' . urlencode($request->name) . 
+                    '&background=2D4F2B&color=ffffff&size=128&bold=true';
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'avatar' => 'https://ui-avatars.com/api/?name=' . urlencode($request->name) . '&color=2D4F2B&background=81C784',
+            'avatar' => $avatarUrl, // Simpan avatar generated
+        ]);
+
+        Log::info('Manual registration:', [
+            'user_id' => $user->id,
+            'name' => $user->name,
+            'avatar' => $user->avatar
         ]);
 
         Auth::login($user);

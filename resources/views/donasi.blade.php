@@ -234,101 +234,11 @@
 
 <body class="bg-gradient-to-br from-gray-50 via-white to-green-50 font-sans antialiased text-gray-800 overflow-x-hidden">
     <!-- Navigation -->
-    <nav class="fixed w-full bg-primary text-white shadow-md z-50 transition-all duration-300" id="main-nav">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="{{route('home')}}" class="flex items-center text-2xl font-bold">
-                <i class="fas fa-tree mr-2"></i>
-                <span>PohonUntukEsok</span>
-            </a>
-            <!-- Burger Button -->
-            <button id="burger-button" class="lg:hidden flex flex-col justify-center items-center w-10 h-10" aria-label="Toggle Menu">
-                <span class="block w-7 h-1 bg-white rounded transition-all duration-300 mb-1"></span>
-                <span class="block w-7 h-1 bg-white rounded transition-all duration-300 mb-1"></span>
-                <span class="block w-7 h-1 bg-white rounded transition-all duration-300"></span>
-            </button>
-            <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center space-x-8">
-                <a href="{{route('home')}}" class="hover:text-accent transition-colors flex items-center">
-                    <i class="fas fa-home mr-2"></i> Beranda
-                </a>
-                <div class="relative group">
-                    <button class="hover:text-accent transition-colors flex items-center">
-                        <i class="fas fa-seedling mr-2"></i> Mulai Dari Kamu
-                        <i class="fas fa-chevron-down ml-1 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
-                    </button>
-                    <div class="dropdown-menu absolute left-0 mt-2 w-56 bg-white rounded-md shadow-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                        <a href="{{route('buat')}}" class="block px-4 py-2 text-gray-800 hover:bg-green-50 hover:text-primary transition-colors">
-                            <i class="fas fa-plus-circle text-primary mr-2"></i>Buat Kampanye
-                        </a>
-                        <div class="border-t my-1"></div>
-                        <a href="{{route('donasi')}}" class="block px-4 py-2 text-gray-800 hover:bg-green-50 hover:text-primary transition-colors">
-                            <i class="fas fa-hand-holding-heart text-primary mr-2"></i>Donasi Pohon
-                        </a>
-                        <div class="border-t my-1"></div>
-                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-green-50 hover:text-primary transition-colors">
-                            <i class="fas fa-list-ul text-primary mr-2"></i>Daftar Kampanye
-                        </a>
-                    </div>
-                </div>
-                <a href="{{ route('about')}}" class="hover:text-accent transition-colors flex items-center">
-                    <i class="fas fa-info-circle mr-2"></i> Tentang Kami
-                </a>
-                <a href="{{ route('blog')}}" class="hover:text-accent transition-colors flex items-center">
-                    <i class="fas fa-newspaper mr-2"></i> Blog
-                </a>
-                <div class="flex space-x-4 ml-8">
-                    <a href="#" class="px-4 py-2 border border-white rounded-lg hover:bg-white hover:text-primary transition-colors">
-                        <i class="fas fa-sign-in-alt mr-2"></i> Masuk
-                    </a>
-                    <a href="#" class="px-4 py-2 bg-white text-primary font-bold rounded-lg hover:bg-gray-100 transition-colors">
-                        <i class="fas fa-user-plus mr-2"></i> Daftar
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="fixed inset-0 bg-primary bg-opacity-95 z-40">
-            <div class="container mx-auto px-4 h-full overflow-y-auto pt-20 pb-8">
-                <div class="flex flex-col items-center space-y-6 text-xl font-semibold text-white">
-                    <a href="{{route('home')}}" class="w-full text-center py-2 hover:text-accent transition-colors">
-                        <i class="fas fa-home mr-2"></i> Beranda
-                    </a>
-                    <div class="w-full">
-                        <button id="mobile-dropdown-btn" class="w-full text-center py-2 flex items-center justify-center hover:text-accent transition-colors">
-                            <i class="fas fa-seedling mr-2"></i> 
-                            Mulai Dari Kamu 
-                            <i class="fas fa-chevron-down ml-2 transition-transform duration-300"></i>
-                        </button>
-                        <div id="mobile-dropdown-menu" class="w-full flex flex-col items-center space-y-4 mt-4">
-                            <a href="{{route('buat')}}" class="py-2 hover:text-accent transition-colors w-full text-center">
-                                <i class="fas fa-plus-circle mr-2"></i>Buat Kampanye
-                            </a>
-                            <a href="{{route('donasi')}}" class="py-2 hover:text-accent transition-colors w-full text-center">
-                                <i class="fas fa-hand-holding-heart mr-2"></i>Donasi Pohon
-                            </a>
-                            <a href="#" class="py-2 hover:text-accent transition-colors w-full text-center">
-                                <i class="fas fa-list-ul mr-2"></i>Daftar Kampanye
-                            </a>
-                        </div>
-                    </div>
-                    <a href="{{ route('about')}}" class="w-full text-center py-2 hover:text-accent transition-colors">
-                        <i class="fas fa-info-circle mr-2"></i> Tentang Kami
-                    </a>
-                    <a href="{{ route('blog')}}" class="w-full text-center py-2 hover:text-accent transition-colors">
-                        <i class="fas fa-newspaper mr-2"></i> Blog
-                    </a>
-                    <div class="flex flex-col sm:flex-row gap-4 w-full sm:justify-center pt-4">
-                        <a href="#" class="px-6 py-3 border border-white rounded-lg hover:bg-white hover:text-primary transition-colors text-center">
-                            <i class="fas fa-sign-in-alt mr-2"></i> Masuk
-                        </a>
-                        <a href="#" class="px-6 py-3 bg-white text-primary font-bold rounded-lg hover:bg-gray-100 transition-colors text-center">
-                            <i class="fas fa-user-plus mr-2"></i> Daftar
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- Include Navigation -->
+    @include('layouts.navigation')
+    
+    <!-- Include Auth Modal -->
+    @include('components.auth-modal')
 
     <!-- Hero Section -->
     <section class="relative pt-32 pb-20 hero-gradient overflow-hidden">

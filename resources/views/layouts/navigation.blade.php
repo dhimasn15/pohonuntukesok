@@ -48,9 +48,21 @@
             @auth
                 <div class="flex items-center space-x-4 ml-8">
                     <div class="flex items-center space-x-2">
-                        <img src="{{ Auth::user()->avatar ?: 'https://via.placeholder.com/32' }}" 
+                        @php
+                            // Generate avatar URL dengan fallback yang lebih baik
+                            $avatarUrl = Auth::user()->avatar;
+                            
+                            // Jika avatar kosong atau null, buat avatar dari initial
+                            if (empty($avatarUrl) || $avatarUrl === 'null' || $avatarUrl === '') {
+                                $initial = strtoupper(substr(Auth::user()->name, 0, 1));
+                                $avatarUrl = "https://ui-avatars.com/api/?name=" . urlencode(Auth::user()->name) . "&background=2D4F2B&color=ffffff&size=64&bold=true";
+                            }
+                        @endphp
+                        
+                        <img src="{{ $avatarUrl }}" 
                              alt="{{ Auth::user()->name }}" 
-                             class="w-8 h-8 rounded-full">
+                             class="w-8 h-8 rounded-full object-cover border-2 border-white/50 hover:border-accent transition-colors"
+                             onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=2D4F2B&color=ffffff&size=64&bold=true'">
                         <span class="text-white">{{ Auth::user()->name }}</span>
                     </div>
                     <form method="POST" action="{{ route('logout') }}" class="inline">
@@ -114,9 +126,18 @@
                     @auth
                         <div class="flex flex-col items-center space-y-4 w-full">
                             <div class="flex items-center space-x-3 bg-white/10 rounded-lg px-4 py-3 w-full">
-                                <img src="{{ Auth::user()->avatar ?: 'https://via.placeholder.com/32' }}" 
+                                @php
+                                    // Generate avatar URL untuk mobile juga
+                                    $avatarUrlMobile = Auth::user()->avatar;
+                                    if (empty($avatarUrlMobile) || $avatarUrlMobile === 'null' || $avatarUrlMobile === '') {
+                                        $avatarUrlMobile = "https://ui-avatars.com/api/?name=" . urlencode(Auth::user()->name) . "&background=2D4F2B&color=ffffff&size=64&bold=true";
+                                    }
+                                @endphp
+                                
+                                <img src="{{ $avatarUrlMobile }}" 
                                      alt="{{ Auth::user()->name }}" 
-                                     class="w-10 h-10 rounded-full">
+                                     class="w-10 h-10 rounded-full object-cover border-2 border-white/50"
+                                     onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=2D4F2B&color=ffffff&size=64&bold=true'">
                                 <span class="text-white text-lg">{{ Auth::user()->name }}</span>
                             </div>
                             <form method="POST" action="{{ route('logout') }}" class="inline w-full">
@@ -141,264 +162,3 @@
         </div>
     </div>
 </nav>
-
-<script>
-// Mobile menu functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const burgerButton = document.getElementById('burger-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileCloseBtn = document.getElementById('mobile-close-btn');
-    const mobileDropdownBtn = document.getElementById('mobile-dropdown-btn');
-    const mobileDropdownMenu = document.getElementById('mobile-dropdown-menu');
-    const mobileChevron = document.getElementById('mobile-chevron');
-    
-    // Function to open mobile menu
-    function openMobileMenu() {
-        mobileMenu.classList.remove('transform', '-translate-y-full');
-        mobileMenu.classList.add('transform', 'translate-y-0');
-        document.body.style.overflow = 'hidden';
-    }
-    
-    // Function to close mobile menu
-    function closeMobileMenu() {
-        mobileMenu.classList.remove('transform', 'translate-y-0');
-        mobileMenu.classList.add('transform', '-translate-y-full');
-        document.body.style.overflow = 'auto';
-        
-        // Reset burger animation
-        burgerButton.classList.remove('active');
-        const spans = burgerButton.querySelectorAll('.burger-line');
-        spans[0].style.transform = 'none';
-        spans[1].style.opacity = '1';
-        spans[2].style.transform = 'none';
-        
-        // Close dropdown if open
-        closeMobileDropdown();
-    }
-    
-    // Function to toggle mobile dropdown
-    function toggleMobileDropdown() {
-        const isOpen = mobileDropdownMenu.classList.contains('max-h-96');
-        
-        if (isOpen) {
-            closeMobileDropdown();
-        } else {
-            openMobileDropdown();
-        }
-    }
-    
-    function openMobileDropdown() {
-        mobileDropdownMenu.classList.remove('max-h-0');
-        mobileDropdownMenu.classList.add('max-h-96');
-        mobileChevron.style.transform = 'rotate(180deg)';
-    }
-    
-    function closeMobileDropdown() {
-        mobileDropdownMenu.classList.remove('max-h-96');
-        mobileDropdownMenu.classList.add('max-h-0');
-        mobileChevron.style.transform = 'rotate(0deg)';
-    }
-    
-    // Toggle mobile menu with burger button
-    burgerButton?.addEventListener('click', function(e) {
-        e.stopPropagation();
-        
-        if (mobileMenu.classList.contains('-translate-y-full')) {
-            openMobileMenu();
-            burgerButton.classList.add('active');
-            
-            // Burger animation
-            const spans = this.querySelectorAll('.burger-line');
-            spans[0].style.transform = 'translateY(9px) rotate(45deg)';
-            spans[1].style.opacity = '0';
-            spans[2].style.transform = 'translateY(-9px) rotate(-45deg)';
-        } else {
-            closeMobileMenu();
-        }
-    });
-    
-    // Close mobile menu with close button
-    mobileCloseBtn?.addEventListener('click', function(e) {
-        e.stopPropagation();
-        closeMobileMenu();
-    });
-    
-    // Toggle dropdown on mobile
-    mobileDropdownBtn?.addEventListener('click', function(e) {
-        e.stopPropagation();
-        toggleMobileDropdown();
-    });
-    
-    // Close mobile menu when clicking on links (with delay for smooth transition)
-    document.querySelectorAll('#mobile-menu a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (!this.classList.contains('no-close')) {
-                setTimeout(closeMobileMenu, 300);
-            }
-        });
-    });
-    
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!mobileMenu.contains(e.target) && !burgerButton.contains(e.target)) {
-            if (!mobileMenu.classList.contains('-translate-y-full')) {
-                closeMobileMenu();
-            }
-        }
-    });
-    
-    // Close mobile menu on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && !mobileMenu.classList.contains('-translate-y-full')) {
-            closeMobileMenu();
-        }
-    });
-    
-    // Ripple effect for buttons
-    const rippleButtons = document.querySelectorAll('.ripple-btn');
-    rippleButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const ripple = document.createElement('span');
-            ripple.classList.add('ripple');
-            ripple.style.left = `${x}px`;
-            ripple.style.top = `${y}px`;
-            
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-    });
-});
-
-// Make functions globally available
-function closeMobileMenu() {
-    const mobileMenu = document.getElementById('mobile-menu');
-    const burgerButton = document.getElementById('burger-button');
-    
-    if (mobileMenu) {
-        mobileMenu.classList.remove('transform', 'translate-y-0');
-        mobileMenu.classList.add('transform', '-translate-y-full');
-        document.body.style.overflow = 'auto';
-        
-        if (burgerButton) {
-            burgerButton.classList.remove('active');
-            const spans = burgerButton.querySelectorAll('.burger-line');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        }
-    }
-}
-
-// Auth Modal Functions
-function openAuthModal(type = 'login') {
-    const modal = document.getElementById('authModal');
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    
-    if (modal) {
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-        
-        if (type === 'login') {
-            if (loginForm) loginForm.classList.remove('hidden');
-            if (registerForm) registerForm.classList.add('hidden');
-        } else {
-            if (loginForm) loginForm.classList.add('hidden');
-            if (registerForm) registerForm.classList.remove('hidden');
-        }
-        
-        // Close mobile menu if open
-        closeMobileMenu();
-    }
-}
-
-function closeAuthModal() {
-    const modal = document.getElementById('authModal');
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-}
-
-function switchToRegister() {
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    if (loginForm && registerForm) {
-        loginForm.classList.add('hidden');
-        registerForm.classList.remove('hidden');
-    }
-}
-
-function switchToLogin() {
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    if (loginForm && registerForm) {
-        registerForm.classList.add('hidden');
-        loginForm.classList.remove('hidden');
-    }
-}
-
-// Close modal when clicking outside
-document.addEventListener('click', function(event) {
-    const modal = document.getElementById('authModal');
-    if (event.target === modal) {
-        closeAuthModal();
-    }
-});
-</script>
-
-<style>
-/* Additional styles for mobile menu */
-#mobile-menu {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-#mobile-dropdown-menu {
-    transition: max-height 0.3s ease-in-out;
-}
-
-.burger-line {
-    transition: all 0.3s ease-in-out;
-}
-
-/* Smooth transitions */
-#mobile-menu,
-#mobile-dropdown-menu {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Prevent body scroll when menu is open */
-body.menu-open {
-    overflow: hidden;
-}
-
-/* Ripple effect styles */
-.ripple-btn {
-    position: relative;
-    overflow: hidden;
-}
-
-.ripple-btn span.ripple {
-    position: absolute;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.4);
-    transform: scale(0);
-    animation: ripple 0.6s linear;
-    pointer-events: none;
-}
-
-@keyframes ripple {
-    to {
-        transform: scale(2.5);
-        opacity: 0;
-    }
-}
-</style>

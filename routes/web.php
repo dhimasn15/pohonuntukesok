@@ -14,6 +14,23 @@ Route::post('/logout', [GoogleAuthController::class, 'logout'])->name('logout');
 Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
 
+// Di routes/web.php
+Route::get('/debug-user', function () {
+    if (Auth::check()) {
+        $user = Auth::user();
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'avatar' => $user->avatar,
+            'google_id' => $user->google_id,
+            'avatar_exists' => !empty($user->avatar),
+            'avatar_url' => $user->avatar
+        ]);
+    }
+    return response()->json(['error' => 'Not authenticated']);
+});
+
 // Your existing routes
 Route::get('/', function () {
     return view('home');

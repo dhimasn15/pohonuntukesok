@@ -1,9 +1,9 @@
 <!-- Navigation -->
 <nav class="fixed w-full bg-primary text-white shadow-md z-50 transition-all duration-300" id="main-nav">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
         <a href="{{route('home')}}" class="flex items-center text-2xl font-bold hover-target">
-            <i class="fas fa-tree mr-2"></i>
-            <span>PohonUntukEsok</span>
+            <!-- Responsive logo: small on mobile, larger on desktop. Keep aspect ratio with object-contain -->
+            <img src="{{ asset('img/logo.png') }}" alt="PohonUntukEsok" class="w-60 h-auto md:w-36 lg:w-60 object-contain" />
         </a>
         
         <!-- Burger Button -->

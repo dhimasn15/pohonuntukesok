@@ -35,7 +35,7 @@
         /* Hero Section */
         .hero-about {
             background: linear-gradient(135deg, #1a3a1a 0%, #2D4F2B 50%, #3d6b3a 100%);
-            min-height: 70vh;
+            min-height: 50vh;
             display: flex;
             align-items: center;
             position: relative;
@@ -328,19 +328,19 @@
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="text-center" data-aos="fade-up" data-aos-delay="100">
-                    <div class="text-3xl md:text-4xl font-bold text-primary mb-2">125K+</div>
+                    <div class="text-3xl md:text-4xl font-bold text-primary mb-2">...+</div>
                     <div class="text-gray-600">Pohon Tertanam</div>
                 </div>
                 <div class="text-center" data-aos="fade-up" data-aos-delay="200">
-                    <div class="text-3xl md:text-4xl font-bold text-primary mb-2">12</div>
+                    <div class="text-3xl md:text-4xl font-bold text-primary mb-2">..</div>
                     <div class="text-gray-600">Provinsi</div>
                 </div>
                 <div class="text-center" data-aos="fade-up" data-aos-delay="300">
-                    <div class="text-3xl md:text-4xl font-bold text-primary mb-2">5K+</div>
+                    <div class="text-3xl md:text-4xl font-bold text-primary mb-2">..+</div>
                     <div class="text-gray-600">Relawan</div>
                 </div>
                 <div class="text-center" data-aos="fade-up" data-aos-delay="400">
-                    <div class="text-3xl md:text-4xl font-bold text-primary mb-2">5+</div>
+                    <div class="text-3xl md:text-4xl font-bold text-primary mb-2">..+</div>
                     <div class="text-gray-600">Tahun Pengalaman</div>
                 </div>
             </div>
@@ -358,13 +358,11 @@
                     <div class="space-y-6 text-lg text-gray-600">
                         <p>
                             <strong>PohonUntukEsok</strong> lahir dari keprihatinan mendalam akan dampak perubahan iklim dan deforestasi di Indonesia. 
-                            Didirikan pada tahun 2018, kami memulai perjalanan dengan tekad untuk menciptakan perubahan nyata melalui gerakan penanaman pohon 
+                            Didirikan pada tahun 2025, kami memulai perjalanan dengan tekad untuk menciptakan perubahan nyata melalui gerakan penanaman pohon 
                             yang melibatkan seluruh lapisan masyarakat.
                         </p>
                         <p>
-                            Awalnya hanya sebagai gerakan kecil di Jakarta, kini kami telah berkembang menjadi platform
-                            donasi pohon terbesar di Indonesia dengan jaringan relawan di 12 provinsi. Melalui platform digital kami, 
-                            berdonasi dan berpartisipasi dalam kegiatan penanaman pohon menjadi lebih mudah dan transparan.
+                            Proyek <strong>PohonUntukEsok</strong> diharapkan memberikan berbagai manfaat nyata bagi lingkungan dan masyarakat. Secara ekologis, proyek ini dapat membantu menambah ruang hijau dan mengurangi polusi udara di wilayah perkotaan. Dari sisi sosial, proyek ini mendorong partisipasi aktif masyarakat dalam pelestarian lingkungan serta meningkatkan kesadaran akan pentingnya penghijauan.
                         </p>
                         <div class="bg-lightbg p-6 rounded-xl border-l-4 border-accent">
                             <p class="text-primary font-medium italic">
@@ -414,19 +412,19 @@
                     <ul class="space-y-4">
                         <li class="flex items-start">
                             <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Mengembalikan kehijauan Indonesia melalui penanaman pohon secara berkelanjutan</span>
+                            <span>Mengembangkan platform digital yang transparan, mudah diakses, dan mendukung kegiatan penghijauan kota.</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Meningkatkan kesadaran masyarakat akan pentingnya pelestarian lingkungan</span>
+                            <span>Menghubungkan donatur, petani bibit, pengelola lahan, dan komunitas dalam sistem kolaboratif berbasis teknologi.</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Menciptakan lapangan kerja hijau bagi masyarakat lokal</span>
+                            <span>Menyediakan fitur pemantauan dan pelaporan digital agar setiap aksi tanam dapat dipantau secara publik.</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Membangun jaringan relawan lingkungan di seluruh Indonesia</span>
+                            <span>Mendorong partisipasi masyarakat melalui donasi, aksi lapangan, dan kampanye lingkungan yang berkelanjutan.</span>
                         </li>
                     </ul>
                 </div>
@@ -442,19 +440,19 @@
                     <ul class="space-y-4">
                         <li class="flex items-start">
                             <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
-                            <span>Menjadi platform donasi pohon terdepan di Indonesia</span>
+                            <span>Mewujudkan kota hijau yang berkelanjutan melalui kolaborasi digital dan aksi nyata masyarakat.</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
-                            <span>Menanam 1 juta pohon di seluruh Indonesia dalam 5 tahun ke depan</span>
+                            <span>Menjadi platform donasi dan penghijauan terpercaya yang menghubungkan semua pihak dalam satu ekosistem hijau.</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
-                            <span>Membangun pusat pendidikan lingkungan di setiap provinsi</span>
+                            <span>Menumbuhkan kesadaran lingkungan dengan menghadirkan solusi teknologi yang transparan dan berdampak.</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
-                            <span>Menciptakan model bisnis berkelanjutan untuk pelestarian lingkungan</span>
+                            <span>Menjadikan gerakan menanam pohon sebagai gaya hidup positif dan edukatif bagi generasi masa depan.</span>
                         </li>
                     </ul>
                 </div>
@@ -524,7 +522,7 @@
                 <!-- Team Member 1 -->
                 <div class="team-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="h-64 overflow-hidden">
-                        <img src="" 
+                        <img src="{{ asset('img/10.png') }}" 
                              alt="Founder" 
                              class="w-full h-full object-cover">
                     </div>
@@ -545,7 +543,7 @@
                 <!-- Team Member 2 -->
                 <div class="team-card" data-aos="zoom-in" data-aos-delay="200">
                     <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400" 
+                        <img src="{{ asset('img/11.png') }}"
                              alt="Program Manager" 
                              class="w-full h-full object-cover">
                     </div>
@@ -567,7 +565,7 @@
                 <!-- Team Member 3 -->
                 <div class="team-card" data-aos="zoom-in" data-aos-delay="300">
                     <div class="h-64 overflow-hidden">
-                        <img src="" 
+                        <img src="{{ asset('img/12.png') }}"
                              alt="Tech Lead" 
                              class="w-full h-full object-cover">
                     </div>

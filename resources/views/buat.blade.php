@@ -719,183 +719,232 @@
                         </div>
                         
                         <!-- Form Content -->
-                        <!-- Form Content -->
-<div class="p-8">
-    <form id="campaign-form" action="{{ route('campaign.store') }}" method="POST" enctype="multipart/form-data" novalidate>
-        @csrf
-        
-        <!-- Step 1: Basic Information -->
-        <div class="step-content active" data-step="1">
-            <h2 class="text-3xl font-bold text-primary mb-8">Informasi Dasar Kampanye</h2>
-            
-            <div class="space-y-6">
-                <div class="form-group">
-                    <label for="campaign-title" class="form-label required">Judul Kampanye</label>
-                    <input type="text" id="campaign-title" name="title" class="form-input" placeholder="Contoh: Penanaman 1000 Pohon Mangrove di Bali" required value="{{ old('title') }}">
-                    <div class="error-message">Judul kampanye harus diisi</div>
-                    <div class="form-help">Buat judul yang menarik dan jelas untuk kampanye Anda</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="campaign-category" class="form-label required">Kategori</label>
-                    <select id="campaign-category" name="category" class="form-input form-select" required>
-                        <option value="">Pilih Kategori</option>
-                        <option value="reboisasi" {{ old('category') == 'reboisasi' ? 'selected' : '' }}>Reboisasi Hutan</option>
-                        <option value="mangrove" {{ old('category') == 'mangrove' ? 'selected' : '' }}>Penanaman Mangrove</option>
-                        <option value="perkotaan" {{ old('category') == 'perkotaan' ? 'selected' : '' }}>Hijaukan Perkotaan</option>
-                        <option value="edukasi" {{ old('category') == 'edukasi' ? 'selected' : '' }}>Edukasi Lingkungan</option>
-                        <option value="lainnya" {{ old('category') == 'lainnya' ? 'selected' : '' }}>Lainnya</option>
-                    </select>
-                    <div class="error-message">Pilih kategori kampanye</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="campaign-location" class="form-label required">Lokasi Penanaman</label>
-                    <input type="text" id="campaign-location" name="location" class="form-input" placeholder="Contoh: Pantai Sanur, Denpasar, Bali" required value="{{ old('location') }}">
-                    <div class="error-message">Lokasi penanaman harus diisi</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="campaign-image" class="form-label required">Gambar Kampanye</label>
-                    <div class="file-upload">
-                        <div class="file-upload-btn">
-                            <i class="fas fa-cloud-upload-alt text-2xl mb-2 text-gray-400"></i>
-                            <p class="font-semibold text-gray-600">Klik untuk mengunggah gambar</p>
-                            <p class="text-sm text-gray-500">Format: JPG, PNG (Maks. 5MB)</p>
-                            <input type="file" id="campaign-image" name="image" accept="image/*" required>
+                        <div class="p-8">
+                            <form id="campaign-form" action="{{ route('campaign.store') }}" method="POST" enctype="multipart/form-data" novalidate>
+                                @csrf
+                                
+                                <!-- Step 1: Basic Information -->
+                                <div class="step-content active" data-step="1">
+                                    <h2 class="text-3xl font-bold text-primary mb-8">Informasi Dasar Kampanye</h2>
+                                    
+                                    <div class="space-y-6">
+                                        <div class="form-group">
+                                            <label for="campaign-title" class="form-label required">Judul Kampanye</label>
+                                            <input type="text" id="campaign-title" name="title" class="form-input" placeholder="Contoh: Penanaman 1000 Pohon Mangrove di Bali" required value="{{ old('title') }}">
+                                            <div class="error-message">Judul kampanye harus diisi</div>
+                                            <div class="form-help">Buat judul yang menarik dan jelas untuk kampanye Anda</div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="campaign-category" class="form-label required">Kategori</label>
+                                            <select id="campaign-category" name="category" class="form-input form-select" required>
+                                                <option value="">Pilih Kategori</option>
+                                                <option value="reboisasi" {{ old('category') == 'reboisasi' ? 'selected' : '' }}>Reboisasi</option>
+                                                <option value="mangrove" {{ old('category') == 'mangrove' ? 'selected' : '' }}>Penanaman Mangrove</option>
+                                                <option value="perkotaan" {{ old('category') == 'perkotaan' ? 'selected' : '' }}>Hijaukan Perkotaan</option>
+                                                <option value="edukasi" {{ old('category') == 'edukasi' ? 'selected' : '' }}>Edukasi Lingkungan</option>
+                                                <option value="lainnya" {{ old('category') == 'lainnya' ? 'selected' : '' }}>Lainnya</option>
+                                            </select>
+                                            <div class="error-message">Pilih kategori kampanye</div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="campaign-location" class="form-label required">Lokasi Penanaman</label>
+                                            <select id="campaign-location" name="location" class="form-input form-select" required>
+                                                <option value="">Pilih Lokasi Penanaman</option>
+                                                <option value="Jakarta" {{ old('location') == 'Jakarta' ? 'selected' : '' }}>Jakarta</option>
+                                                <option value="Bogor" {{ old('location') == 'Bogor' ? 'selected' : '' }}>Bogor</option>
+                                                <option value="Depok" {{ old('location') == 'Depok' ? 'selected' : '' }}>Depok</option>
+                                                <option value="Tangerang" {{ old('location') == 'Tangerang' ? 'selected' : '' }}>Tangerang</option>
+                                                <option value="Bekasi" {{ old('location') == 'Bekasi' ? 'selected' : '' }}>Bekasi</option>
+                                                <option value="Jawa Barat" {{ old('location') == 'Jawa Barat' ? 'selected' : '' }}>Jawa Barat (Luar Jabodetabek)</option>
+                                                <option value="Jawa Tengah" {{ old('location') == 'Jawa Tengah' ? 'selected' : '' }}>Jawa Tengah</option>
+                                                <option value="Jawa Timur" {{ old('location') == 'Jawa Timur' ? 'selected' : '' }}>Jawa Timur</option>
+                                                <option value="Bali" {{ old('location') == 'Bali' ? 'selected' : '' }}>Bali</option>
+                                                <option value="Sumatera" {{ old('location') == 'Sumatera' ? 'selected' : '' }}>Sumatera</option>
+                                                <option value="Kalimantan" {{ old('location') == 'Kalimantan' ? 'selected' : '' }}>Kalimantan</option>
+                                                <option value="Sulawesi" {{ old('location') == 'Sulawesi' ? 'selected' : '' }}>Sulawesi</option>
+                                                <option value="Papua" {{ old('location') == 'Papua' ? 'selected' : '' }}>Papua</option>
+                                                <option value="lainnya" {{ old('location') == 'lainnya' ? 'selected' : '' }}>Lainnya</option>
+                                            </select>
+                                            <div class="error-message">Lokasi penanaman harus dipilih</div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="campaign-image" class="form-label required">Gambar Kampanye</label>
+                                            <div class="file-upload">
+                                                <div class="file-upload-btn">
+                                                    <i class="fas fa-cloud-upload-alt text-2xl mb-2 text-gray-400"></i>
+                                                    <p class="font-semibold text-gray-600">Klik untuk mengunggah gambar</p>
+                                                    <p class="text-sm text-gray-500">Format: JPG, PNG (Maks. 5MB)</p>
+                                                    <input type="file" id="campaign-image" name="image" accept="image/*" required>
+                                                </div>
+                                            </div>
+                                            <img id="image-preview" class="preview-image" alt="Pratinjau Gambar">
+                                            <div class="error-message">Gambar kampanye harus diunggah</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 2: Campaign Details -->
+                                <div class="step-content" data-step="2">
+                                    <h2 class="text-3xl font-bold text-primary mb-8">Detail Kampanye</h2>
+                                    
+                                    <div class="space-y-6">
+                                        <div class="form-group">
+                                            <label for="campaign-description" class="form-label required">Deskripsi Kampanye</label>
+                                            <textarea id="campaign-description" name="description" class="form-input form-textarea" placeholder="Jelaskan secara detail tentang kampanye Anda, tujuan, dan manfaatnya bagi lingkungan..." required>{{ old('description') }}</textarea>
+                                            <div class="error-message">Deskripsi kampanye harus diisi</div>
+                                            <div class="form-help">Minimal 200 karakter. Jelaskan dengan jelas dan menarik</div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="campaign-benefits" class="form-label">Manfaat Kampanye</label>
+                                            <textarea id="campaign-benefits" name="benefits" class="form-input form-textarea" placeholder="Jelaskan manfaat yang akan didapat dari kampanye ini, seperti mengurangi erosi, menyediakan oksigen, dll...">{{ old('benefits') }}</textarea>
+                                            <div class="form-help">Sebutkan manfaat lingkungan dan sosial dari kampanye ini</div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="tree-type" class="form-label required">Jenis Pohon</label>
+                                            <select id="tree-type" name="tree_type" class="form-input form-select" required>
+                                                <option value="">Pilih Jenis Pohon</option>
+                                                <option value="Mangrove" {{ old('tree_type') == 'Mangrove' ? 'selected' : '' }}>Mangrove</option>
+                                                <option value="Pohon Buah" {{ old('tree_type') == 'Pohon Buah' ? 'selected' : '' }}>Pohon Buah</option>
+                                                <option value="Pohon Trembesi" {{ old('tree_type') == 'Pohon Trembesi' ? 'selected' : '' }}>Pohon Trembesi</option>
+                                                <option value="Pohon Mahoni" {{ old('tree_type') == 'Pohon Mahoni' ? 'selected' : '' }}>Pohon Mahoni</option>
+                                                <option value="Pohon Jati" {{ old('tree_type') == 'Pohon Jati' ? 'selected' : '' }}>Pohon Jati</option>
+                                                <option value="Bambu" {{ old('tree_type') == 'Bambu' ? 'selected' : '' }}>Bambu</option>
+                                                <option value="Pohon Pinus" {{ old('tree_type') == 'Pohon Pinus' ? 'selected' : '' }}>Pohon Pinus</option>
+                                                <option value="Pohon Akasia" {{ old('tree_type') == 'Pohon Akasia' ? 'selected' : '' }}>Pohon Akasia</option>
+                                                <option value="Pohon Sengon" {{ old('tree_type') == 'Pohon Sengon' ? 'selected' : '' }}>Pohon Sengon</option>
+                                                <option value="lainnya" {{ old('tree_type') == 'lainnya' ? 'selected' : '' }}>Lainnya</option>
+                                            </select>
+                                            <div class="error-message">Jenis pohon harus dipilih</div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="form-label required">Metode Penanaman</label>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
+                                                <label class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-green-500 transition-colors planting-method-option">
+                                                    <input type="radio" name="planting_method" value="donatur_ikut" class="hidden" {{ old('planting_method', 'donatur_ikut') == 'donatur_ikut' ? 'checked' : '' }}>
+                                                    <i class="fas fa-hands-helping text-3xl text-gray-400 mb-2"></i>
+                                                    <span class="font-semibold text-center">Donatur Bisa Ikut</span>
+                                                    <span class="text-sm text-gray-500 text-center mt-1">Donatur dapat berpartisipasi langsung</span>
+                                                </label>
+                                                <label class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-green-500 transition-colors planting-method-option">
+                                                    <input type="radio" name="planting_method" value="donatur_tidak_ikut" class="hidden" {{ old('planting_method') == 'donatur_tidak_ikut' ? 'checked' : '' }}>
+                                                    <i class="fas fa-user-tie text-3xl text-gray-400 mb-2"></i>
+                                                    <span class="font-semibold text-center">Donatur Tidak Ikut</span>
+                                                    <span class="text-sm text-gray-500 text-center mt-1">Dilakukan oleh tim profesional</span>
+                                                </label>
+                                                <label class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-green-500 transition-colors planting-method-option">
+                                                    <input type="radio" name="planting_method" value="komunitas" class="hidden" {{ old('planting_method') == 'komunitas' ? 'checked' : '' }}>
+                                                    <i class="fas fa-users text-3xl text-gray-400 mb-2"></i>
+                                                    <span class="font-semibold text-center">Komunitas</span>
+                                                    <span class="text-sm text-gray-500 text-center mt-1">Melibatkan komunitas lokal</span>
+                                                </label>
+                                            </div>
+                                            <div class="error-message">Pilih metode penanaman</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 3: Target & Timeline -->
+                                <div class="step-content" data-step="3">
+                                    <h2 class="text-3xl font-bold text-primary mb-8">Target & Timeline</h2>
+                                    
+                                    <div class="space-y-6">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div class="form-group">
+                                                <label for="target-trees" class="form-label required">Target Jumlah Pohon</label>
+                                                <select id="target-trees" name="target_trees" class="form-input form-select" required>
+                                                    <option value="">Pilih Target Pohon</option>
+                                                    <option value="30" {{ old('target_trees') == '30' ? 'selected' : '' }}>30 Pohon</option>
+                                                    <option value="60" {{ old('target_trees') == '60' ? 'selected' : '' }}>60 Pohon</option>
+                                                    <option value="120" {{ old('target_trees') == '120' ? 'selected' : '' }}>120 Pohon</option>
+                                                    <option value="250" {{ old('target_trees') == '250' ? 'selected' : '' }}>250 Pohon</option>
+                                                    <option value="500" {{ old('target_trees') == '500' ? 'selected' : '' }}>500 Pohon</option>
+                                                    <option value="1000" {{ old('target_trees') == '1000' ? 'selected' : '' }}>1000 Pohon</option>
+                                                </select>
+                                                <div class="error-message">Target pohon harus dipilih</div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="tree-price" class="form-label required">Biaya per Pohon (Rp)</label>
+                                                <select id="tree-price" name="tree_price" class="form-input form-select" required>
+                                                    <option value="">Pilih Biaya per Pohon</option>
+                                                    <option value="10000" {{ old('tree_price') == '10000' ? 'selected' : '' }}>Rp 10.000</option>
+                                                    <option value="15000" {{ old('tree_price') == '15000' ? 'selected' : '' }}>Rp 15.000</option>
+                                                    <option value="20000" {{ old('tree_price') == '20000' ? 'selected' : '' }}>Rp 20.000</option>
+                                                    <option value="25000" {{ old('tree_price') == '25000' ? 'selected' : '' }}>Rp 25.000</option>
+                                                    <option value="30000" {{ old('tree_price') == '30000' ? 'selected' : '' }}>Rp 30.000</option>
+                                                    <option value="50000" {{ old('tree_price') == '50000' ? 'selected' : '' }}>Rp 50.000</option>
+                                                </select>
+                                                <div class="error-message">Biaya per pohon harus dipilih</div>
+                                                <div class="form-help">Termasuk biaya bibit, penanaman, dan perawatan</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="campaign-duration" class="form-label required">Durasi Kampanye (hari)</label>
+                                            <select id="campaign-duration" name="campaign_duration" class="form-input form-select" required>
+                                                <option value="">Pilih Durasi Kampanye</option>
+                                                <option value="7" {{ old('campaign_duration') == '7' ? 'selected' : '' }}>7 Hari</option>
+                                                <option value="14" {{ old('campaign_duration') == '14' ? 'selected' : '' }}>14 Hari</option>
+                                                <option value="30" {{ old('campaign_duration') == '30' ? 'selected' : '' }}>30 Hari</option>
+                                                <option value="60" {{ old('campaign_duration') == '60' ? 'selected' : '' }}>60 Hari</option>
+                                                <option value="90" {{ old('campaign_duration') == '90' ? 'selected' : '' }}>90 Hari</option>
+                                                <option value="180" {{ old('campaign_duration') == '180' ? 'selected' : '' }}>180 Hari</option>
+                                            </select>
+                                            <div class="error-message">Durasi kampanye harus dipilih</div>
+                                            <div class="form-help">Kampanye dapat berlangsung 7 hari hingga 6 bulan</div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="planting-date" class="form-label required">Perkiraan Tanggal Penanaman</label>
+                                            <input type="date" id="planting-date" name="planting_date" class="form-input" required value="{{ old('planting_date') }}">
+                                            <div class="error-message">Tanggal penanaman harus diisi</div>
+                                            <div class="form-help">Penanaman akan dilakukan setelah kampanye berakhir</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 4: Preview -->
+                                <div class="step-content" data-step="4">
+                                    <h2 class="text-3xl font-bold text-primary mb-8">Pratinjau Kampanye</h2>
+                                    
+                                    <div class="bg-gray-50 rounded-2xl p-6 mb-6">
+                                        <div id="preview-content">
+                                            <div class="text-center py-8 text-gray-500">
+                                                <i class="fas fa-spinner fa-spin text-4xl mb-4"></i>
+                                                <p>Memuat pratinjau...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-green-50 transition-colors">
+                                            <input type="checkbox" id="terms-agreement" class="mr-3 mt-1" required>
+                                            <span>Saya menyetujui <a href="#" class="text-secondary hover:underline font-semibold">Syarat dan Ketentuan</a> serta <a href="#" class="text-secondary hover:underline font-semibold">Kebijakan Privasi</a> PohonUntukEsok</span>
+                                        </label>
+                                        <div class="error-message">Anda harus menyetujui syarat dan ketentuan</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Form Actions -->
+                                <div class="form-actions">
+                                    <button type="button" id="prev-btn" class="btn btn-secondary" disabled>
+                                        <i class="fas fa-arrow-left mr-2"></i> Sebelumnya
+                                    </button>
+                                    <button type="button" id="next-btn" class="btn btn-primary shimmer-btn">
+                                        Selanjutnya <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                                    <button type="submit" id="submit-btn" class="btn btn-primary shimmer-btn">
+                                        <i class="fas fa-paper-plane mr-2"></i> Kirim Kampanye
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </div>
-                    <img id="image-preview" class="preview-image" alt="Pratinjau Gambar">
-                    <div class="error-message">Gambar kampanye harus diunggah</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Step 2: Campaign Details -->
-        <div class="step-content" data-step="2">
-            <h2 class="text-3xl font-bold text-primary mb-8">Detail Kampanye</h2>
-            
-            <div class="space-y-6">
-                <div class="form-group">
-                    <label for="campaign-description" class="form-label required">Deskripsi Kampanye</label>
-                    <textarea id="campaign-description" name="description" class="form-input form-textarea" placeholder="Jelaskan secara detail tentang kampanye Anda, tujuan, dan manfaatnya bagi lingkungan..." required>{{ old('description') }}</textarea>
-                    <div class="error-message">Deskripsi kampanye harus diisi</div>
-                    <div class="form-help">Minimal 200 karakter. Jelaskan dengan jelas dan menarik</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="campaign-benefits" class="form-label">Manfaat Kampanye</label>
-                    <textarea id="campaign-benefits" name="benefits" class="form-input form-textarea" placeholder="Jelaskan manfaat yang akan didapat dari kampanye ini, seperti mengurangi erosi, menyediakan oksigen, dll...">{{ old('benefits') }}</textarea>
-                    <div class="form-help">Sebutkan manfaat lingkungan dan sosial dari kampanye ini</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="tree-type" class="form-label required">Jenis Pohon</label>
-                    <input type="text" id="tree-type" name="tree_type" class="form-input" placeholder="Contoh: Mangrove Rhizophora, Pohon Trembesi, dll" required value="{{ old('tree_type') }}">
-                    <div class="error-message">Jenis pohon harus diisi</div>
-                    <div class="form-help">Sebutkan jenis pohon yang akan ditanam</div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Metode Penanaman</label>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
-                        <label class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-green-500 transition-colors">
-                            <input type="radio" name="planting_method" value="volunteer" class="hidden" {{ old('planting_method', 'volunteer') == 'volunteer' ? 'checked' : '' }}>
-                            <i class="fas fa-users text-3xl text-gray-400 mb-2"></i>
-                            <span class="font-semibold text-center">Relawan</span>
-                            <span class="text-sm text-gray-500 text-center mt-1">Penanaman oleh relawan</span>
-                        </label>
-                        <label class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-green-500 transition-colors">
-                            <input type="radio" name="planting_method" value="professional" class="hidden" {{ old('planting_method') == 'professional' ? 'checked' : '' }}>
-                            <i class="fas fa-user-tie text-3xl text-gray-400 mb-2"></i>
-                            <span class="font-semibold text-center">Profesional</span>
-                            <span class="text-sm text-gray-500 text-center mt-1">Tim profesional</span>
-                        </label>
-                        <label class="flex flex-col items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-green-500 transition-colors">
-                            <input type="radio" name="planting_method" value="community" class="hidden" {{ old('planting_method') == 'community' ? 'checked' : '' }}>
-                            <i class="fas fa-hands-helping text-3xl text-gray-400 mb-2"></i>
-                            <span class="font-semibold text-center">Komunitas</span>
-                            <span class="text-sm text-gray-500 text-center mt-1">Komunitas lokal</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Step 3: Target & Timeline -->
-        <div class="step-content" data-step="3">
-            <h2 class="text-3xl font-bold text-primary mb-8">Target & Timeline</h2>
-            
-            <div class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="form-group">
-                        <label for="target-trees" class="form-label required">Target Jumlah Pohon</label>
-                        <input type="number" id="target-trees" name="target_trees" class="form-input" placeholder="Contoh: 1000" max="10" required value="{{ old('target_trees') }}">
-                        <div class="error-message">Target pohon harus diisi (minimal 10 pohon)</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="tree-price" class="form-label required">Biaya per Pohon (Rp)</label>
-                        <input type="number" id="tree-price" name="tree_price" class="form-input" placeholder="Contoh: 25000" max="5000" required value="{{ old('tree_price') }}">
-                        <div class="error-message">Biaya per pohon harus diisi (minimal Rp 5.000)</div>
-                        <div class="form-help">Termasuk biaya bibit, penanaman, dan perawatan</div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="campaign-duration" class="form-label required">Durasi Kampanye (hari)</label>
-                    <input type="number" id="campaign-duration" name="campaign_duration" class="form-input" placeholder="Contoh: 30"  max="30" required value="{{ old('campaign_duration') }}">
-                    <div class="error-message">Durasi kampanye harus diisi (7-365 hari)</div>
-                    <div class="form-help">Kampanye dapat berlangsung 7 hari hingga 1 tahun</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="planting-date" class="form-label required">Perkiraan Tanggal Penanaman</label>
-                    <input type="date" id="planting-date" name="planting_date" class="form-input" required value="{{ old('planting_date') }}">
-                    <div class="error-message">Tanggal penanaman harus diisi</div>
-                    <div class="form-help">Penanaman akan dilakukan setelah kampanye berakhir</div>
-                </div>
-                
-                <!-- Hapus bagian updates checkbox karena tidak ada di database -->
-            </div>
-        </div>
-        
-        <!-- Step 4: Preview -->
-        <div class="step-content" data-step="4">
-            <h2 class="text-3xl font-bold text-primary mb-8">Pratinjau Kampanye</h2>
-            
-            <div class="bg-gray-50 rounded-2xl p-6 mb-6">
-                <div id="preview-content">
-                    <div class="text-center py-8 text-gray-500">
-                        <i class="fas fa-spinner fa-spin text-4xl mb-4"></i>
-                        <p>Memuat pratinjau...</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label class="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-green-50 transition-colors">
-                    <input type="checkbox" id="terms-agreement" class="mr-3 mt-1" required>
-                    <span>Saya menyetujui <a href="#" class="text-secondary hover:underline font-semibold">Syarat dan Ketentuan</a> serta <a href="#" class="text-secondary hover:underline font-semibold">Kebijakan Privasi</a> PohonUntukEsok</span>
-                </label>
-                <div class="error-message">Anda harus menyetujui syarat dan ketentuan</div>
-            </div>
-        </div>
-        
-        <!-- Form Actions -->
-        <div class="form-actions">
-            <button type="button" id="prev-btn" class="btn btn-secondary" disabled>
-                <i class="fas fa-arrow-left mr-2"></i> Sebelumnya
-            </button>
-            <button type="button" id="next-btn" class="btn btn-primary shimmer-btn">
-                Selanjutnya <i class="fas fa-arrow-right ml-2"></i>
-            </button>
-            <button type="submit" id="submit-btn" class="btn btn-primary shimmer-btn">
-                <i class="fas fa-paper-plane mr-2"></i> Kirim Kampanye
-            </button>
-        </div>
-    </form>
-</div>
                     </div>
                 </div>
             </div>
@@ -923,103 +972,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white pt-16 pb-8">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                <!-- About -->
-                <div data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex items-center text-2xl font-bold mb-4">
-                        <i class="fas fa-tree mr-2"></i>
-                        <span>PohonUntukEsok</span>
-                    </div>
-                    <p class="text-gray-400 mb-4">
-                        Platform donasi pohon untuk menghijaukan Indonesia. Bersama kita bisa menciptakan perubahan
-                        untuk masa depan yang lebih baik.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors hover-zoom">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors hover-zoom">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors hover-zoom">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors hover-zoom">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-lg font-bold mb-4">Tautan Cepat</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Beranda</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Tentang Kami</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Kampanye</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Blog</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> FAQ</a></li>
-                    </ul>
-                </div>
-
-                <!-- Programs -->
-                <div data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="text-lg font-bold mb-4">Program Kami</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Donasi Pohon</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Relawan</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Edukasi Lingkungan</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact -->
-                <div data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="text-lg font-bold mb-4">Hubungi Kami</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt text-accent mt-1 mr-3"></i>
-                            <span class="text-gray-400">Jl. Hijau Lestari No. 42, Jakarta Selatan, Indonesia</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone-alt text-accent mr-3"></i>
-                            <span class="text-gray-400">+62 21 1234 5678</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope text-accent mr-3"></i>
-                            <span class="text-gray-400">info@pohonuntukesok.org</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="pt-8 border-t border-gray-800">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 text-sm mb-4 md:mb-0">
-                        &copy; 2023 PohonUntukEsok. All rights reserved.
-                    </p>
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm transition-colors">Privacy Policy</a>
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm transition-colors">Terms of Service</a>
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm transition-colors">Sitemap</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    @include('layouts.footer')
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -1060,329 +1013,364 @@
         });
 
         // Campaign Form Functionality - FIXED VERSION
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('campaign-form');
-    const steps = document.querySelectorAll('.step');
-    const stepContents = document.querySelectorAll('.step-content');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const submitBtn = document.getElementById('submit-btn');
-    let currentStep = 1;
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('campaign-form');
+            const steps = document.querySelectorAll('.step');
+            const stepContents = document.querySelectorAll('.step-content');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            let currentStep = 1;
 
-    console.log('Form initialized - current step:', currentStep);
+            console.log('Form initialized - current step:', currentStep);
 
-    // Image Preview
-    const campaignImage = document.getElementById('campaign-image');
-    const imagePreview = document.getElementById('image-preview');
-    
-    if (campaignImage && imagePreview) {
-        campaignImage.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-
-    // Update Steps
-    function updateSteps() {
-        const stepContainers = document.querySelectorAll('.step-container');
-        
-        stepContainers.forEach((container, index) => {
-            const step = container.querySelector('.step');
-            const stepLabel = container.querySelector('.step-label');
+            // Image Preview
+            const campaignImage = document.getElementById('campaign-image');
+            const imagePreview = document.getElementById('image-preview');
             
-            if (index + 1 < currentStep) {
-                step.classList.add('completed');
-                step.classList.remove('active');
-                if (stepLabel) {
-                    stepLabel.classList.add('completed');
-                    stepLabel.classList.remove('active');
-                }
-            } else if (index + 1 === currentStep) {
-                step.classList.add('active');
-                step.classList.remove('completed');
-                if (stepLabel) {
-                    stepLabel.classList.add('active');
-                    stepLabel.classList.remove('completed');
-                }
-            } else {
-                step.classList.remove('active', 'completed');
-                if (stepLabel) {
-                    stepLabel.classList.remove('active', 'completed');
-                }
-            }
-        });
-
-        stepContents.forEach(content => {
-            if (parseInt(content.dataset.step) === currentStep) {
-                content.classList.add('active');
-                // Remove required attributes from hidden steps to prevent HTML5 validation
-                content.querySelectorAll('[required]').forEach(field => {
-                    field.setAttribute('data-required', 'true');
-                    field.removeAttribute('required');
-                });
-            } else {
-                content.classList.remove('active');
-                // Add back required attributes when step is hidden
-                content.querySelectorAll('[data-required="true"]').forEach(field => {
-                    field.setAttribute('required', 'true');
-                });
-            }
-        });
-
-        // Update buttons
-        if (prevBtn) prevBtn.disabled = currentStep === 1;
-        
-        const totalSteps = stepContainers.length;
-        if (currentStep === totalSteps) {
-            if (nextBtn) nextBtn.style.display = 'none';
-            if (submitBtn) submitBtn.style.display = 'inline-flex';
-            generatePreview();
-        } else {
-            if (nextBtn) nextBtn.style.display = 'inline-flex';
-            if (submitBtn) submitBtn.style.display = 'none';
-        }
-    }
-
-    // Navigation
-    if (nextBtn) {
-        nextBtn.addEventListener('click', function() {
-            if (validateStep(currentStep)) {
-                currentStep++;
-                updateSteps();
-            }
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', function() {
-            currentStep--;
-            updateSteps();
-        });
-    }
-
-    // Manual validation (disable HTML5 validation)
-    function validateStep(step) {
-        let isValid = true;
-        const currentStepContent = document.querySelector(`.step-content[data-step="${step}"]`);
-        
-        if (!currentStepContent) return false;
-        
-        // Temporarily add required attributes for validation
-        currentStepContent.querySelectorAll('[data-required="true"]').forEach(field => {
-            field.setAttribute('required', 'true');
-        });
-
-        const requiredFields = currentStepContent.querySelectorAll('[required]');
-        
-        requiredFields.forEach(field => {
-            field.classList.remove('error');
-            
-            if (field.type === 'file') {
-                if (field.files.length === 0) {
-                    isValid = false;
-                    field.classList.add('error');
-                    showFieldError(field, 'File gambar harus diupload');
-                }
-            } else if (field.type === 'number') {
-                if (!field.value || field.value < field.min) {
-                    isValid = false;
-                    field.classList.add('error');
-                    showFieldError(field, `Nilai minimal adalah ${field.min}`);
-                }
-            } else if (field.type === 'date') {
-                if (!field.value) {
-                    isValid = false;
-                    field.classList.add('error');
-                    showFieldError(field, 'Tanggal harus diisi');
-                }
-            } else if (!field.value.trim()) {
-                isValid = false;
-                field.classList.add('error');
-                showFieldError(field, 'Field ini harus diisi');
-            }
-        });
-
-        // Remove required attributes after validation to prevent HTML5 validation
-        currentStepContent.querySelectorAll('[required]').forEach(field => {
-            field.removeAttribute('required');
-        });
-
-        if (!isValid) {
-            alert('Mohon lengkapi semua field yang diperlukan sebelum melanjutkan.');
-            // Scroll to first error
-            const firstError = currentStepContent.querySelector('.error');
-            if (firstError) {
-                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }
-        
-        return isValid;
-    }
-
-    function showFieldError(field, message) {
-        // Remove existing error message
-        const existingError = field.parentNode.querySelector('.field-error');
-        if (existingError) {
-            existingError.remove();
-        }
-        
-        // Add error message
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'field-error text-red-500 text-sm mt-1';
-        errorDiv.textContent = message;
-        field.parentNode.appendChild(errorDiv);
-    }
-
-    // Generate Preview
-    function generatePreview() {
-        const previewContent = document.getElementById('preview-content');
-        if (!previewContent) return;
-        
-        // Get form values
-        const title = document.getElementById('campaign-title')?.value || '';
-        const category = document.getElementById('campaign-category')?.value || '';
-        const location = document.getElementById('campaign-location')?.value || '';
-        const description = document.getElementById('campaign-description')?.value || '';
-        const treeType = document.getElementById('tree-type')?.value || '';
-        const targetTrees = document.getElementById('target-trees')?.value || '0';
-        const treePrice = document.getElementById('tree-price')?.value || '0';
-        const duration = document.getElementById('campaign-duration')?.value || '0';
-        const plantingDate = document.getElementById('planting-date')?.value || '';
-        
-        // Format date
-        let formattedDate = 'Belum ditentukan';
-        if (plantingDate) {
-            try {
-                formattedDate = new Date(plantingDate).toLocaleDateString('id-ID', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-            } catch (e) {
-                formattedDate = plantingDate;
-            }
-        }
-        
-        // Calculate total funding
-        const totalFunding = (parseInt(targetTrees) * parseInt(treePrice) || 0).toLocaleString('id-ID');
-        
-        // Generate preview HTML
-        previewContent.innerHTML = `
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
-                ${imagePreview && imagePreview.style.display !== 'none' ? 
-                    `<img src="${imagePreview.src}" alt="${title}" class="w-full h-48 object-cover">` : 
-                    '<div class="w-full h-48 bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center"><i class="fas fa-tree text-6xl text-green-300"></i></div>'
-                }
-                <div class="p-6">
-                    <span class="inline-block category-badge text-white text-xs px-3 py-1 rounded-full mb-3">${getCategoryName(category)}</span>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">${title || 'Judul Kampanye'}</h3>
-                    <p class="text-gray-600 mb-4 leading-relaxed">${description ? description.substring(0, 150) + '...' : 'Deskripsi kampanye'}</p>
-                    <div class="grid grid-cols-2 gap-4 text-sm mb-4">
-                        <div class="flex items-center text-gray-700">
-                            <i class="fas fa-map-marker-alt text-green-600 mr-2"></i>
-                            <span>${location || 'Lokasi'}</span>
-                        </div>
-                        <div class="flex items-center text-gray-700">
-                            <i class="fas fa-tree text-green-600 mr-2"></i>
-                            <span>${treeType || 'Jenis Pohon'}</span>
-                        </div>
-                        <div class="flex items-center text-gray-700">
-                            <i class="fas fa-bullseye text-green-600 mr-2"></i>
-                            <span>${targetTrees} pohon</span>
-                        </div>
-                        <div class="flex items-center text-gray-700">
-                            <i class="fas fa-clock text-green-600 mr-2"></i>
-                            <span>${duration} hari</span>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-gray-200">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-xl font-bold text-green-700">Rp ${totalFunding}</span>
-                            <span class="text-sm text-gray-500">Total dana dibutuhkan</span>
-                        </div>
-                        <div class="text-sm text-gray-500">
-                            <i class="fas fa-calendar-alt mr-1"></i> Perkiraan penanaman: ${formattedDate}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    // Helper function to get category name
-    function getCategoryName(categoryValue) {
-        const categories = {
-            'reboisasi': 'Reboisasi Hutan',
-            'mangrove': 'Penanaman Mangrove',
-            'perkotaan': 'Hijaukan Perkotaan',
-            'edukasi': 'Edukasi Lingkungan',
-            'lainnya': 'Lainnya'
-        };
-        return categories[categoryValue] || 'Lainnya';
-    }
-
-    // Form Submission Handler
-    if (form && submitBtn) {
-        // Disable HTML5 validation on form
-        form.setAttribute('novalidate', 'true');
-
-        submitBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            console.log('Submit button clicked - validating all steps...');
-
-            // Validate terms agreement
-            const termsAgreement = document.getElementById('terms-agreement');
-            if (!termsAgreement || !termsAgreement.checked) {
-                alert('Anda harus menyetujui syarat dan ketentuan sebelum mengirim kampanye.');
-                termsAgreement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return false;
-            }
-
-            // Validate all steps manually
-            let allValid = true;
-            const stepsToValidate = [1, 2, 3]; // Step 4 is preview only
-
-            stepsToValidate.forEach(step => {
-                if (!validateStep(step)) {
-                    allValid = false;
-                    // Switch to the first invalid step
-                    if (allValid === false && currentStep !== step) {
-                        currentStep = step;
-                        updateSteps();
+            if (campaignImage && imagePreview) {
+                campaignImage.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            imagePreview.src = e.target.result;
+                            imagePreview.style.display = 'block';
+                        }
+                        reader.readAsDataURL(file);
                     }
-                }
+                });
+            }
+
+            // Planting Method Selection
+            document.querySelectorAll('.planting-method-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected style from all options
+                    document.querySelectorAll('.planting-method-option').forEach(opt => {
+                        opt.style.borderColor = '#e5e7eb';
+                        opt.style.backgroundColor = 'white';
+                    });
+                    
+                    // Add selected style to clicked option
+                    this.style.borderColor = '#2D4F2B';
+                    this.style.backgroundColor = '#f0f9f0';
+                    
+                    // Check the radio button
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                });
             });
 
-            if (!allValid) {
-                alert('Mohon lengkapi semua field yang diperlukan di semua step sebelum mengirim kampanye.');
-                return false;
+            // Update Steps
+            function updateSteps() {
+                const stepContainers = document.querySelectorAll('.step-container');
+                
+                stepContainers.forEach((container, index) => {
+                    const step = container.querySelector('.step');
+                    const stepLabel = container.querySelector('.step-label');
+                    
+                    if (index + 1 < currentStep) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                        if (stepLabel) {
+                            stepLabel.classList.add('completed');
+                            stepLabel.classList.remove('active');
+                        }
+                    } else if (index + 1 === currentStep) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                        if (stepLabel) {
+                            stepLabel.classList.add('active');
+                            stepLabel.classList.remove('completed');
+                        }
+                    } else {
+                        step.classList.remove('active', 'completed');
+                        if (stepLabel) {
+                            stepLabel.classList.remove('active', 'completed');
+                        }
+                    }
+                });
+
+                stepContents.forEach(content => {
+                    if (parseInt(content.dataset.step) === currentStep) {
+                        content.classList.add('active');
+                        // Remove required attributes from hidden steps to prevent HTML5 validation
+                        content.querySelectorAll('[required]').forEach(field => {
+                            field.setAttribute('data-required', 'true');
+                            field.removeAttribute('required');
+                        });
+                    } else {
+                        content.classList.remove('active');
+                        // Add back required attributes when step is hidden
+                        content.querySelectorAll('[data-required="true"]').forEach(field => {
+                            field.setAttribute('required', 'true');
+                        });
+                    }
+                });
+
+                // Update buttons
+                if (prevBtn) prevBtn.disabled = currentStep === 1;
+                
+                const totalSteps = stepContainers.length;
+                if (currentStep === totalSteps) {
+                    if (nextBtn) nextBtn.style.display = 'none';
+                    if (submitBtn) submitBtn.style.display = 'inline-flex';
+                    generatePreview();
+                } else {
+                    if (nextBtn) nextBtn.style.display = 'inline-flex';
+                    if (submitBtn) submitBtn.style.display = 'none';
+                }
             }
 
-            console.log('All validation passed - submitting form...');
-            
-            // Show loading state
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...';
-            submitBtn.disabled = true;
+            // Navigation
+            if (nextBtn) {
+                nextBtn.addEventListener('click', function() {
+                    if (validateStep(currentStep)) {
+                        currentStep++;
+                        updateSteps();
+                    }
+                });
+            }
 
-            // Submit form programmatically
-            setTimeout(() => {
-                form.submit();
-            }, 1000);
+            if (prevBtn) {
+                prevBtn.addEventListener('click', function() {
+                    currentStep--;
+                    updateSteps();
+                });
+            }
+
+            // Manual validation (disable HTML5 validation)
+            function validateStep(step) {
+                let isValid = true;
+                const currentStepContent = document.querySelector(`.step-content[data-step="${step}"]`);
+                
+                if (!currentStepContent) return false;
+                
+                // Temporarily add required attributes for validation
+                currentStepContent.querySelectorAll('[data-required="true"]').forEach(field => {
+                    field.setAttribute('required', 'true');
+                });
+
+                const requiredFields = currentStepContent.querySelectorAll('[required]');
+                
+                requiredFields.forEach(field => {
+                    field.classList.remove('error');
+                    
+                    if (field.type === 'file') {
+                        if (field.files.length === 0) {
+                            isValid = false;
+                            field.classList.add('error');
+                            showFieldError(field, 'File gambar harus diupload');
+                        }
+                    } else if (field.type === 'select-one') {
+                        if (!field.value) {
+                            isValid = false;
+                            field.classList.add('error');
+                            showFieldError(field, 'Pilihan ini harus dipilih');
+                        }
+                    } else if (field.type === 'date') {
+                        if (!field.value) {
+                            isValid = false;
+                            field.classList.add('error');
+                            showFieldError(field, 'Tanggal harus diisi');
+                        }
+                    } else if (!field.value.trim()) {
+                        isValid = false;
+                        field.classList.add('error');
+                        showFieldError(field, 'Field ini harus diisi');
+                    }
+                });
+
+                // Remove required attributes after validation to prevent HTML5 validation
+                currentStepContent.querySelectorAll('[required]').forEach(field => {
+                    field.removeAttribute('required');
+                });
+
+                if (!isValid) {
+                    alert('Mohon lengkapi semua field yang diperlukan sebelum melanjutkan.');
+                    // Scroll to first error
+                    const firstError = currentStepContent.querySelector('.error');
+                    if (firstError) {
+                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+                
+                return isValid;
+            }
+
+            function showFieldError(field, message) {
+                // Remove existing error message
+                const existingError = field.parentNode.querySelector('.field-error');
+                if (existingError) {
+                    existingError.remove();
+                }
+                
+                // Add error message
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'field-error text-red-500 text-sm mt-1';
+                errorDiv.textContent = message;
+                field.parentNode.appendChild(errorDiv);
+            }
+
+            // Generate Preview
+            function generatePreview() {
+                const previewContent = document.getElementById('preview-content');
+                if (!previewContent) return;
+                
+                // Get form values
+                const title = document.getElementById('campaign-title')?.value || '';
+                const category = document.getElementById('campaign-category')?.value || '';
+                const location = document.getElementById('campaign-location')?.value || '';
+                const description = document.getElementById('campaign-description')?.value || '';
+                const treeType = document.getElementById('tree-type')?.value || '';
+                const targetTrees = document.getElementById('target-trees')?.value || '0';
+                const treePrice = document.getElementById('tree-price')?.value || '0';
+                const duration = document.getElementById('campaign-duration')?.value || '0';
+                const plantingDate = document.getElementById('planting-date')?.value || '';
+                const plantingMethod = document.querySelector('input[name="planting_method"]:checked')?.value || '';
+                
+                // Format date
+                let formattedDate = 'Belum ditentukan';
+                if (plantingDate) {
+                    try {
+                        formattedDate = new Date(plantingDate).toLocaleDateString('id-ID', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                    } catch (e) {
+                        formattedDate = plantingDate;
+                    }
+                }
+                
+                // Calculate total funding
+                const totalFunding = (parseInt(targetTrees) * parseInt(treePrice) || 0).toLocaleString('id-ID');
+                
+                // Get planting method text
+                const plantingMethodText = {
+                    'donatur_ikut': 'Donatur Bisa Ikut',
+                    'donatur_tidak_ikut': 'Donatur Tidak Ikut',
+                    'komunitas': 'Komunitas'
+                }[plantingMethod] || 'Belum dipilih';
+                
+                // Generate preview HTML
+                previewContent.innerHTML = `
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
+                        ${imagePreview && imagePreview.style.display !== 'none' ? 
+                            `<img src="${imagePreview.src}" alt="${title}" class="w-full h-48 object-cover">` : 
+                            '<div class="w-full h-48 bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center"><i class="fas fa-tree text-6xl text-green-300"></i></div>'
+                        }
+                        <div class="p-6">
+                            <span class="inline-block category-badge text-white text-xs px-3 py-1 rounded-full mb-3">${getCategoryName(category)}</span>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-3">${title || 'Judul Kampanye'}</h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">${description ? description.substring(0, 150) + '...' : 'Deskripsi kampanye'}</p>
+                            <div class="grid grid-cols-2 gap-4 text-sm mb-4">
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-map-marker-alt text-green-600 mr-2"></i>
+                                    <span>${location || 'Lokasi'}</span>
+                                </div>
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-tree text-green-600 mr-2"></i>
+                                    <span>${treeType || 'Jenis Pohon'}</span>
+                                </div>
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-bullseye text-green-600 mr-2"></i>
+                                    <span>${targetTrees} pohon</span>
+                                </div>
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-clock text-green-600 mr-2"></i>
+                                    <span>${duration} hari</span>
+                                </div>
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-users text-green-600 mr-2"></i>
+                                    <span>${plantingMethodText}</span>
+                                </div>
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-money-bill text-green-600 mr-2"></i>
+                                    <span>Rp ${parseInt(treePrice).toLocaleString('id-ID')}/pohon</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xl font-bold text-green-700">Rp ${totalFunding}</span>
+                                    <span class="text-sm text-gray-500">Total dana dibutuhkan</span>
+                                </div>
+                                <div class="text-sm text-gray-500">
+                                    <i class="fas fa-calendar-alt mr-1"></i> Perkiraan penanaman: ${formattedDate}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Helper function to get category name
+            function getCategoryName(categoryValue) {
+                const categories = {
+                    'reboisasi': 'Reboisasi Hutan',
+                    'mangrove': 'Penanaman Mangrove',
+                    'perkotaan': 'Hijaukan Perkotaan',
+                    'edukasi': 'Edukasi Lingkungan',
+                    'lainnya': 'Lainnya'
+                };
+                return categories[categoryValue] || 'Lainnya';
+            }
+
+            // Form Submission Handler
+            if (form && submitBtn) {
+                // Disable HTML5 validation on form
+                form.setAttribute('novalidate', 'true');
+
+                submitBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    console.log('Submit button clicked - validating all steps...');
+
+                    // Validate terms agreement
+                    const termsAgreement = document.getElementById('terms-agreement');
+                    if (!termsAgreement || !termsAgreement.checked) {
+                        alert('Anda harus menyetujui syarat dan ketentuan sebelum mengirim kampanye.');
+                        termsAgreement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        return false;
+                    }
+
+                    // Validate all steps manually
+                    let allValid = true;
+                    const stepsToValidate = [1, 2, 3]; // Step 4 is preview only
+
+                    stepsToValidate.forEach(step => {
+                        if (!validateStep(step)) {
+                            allValid = false;
+                            // Switch to the first invalid step
+                            if (allValid === false && currentStep !== step) {
+                                currentStep = step;
+                                updateSteps();
+                            }
+                        }
+                    });
+
+                    if (!allValid) {
+                        alert('Mohon lengkapi semua field yang diperlukan di semua step sebelum mengirim kampanye.');
+                        return false;
+                    }
+
+                    console.log('All validation passed - submitting form...');
+                    
+                    // Show loading state
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...';
+                    submitBtn.disabled = true;
+
+                    // Submit form programmatically
+                    setTimeout(() => {
+                        form.submit();
+                    }, 1000);
+                });
+            }
+
+            // Initialize steps
+            updateSteps();
         });
-    }
-
-    // Initialize steps
-    updateSteps();
-});
 
         // Navbar scroll effect
         window.addEventListener('scroll', function() {

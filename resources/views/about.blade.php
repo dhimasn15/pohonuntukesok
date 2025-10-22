@@ -35,7 +35,7 @@
         /* Hero Section */
         .hero-about {
             background: linear-gradient(135deg, #1a3a1a 0%, #2D4F2B 50%, #3d6b3a 100%);
-            min-height: 50vh;
+            min-height: 90vh;
             display: flex;
             align-items: center;
             position: relative;
@@ -167,19 +167,7 @@
             background: linear-gradient(90deg, #2D4F2B, #3d6b3a);
         }
 
-        /* Team Card */
-        .team-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-
-        .team-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-        }
+       
 
         /* Timeline */
         .timeline-item {
@@ -301,6 +289,9 @@
         <div class="container mx-auto px-4 relative z-10">
             <div class="hero-content max-w-4xl mx-auto text-center text-white">
                 <div data-aos="fade-down" class="mb-8">
+                    <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full mb-8">
+                    <span class="text-white font-semibold">Cerita Kami...</span>
+                </div>
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                         Tentang <span class="text-accent">PohonUntukEsok</span>
                     </h1>
@@ -379,7 +370,7 @@
                              alt="Kegiatan Konservasi" 
                              class="rounded-2xl shadow-xl w-full">
                         <div class="absolute -bottom-6 -right-6 bg-accent text-primary px-6 py-4 rounded-xl shadow-lg">
-                            <div class="text-2xl font-bold">125K+</div>
+                            <div class="text-2xl font-bold">125</div>
                             <div class="text-sm">Pohon Tertanam</div>
                         </div>
                     </div>
@@ -507,85 +498,7 @@
     </section>
 
     <!-- Our Team -->
-    <section class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="section-title center text-3xl md:text-4xl font-bold text-primary">
-                    Tim Kami
-                </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Kenali orang-orang berdedikasi di balik PohonUntukEsok
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Team Member 1 -->
-                <div class="team-card" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="h-64 overflow-hidden">
-                        <img src="{{ asset('img/10.png') }}" 
-                             alt="Founder" 
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">Firah Dzahabiyyah</h3>
-                        <p class="text-accent mb-4">CEO</p>
-                        <p class="text-gray-600 text-sm mb-4">
-                            NIM: 2023081050
-                        </p>
-                        <div class="flex space-x-3">
-                           <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="fab fa-instagram text-xs"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team Member 2 -->
-                <div class="team-card" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="h-64 overflow-hidden">
-                        <img src="{{ asset('img/11.png') }}"
-                             alt="Program Manager" 
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">Dhimas Nurhidayat</h3>
-                        <p class="text-accent mb-4">Tech Lead</p>
-                        <p class="text-gray-600 text-sm mb-4">
-                            NIM: 2023071066
-                        </p>
-                        <div class="flex space-x-3">
-                           
-                            <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="fab fa-instagram text-xs"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team Member 3 -->
-                <div class="team-card" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="h-64 overflow-hidden">
-                        <img src="{{ asset('img/12.png') }}"
-                             alt="Tech Lead" 
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">Leonardo</h3>
-                        <p class="text-accent mb-4">CMO</p>
-                        <p class="text-gray-600 text-sm mb-4">
-                            NIM: 2023071078
-                        </p>
-                        <div class="flex space-x-3">
-                           <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="fab fa-instagram text-xs"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </section>
+    
 
     <!-- CTA Section -->
     <section class="py-20 bg-primary text-white">
@@ -613,122 +526,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white pt-16 pb-8">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                <!-- About -->
-                <div>
-                    <div class="flex items-center text-2xl font-bold mb-4">
-                        <i class="fas fa-tree mr-2"></i>
-                        <span>PohonUntukEsok</span>
-                    </div>
-                    <p class="text-gray-400 mb-4">
-                        Platform donasi pohon untuk menghijaukan Indonesia. Bersama kita bisa menciptakan perubahan
-                        untuk masa depan yang lebih baik.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Tautan Cepat</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Beranda</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Tentang Kami</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Kampanye</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Blog</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> FAQ</a></li>
-                    </ul>
-                </div>
-
-                <!-- Programs -->
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Program Kami</h3>
-                    <ul class="space-y-3">
-                        <li>
-                            <a href="#" class="group flex items-center text-gray-400 hover:text-accent transition-colors">
-                                <span class="w-8 h-8 mr-3 flex items-center justify-center bg-primary/20 rounded-lg group-hover:bg-accent/20 transition-colors">
-                                    <i class="fas fa-seedling"></i>
-                                </span>
-                                Donasi Pohon
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="group flex items-center text-gray-400 hover:text-accent transition-colors">
-                                <span class="w-8 h-8 mr-3 flex items-center justify-center bg-primary/20 rounded-lg group-hover:bg-accent/20 transition-colors">
-                                    <i class="fas fa-hands-helping"></i>
-                                </span>
-                                Relawan
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="group flex items-center text-gray-400 hover:text-accent transition-colors">
-                                <span class="w-8 h-8 mr-3 flex items-center justify-center bg-primary/20 rounded-lg group-hover:bg-accent/20 transition-colors">
-                                    <i class="fas fa-book-reader"></i>
-                                </span>
-                                Edukasi Lingkungan
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Contact -->
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Hubungi Kami</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt text-accent mt-1 mr-3"></i>
-                            <span class="text-gray-400">Jl. Hijau Lestari No. 42, Jakarta Selatan, Indonesia</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone-alt text-accent mr-3"></i>
-                            <span class="text-gray-400">+62 21 1234 5678</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope text-accent mr-3"></i>
-                            <span class="text-gray-400">info@pohonuntukesok.org</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="pt-8 border-t border-gray-800">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 text-sm mb-4 md:mb-0">
-                        &copy; 2023 PohonUntukEsok. All rights reserved.
-                    </p>
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm transition-colors">Privacy Policy</a>
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm transition-colors">Terms of
-                            Service</a>
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm transition-colors">Sitemap</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    @include('layouts.footer')
 
     <!-- Back to Top Button -->
     <button id="back-to-top"

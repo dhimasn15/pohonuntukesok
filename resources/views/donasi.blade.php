@@ -229,6 +229,43 @@
             }
         }
 
+        /* Tree Type Selection */
+        .tree-type-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .tree-type-option:hover {
+            border-color: #81C784;
+            transform: translateY(-2px);
+        }
+
+        .tree-type-option.selected {
+            border-color: #2D4F2B;
+            background: linear-gradient(135deg, #f8fff8 0%, #f0f9f0 100%);
+            box-shadow: 0 4px 15px rgba(45, 79, 43, 0.1);
+        }
+
+        .tree-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 1.5rem;
+        }
+
+        .mangrove-icon { background: #dcfce7; color: #16a34a; }
+        .fruit-icon { background: #fef3c7; color: #d97706; }
+        .hardwood-icon { background: #ddd6fe; color: #7c3aed; }
+        .bamboo-icon { background: #bbf7d0; color: #15803d; }
+
     </style>
 </head>
 
@@ -268,10 +305,10 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#donation-form"
+                    <a href="#tree-selection"
                         class="read-more-btn px-8 py-4 bg-gradient-to-r from-accent to-yellow-600 text-white rounded-xl font-semibold flex items-center justify-center">
                         <i class="fas fa-seedling mr-3"></i>
-                        Donasi Sekarang
+                        Pilih Jenis Pohon
                     </a>
                     <a href="#impact"
                         class="px-8 py-4 border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-primary transition-all flex items-center justify-center">
@@ -296,32 +333,89 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="py-16 bg-white">
+    <!-- Tree Selection Section -->
+    <section id="tree-selection" class="py-20 bg-white">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-                <div class="card-modern bg-white rounded-2xl shadow-lg p-8 text-center" data-aos="fade-up">
-                    <div class="text-4xl font-bold text-accent mb-2" id="total-trees">125,847</div>
-                    <div class="text-gray-600">Pohon Tertanam</div>
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-primary mb-4 relative inline-block">
+                    Pilih Jenis Pohon
+                    <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-accent mt-2"></span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Pilih jenis pohon yang ingin Anda donasikan, lalu temukan kampanye yang sesuai
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    <!-- Mangrove Option -->
+                    <div class="tree-type-option" data-tree-type="mangrove" data-aos="fade-up" data-aos-delay="100">
+                        <div class="tree-icon mangrove-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary mb-2">Mangrove</h3>
+                        <p class="text-sm text-gray-600 mb-3">Pelindung pantai & ekosistem laut</p>
+                        <div class="text-accent font-bold">Rp 25.000/pohon</div>
+                    </div>
+
+                    <!-- Fruit Tree Option -->
+                    <div class="tree-type-option" data-tree-type="fruit" data-aos="fade-up" data-aos-delay="200">
+                        <div class="tree-icon fruit-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary mb-2">Pohon Buah</h3>
+                        <p class="text-sm text-gray-600 mb-3">Sumber makanan & ekonomi</p>
+                        <div class="text-accent font-bold">Rp 15.000/pohon</div>
+                    </div>
+
+                    <!-- Hardwood Option -->
+                    <div class="tree-type-option" data-tree-type="hardwood" data-aos="fade-up" data-aos-delay="300">
+                        <div class="tree-icon hardwood-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary mb-2">Kayu Keras</h3>
+                        <p class="text-sm text-gray-600 mb-3">Konservasi hutan & biodiversitas</p>
+                        <div class="text-accent font-bold">Rp 20.000/pohon</div>
+                    </div>
+
+                    <!-- Bamboo Option -->
+                    <div class="tree-type-option" data-tree-type="bamboo" data-aos="fade-up" data-aos-delay="400">
+                        <div class="tree-icon bamboo-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary mb-2">Bambu</h3>
+                        <p class="text-sm text-gray-600 mb-3">Pertumbuhan cepat & multifungsi</p>
+                        <div class="text-accent font-bold">Rp 10.000/pohon</div>
+                    </div>
                 </div>
-                <div class="card-modern bg-white rounded-2xl shadow-lg p-8 text-center" data-aos="fade-up" data-aos-delay="100">
-                    <div class="text-4xl font-bold text-accent mb-2">12</div>
-                    <div class="text-gray-600">Provinsi</div>
-                </div>
-                <div class="card-modern bg-white rounded-2xl shadow-lg p-8 text-center" data-aos="fade-up" data-aos-delay="200">
-                    <div class="text-4xl font-bold text-accent mb-2">5,000+</div>
-                    <div class="text-gray-600">Donatur</div>
-                </div>
-                <div class="card-modern bg-white rounded-2xl shadow-lg p-8 text-center" data-aos="fade-up" data-aos-delay="300">
-                    <div class="text-4xl font-bold text-accent mb-2">50+</div>
-                    <div class="text-gray-600">Kampanye</div>
+
+                <!-- Selected Tree Info -->
+                <div id="selected-tree-info" class="hidden card-modern bg-white rounded-2xl shadow-lg p-8" data-aos="fade-up">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-primary mb-4">Anda Memilih: <span id="selected-tree-name">Mangrove</span></h3>
+                        <p class="text-gray-600 mb-6" id="selected-tree-description">
+                            Pohon mangrove membantu melindungi garis pantai dari abrasi dan menjadi habitat penting bagi biota laut.
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-4">
+                            <button id="view-campaigns-btn" 
+                                    class="read-more-btn px-8 py-4 bg-gradient-to-r from-primary to-green-700 text-white rounded-xl font-semibold flex items-center justify-center">
+                                <i class="fas fa-list mr-3"></i>
+                                Lihat Kampanye Tersedia
+                            </button>
+                            <button id="change-selection" 
+                                    class="px-6 py-4 border-2 border-primary text-primary rounded-xl font-semibold hover:bg-primary hover:text-white transition-all">
+                                <i class="fas fa-redo mr-2"></i>
+                                Ganti Pilihan
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Impact Calculator -->
-    <section id="impact" class="py-20 bg-white">
+    <section id="impact" class="py-20 bg-gradient-to-br from-green-50 to-emerald-50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16" data-aos="fade-up">
                 <h2 class="text-3xl md:text-4xl font-extrabold text-primary mb-4 relative inline-block">
@@ -369,8 +463,8 @@
                         <div class="text-sm text-gray-600">*Harga sudah termasuk perawatan 1 tahun</div>
                     </div>
 
-                    <button class="w-full read-more-btn px-6 py-4 bg-gradient-to-r from-primary to-green-700 text-white rounded-xl font-semibold">
-                        <i class="fas fa-seedling mr-2"></i> Lanjutkan Donasi
+                    <button id="calculate-impact-btn" class="w-full read-more-btn px-6 py-4 bg-gradient-to-r from-primary to-green-700 text-white rounded-xl font-semibold">
+                        <i class="fas fa-calculator mr-2"></i> Hitung Dampak
                     </button>
                 </div>
 
@@ -403,266 +497,13 @@
                             </div>
                             <div class="text-sm text-gray-500">Mencegah banjir & kekeringan</div>
                         </div>
-
-                        <div class="impact-card">
-                            <div class="flex items-center mb-3">
-                                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
-                                    <i class="fas fa-paw text-yellow-600 text-xl"></i>
-                                </div>
-                                <div>
-                                    <div class="font-bold text-lg" id="habitat-creation">3</div>
-                                    <div class="text-gray-600">Habitat Baru Terbentuk</div>
-                                </div>
-                            </div>
-                            <div class="text-sm text-gray-500">Untuk satwa lokal</div>
-                        </div>
-
-                        <div class="impact-card">
-                            <div class="flex items-center mb-3">
-                                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
-                                    <i class="fas fa-users text-red-600 text-xl"></i>
-                                </div>
-                                <div>
-                                    <div class="font-bold text-lg" id="jobs-created">2</div>
-                                    <div class="text-gray-600">Lapangan Kerja</div>
-                                </div>
-                            </div>
-                            <div class="text-sm text-gray-500">Untuk masyarakat lokal</div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Donation Options -->
-    <section id="donation-form" class="py-20 bg-gradient-to-br from-green-50 to-emerald-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-primary mb-4 relative inline-block">
-                    Pilih Paket Donasi
-                    <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-accent mt-2"></span>
-                </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Pilih paket donasi yang sesuai dengan keinginan Anda atau tentukan jumlah sendiri
-                </p>
-            </div>
-
-            <div class="max-w-6xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                    <div class="card-modern bg-white rounded-2xl shadow-lg p-8" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="text-center mb-6">
-                            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-seedling text-3xl text-primary"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-primary mb-2">Paket Pemula</h3>
-                            <div class="text-3xl font-bold text-accent mb-2">Rp 100.000</div>
-                            <div class="text-gray-600">5 Pohon Tertanam</div>
-                        </div>
-                        <ul class="space-y-3 mb-6">
-                            <li class="flex items-center">
-                                <i class="fas fa-check text-green-500 mr-2"></i>
-                                <span>Sertifikat Digital</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-check text-green-500 mr-2"></i>
-                                <span>Update Progress 6 Bulan</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-check text-green-500 mr-2"></i>
-                                <span>Lokasi Penanaman</span>
-                            </li>
-                        </ul>
-                        <button class="w-full px-6 py-3 bg-primary text-white rounded-xl hover:bg-green-700 transition-colors">
-                            Pilih Paket Ini
-                        </button>
-                    </div>
-
-                    <div class="card-modern bg-white rounded-2xl shadow-lg p-8 border-2 border-accent" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="text-center mb-6">
-                            <div class="w-20 h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-tree text-3xl text-white"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-primary mb-2">Paket Peduli</h3>
-                            <div class="text-3xl font-bold text-accent mb-2">Rp 250.000</div>
-                            <div class="text-gray-600">10 Pohon Tertanam</div>
-                        </div>
-                        <ul class="space-y-3 mb-6">
-                            <li class="flex items-center">
-                                <i class="fas fa-check text-green-500 mr-2"></i>
-                                <span>Semua manfaat Paket Pemula</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-check text-green-500 mr-2"></i>
-                                <span>Update Progress Bulanan</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-check text-green-500 mr-2"></i>
-                                <span>Foto Pohon Berkala</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-check text-green-500 mr-2"></i>
-                                <span>Laporan Dampak Lengkap</span>
-                            </li>
-                        </ul>
-                        <button class="w-full read-more-btn px-6 py-3 bg-gradient-to-r from-accent to-yellow-600 text-white rounded-xl font-semibold">
-                            Paket Terpopuler
-                        </button>
-                    </div>
-
-                    <div class="card-modern bg-white rounded-2xl shadow-lg p-8" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="text-center mb-6">
-                            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-forest text-3xl text-primary"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-primary mb-2">Paket Spesial</h3>
-                            <div class="text-3xl font-bold text-accent mb-2">Rp 500.000</div>
-                            <div class="text-gray-600">25 Pohon Tertanam</div>
-                        </div>
-                        <ul class="space-y-3 mb-6">
-                            <li class="flex items-center">
-                                <i class="fas fa-check text-green-500 mr-2"></i>
-                                <span>Semua manfaat Paket Peduli</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-check text-green-500 mr-2"></i>
-                                <span>Sertifikat Premium</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-check text-green-500 mr-2"></i>
-                                <span>Video Progress Khusus</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-check text-green-500 mr-2"></i>
-                                <span>Nama di Wall of Fame</span>
-                            </li>
-                        </ul>
-                        <button class="w-full px-6 py-3 bg-primary text-white rounded-xl hover:bg-green-700 transition-colors">
-                            Pilih Paket Ini
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white pt-16 pb-8">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                <!-- About -->
-                <div>
-                    <div class="flex items-center text-2xl font-bold mb-4">
-                        <i class="fas fa-tree mr-2"></i>
-                        <span>PohonUntukEsok</span>
-                    </div>
-                    <p class="text-gray-400 mb-4">
-                        Platform donasi pohon untuk menghijaukan Indonesia. Bersama kita bisa menciptakan perubahan
-                        untuk masa depan yang lebih baik.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Tautan Cepat</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Beranda</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Tentang Kami</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Kampanye</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> Blog</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                    class="fas fa-chevron-right text-xs mr-2"></i> FAQ</a></li>
-                    </ul>
-                </div>
-
-                <!-- Programs -->
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Program Kami</h3>
-                    <ul class="space-y-3">
-                        <li>
-                            <a href="#" class="group flex items-center text-gray-400 hover:text-accent transition-colors">
-                                <span class="w-8 h-8 mr-3 flex items-center justify-center bg-primary/20 rounded-lg group-hover:bg-accent/20 transition-colors">
-                                    <i class="fas fa-seedling"></i>
-                                </span>
-                                Donasi Pohon
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="group flex items-center text-gray-400 hover:text-accent transition-colors">
-                                <span class="w-8 h-8 mr-3 flex items-center justify-center bg-primary/20 rounded-lg group-hover:bg-accent/20 transition-colors">
-                                    <i class="fas fa-hands-helping"></i>
-                                </span>
-                                Relawan
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="group flex items-center text-gray-400 hover:text-accent transition-colors">
-                                <span class="w-8 h-8 mr-3 flex items-center justify-center bg-primary/20 rounded-lg group-hover:bg-accent/20 transition-colors">
-                                    <i class="fas fa-book-reader"></i>
-                                </span>
-                                Edukasi Lingkungan
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Contact -->
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Hubungi Kami</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt text-accent mt-1 mr-3"></i>
-                            <span class="text-gray-400">Jl. Hijau Lestari No. 42, Jakarta Selatan, Indonesia</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone-alt text-accent mr-3"></i>
-                            <span class="text-gray-400">+62 21 1234 5678</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope text-accent mr-3"></i>
-                            <span class="text-gray-400">info@pohonuntukesok.org</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="pt-8 border-t border-gray-800">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 text-sm mb-4 md:mb-0">
-                        &copy; 2023 PohonUntukEsok. All rights reserved.
-                    </p>
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm transition-colors">Privacy Policy</a>
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm transition-colors">Terms of
-                            Service</a>
-                        <a href="#" class="text-gray-400 hover:text-accent text-sm transition-colors">Sitemap</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    @include('layouts.footer')
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -673,6 +514,84 @@
             once: true,
             offset: 50,
             delay: 0
+        });
+
+        // Tree Type Selection System
+        let selectedTreeType = null;
+
+        const treeData = {
+            mangrove: {
+                name: 'Mangrove',
+                description: 'Pohon mangrove membantu melindungi garis pantai dari abrasi dan menjadi habitat penting bagi biota laut. Cocok untuk kampanye konservasi pesisir.',
+                price: 25000,
+                route: '{{ route("kampanye") }}?type=mangrove'
+            },
+            fruit: {
+                name: 'Pohon Buah',
+                description: 'Pohon buah memberikan manfaat ganda: konservasi lingkungan dan sumber makanan bagi masyarakat. Cocok untuk kampanye agroforestry.',
+                price: 15000,
+                route: '{{ route("kampanye") }}?type=fruit'
+            },
+            hardwood: {
+                name: 'Pohon Kayu Keras',
+                description: 'Pohon kayu keras penting untuk restorasi hutan dan konservasi biodiversitas. Cocok untuk kampanye reboisasi hutan.',
+                price: 20000,
+                route: '{{ route("kampanye") }}?type=hardwood'
+            },
+            bamboo: {
+                name: 'Bambu',
+                description: 'Bambu tumbuh cepat dan multifungsi, cocok untuk konservasi tanah dan ekonomi berkelanjutan. Cocok untuk kampanye penghijauan cepat.',
+                price: 10000,
+                route: '{{ route("kampanye") }}?type=bamboo'
+            }
+        };
+
+        // Tree Type Selection
+        document.querySelectorAll('.tree-type-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                document.querySelectorAll('.tree-type-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Get selected tree type
+                selectedTreeType = this.dataset.treeType;
+                
+                // Update selected tree info
+                const treeInfo = treeData[selectedTreeType];
+                document.getElementById('selected-tree-name').textContent = treeInfo.name;
+                document.getElementById('selected-tree-description').textContent = treeInfo.description;
+                
+                // Show selected tree info section
+                document.getElementById('selected-tree-info').classList.remove('hidden');
+                
+                // Scroll to selected tree info
+                document.getElementById('selected-tree-info').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            });
+        });
+
+        // Change Selection Button
+        document.getElementById('change-selection').addEventListener('click', function() {
+            document.getElementById('selected-tree-info').classList.add('hidden');
+            document.querySelectorAll('.tree-type-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            selectedTreeType = null;
+        });
+
+        // View Campaigns Button
+        document.getElementById('view-campaigns-btn').addEventListener('click', function() {
+            if (selectedTreeType) {
+                const treeInfo = treeData[selectedTreeType];
+                // Redirect to campaigns page with tree type filter
+                window.location.href = treeInfo.route;
+            }
         });
 
         // Show content immediately
@@ -781,6 +700,16 @@
             // Initialize calculator
             updateImpactCalculator();
         }
+
+        // Calculate Impact Button
+        document.getElementById('calculate-impact-btn').addEventListener('click', function() {
+            updateImpactCalculator();
+            // Show impact section
+            document.getElementById('impact').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
+        });
 
         // Navbar scroll effect
         let lastScroll = 0;

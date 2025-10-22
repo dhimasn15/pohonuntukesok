@@ -201,7 +201,7 @@
     </main>
 
     <!-- Footer -->
-    @include('components.footer')
+    @include('layouts.footer')
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>

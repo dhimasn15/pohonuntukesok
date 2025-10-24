@@ -51,14 +51,14 @@
 
             <!-- Programs -->
             <div data-aos="fade-up" data-aos-delay="300">
-                <h3 class="text-lg font-bold mb-4">Program Kami</h3>
+                <h3 class="text-lg font-bold mb-4">Bergabung Kengan Kami</h3>
                 <ul class="space-y-2">
+                    <li><a href="{{ route('petani.daftar')}}" class="text-gray-400 hover:text-accent transition-colors"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Daftar Sebagai Petani</a></li>
                     <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                class="fas fa-chevron-right text-xs mr-2"></i> Donasi Pohon</a></li>
+                                class="fas fa-chevron-right text-xs mr-2"></i> Daftar Relawan</a></li>
                     <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                class="fas fa-chevron-right text-xs mr-2"></i> Relawan</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                class="fas fa-chevron-right text-xs mr-2"></i> Edukasi Lingkungan</a></li>
+                                class="fas fa-chevron-right text-xs mr-2"></i> Daftarkan Lokasi Penanaman</a></li>
                 </ul>
             </div>
 

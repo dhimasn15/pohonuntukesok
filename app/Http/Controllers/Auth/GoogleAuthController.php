@@ -85,6 +85,11 @@ class GoogleAuthController extends Controller
                 'avatar' => $user->avatar
             ]);
 
+            // Redirect admin to dashboard, others to home
+            if ($user->role === 'admin') {
+                return '/admin/dashboard';
+            }
+
             return redirect('/')->with('success', 'Login berhasil! Selamat datang ' . $user->name . '!');
             
         } catch (\Exception $e) {
@@ -108,6 +113,11 @@ class GoogleAuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            
+            // Redirect admin to dashboard, others to home
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard')->with('success', 'Login berhasil! Selamat datang Admin ' . Auth::user()->name . '!');
+            }
             
             return redirect('/')->with('success', 'Login berhasil! Selamat datang ' . Auth::user()->name . '!');
         }

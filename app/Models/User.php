@@ -21,8 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'google_id',
-        'avatar',
+            'google_id',
+            'avatar',
+            'role',
+            'is_active',
     ];
 
 
@@ -38,6 +40,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        
     ];
 
     /**
@@ -51,5 +54,24 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+     public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
+
+    public function isActive()
+    {
+        return $this->is_active;
+    }
+     // Relationship dengan Farmer
+    public function farmer()
+    {
+        return $this->hasOne(Farmer::class);
     }
 }

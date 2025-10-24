@@ -72,4 +72,40 @@ Route::get('/blog', function () {
     return view('blog');
 })->name('blog');
 
-// Note: removed duplicate closure routes for /buat and /kampanye so controller methods are used.
+// ==============================================
+
+use App\Http\Controllers\AdminController;
+
+use App\Http\Controllers\FarmerController;
+
+// Route untuk petani
+Route::middleware(['auth'])->group(function () {
+    Route::get('/petani/daftar', [FarmerController::class, 'create'])->name('petani.daftar');
+    Route::post('/petani/daftar', [FarmerController::class, 'store'])->name('petani.store');
+    Route::get('/petani/dashboard', [FarmerController::class, 'dashboard'])->name('petani.dashboard');
+    Route::get('/petani/tanaman', [FarmerController::class, 'managePlants'])->name('petani.tanaman');
+    Route::post('/petani/tanaman', [FarmerController::class, 'storePlant'])->name('petani.tanaman.store');
+    Route::put('/petani/tanaman/{id}', [FarmerController::class, 'updatePlant'])->name('petani.tanaman.update');
+    Route::delete('/petani/tanaman/{id}', [FarmerController::class, 'deletePlant'])->name('petani.tanaman.delete');
+});
+
+// Route admin (only accessible by users with role 'admin')
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/petani', [AdminController::class, 'manageFarmers'])->name('admin.petani');
+    Route::post('/petani/{id}/approve', [AdminController::class, 'approveFarmer'])->name('admin.petani.approve');
+    Route::post('/petani/{id}/reject', [AdminController::class, 'rejectFarmer'])->name('admin.petani.reject');
+    Route::get('/users', [AdminController::class, 'manageUsers'])->name('admin.users');
+    Route::post('/users/{id}/toggle-status', [AdminController::class, 'toggleUserStatus'])->name('admin.users.toggle-status');
+    Route::get('/kampanye', [AdminController::class, 'manageCampaigns'])->name('admin.kampanye');
+});
+
+// Route untuk relawan dan lokasi (placeholder)
+Route::get('/relawan/daftar', function () {
+    return view('relawan.daftar');
+})->name('relawan.daftar');
+
+Route::get('/lokasi/daftar', function () {
+    return view('lokasi.daftar');
+})->name('lokasi.daftar');
+

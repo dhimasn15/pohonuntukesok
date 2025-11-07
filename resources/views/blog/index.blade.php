@@ -21,7 +21,7 @@
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+       @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
         * {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -300,14 +300,16 @@
 
                 <!-- Search Bar -->
                 <div class="max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-                    <div class="relative">
+                    <form action="{{ route('blog.index') }}" method="GET" class="relative">
                         <input type="text" 
+                               name="search"
+                               value="{{ request('search') }}"
                                placeholder="Cari artikel tentang lingkungan..." 
                                class="search-modern w-full px-6 py-5 rounded-2xl text-gray-800 placeholder-gray-500 focus:outline-none text-lg">
-                        <button class="absolute right-3 top-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-green-700 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all">
+                        <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-green-700 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all">
                             <i class="fas fa-search"></i>
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -332,136 +334,183 @@
             <div class="flex flex-col lg:flex-row gap-12">
                 <!-- Main Content Area -->
                 <div class="lg:w-2/3">
-                    <!-- Ganti bagian Featured Article dengan: -->
-@if($featuredPost)
-<div class="featured-card card-modern rounded-3xl shadow-xl overflow-hidden mb-16" data-aos="fade-up">
-    <div class="relative h-96">
-        <img src="{{ $featuredPost->featured_image ? Storage::url($featuredPost->featured_image) : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800' }}" 
-             alt="{{ $featuredPost->title }}" 
-             class="w-full h-full object-cover">
-        <div class="image-overlay absolute inset-0"></div>
-        <div class="category-badge absolute top-6 left-6 px-5 py-2 rounded-full text-white font-semibold text-sm">
-            <i class="fas fa-star mr-2"></i>Featured
-        </div>
-        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
-            <div class="flex items-center space-x-4 mb-4">
-                @if($featuredPost->author_avatar)
-                    <img src="{{ Storage::url($featuredPost->author_avatar) }}" 
-                         alt="{{ $featuredPost->author_name }}" 
-                         class="w-12 h-12 rounded-full border-2 border-white">
-                @else
-                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center border-2 border-white">
-                        <i class="fas fa-user text-white"></i>
+                    <!-- Featured Article -->
+                    @if($featuredPost)
+                    <div class="featured-card card-modern rounded-3xl shadow-xl overflow-hidden mb-16" data-aos="fade-up">
+                        <div class="relative h-96">
+                            <img src="{{ $featuredPost->featured_image ? Storage::url($featuredPost->featured_image) : 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800' }}" 
+                                 alt="{{ $featuredPost->title }}" 
+                                 class="w-full h-full object-cover">
+                            <div class="image-overlay absolute inset-0"></div>
+                            <div class="category-badge absolute top-6 left-6 px-5 py-2 rounded-full text-white font-semibold text-sm">
+                                <i class="fas fa-star mr-2"></i>Featured
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                                <div class="flex items-center space-x-4 mb-4">
+                                    @if($featuredPost->author_avatar)
+                                        <img src="{{ Storage::url($featuredPost->author_avatar) }}" 
+                                             alt="{{ $featuredPost->author_name }}" 
+                                             class="w-12 h-12 rounded-full border-2 border-white">
+                                    @else
+                                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center border-2 border-white">
+                                            <i class="fas fa-user text-white"></i>
+                                        </div>
+                                    @endif
+                                    <div>
+                                        <p class="font-semibold">{{ $featuredPost->author_name }}</p>
+                                        <p class="text-sm text-white/80">
+                                            {{ $featuredPost->published_at->format('d M Y') }} • {{ $featuredPost->reading_time }} min
+                                        </p>
+                                    </div>
+                                </div>
+                                <h2 class="text-3xl font-bold mb-3">{{ $featuredPost->title }}</h2>
+                                <p class="text-white/90 text-lg">{{ $featuredPost->excerpt }}</p>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <a href="{{ route('blog.show', $featuredPost->slug) }}" 
+                               class="read-more-btn relative px-8 py-4 bg-gradient-to-r from-primary to-green-700 text-white rounded-xl font-semibold hover:shadow-xl transition-all inline-block">
+                                Baca Selengkapnya
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
                     </div>
-                @endif
-                <div>
-                    <p class="font-semibold">{{ $featuredPost->author_name }}</p>
-                    <p class="text-sm text-white/80">
-                        {{ $featuredPost->published_at->format('d M Y') }} • {{ $featuredPost->reading_time }} min
-                    </p>
+                    @endif
+
+                    <!-- Latest Articles -->
+                    <div class="mb-12">
+                        <div class="flex items-center justify-between mb-8">
+                            <h2 class="text-3xl font-bold text-gray-800">Artikel Terbaru</h2>
+                            <div class="flex items-center space-x-2">
+                                <a href="{{ route('blog.index') }}" 
+                                   class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold">Semua</a>
+                                @foreach($categories->take(3) as $category)
+                                    <a href="{{ route('blog.category', $category) }}" 
+                                       class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-200">
+                                       {{ $category }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        @if($posts->count() > 0)
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            @foreach($posts as $post)
+                            <div class="card-modern bg-white rounded-2xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                                <div class="relative h-56">
+                                    <img src="{{ $post->featured_image ? Storage::url($post->featured_image) : 'https://images.unsplash.com/photo-1574263867128-39eaed201e1c?w=600' }}" 
+                                         alt="{{ $post->title }}" 
+                                         class="w-full h-full object-cover">
+                                    <div class="category-badge absolute top-4 left-4 px-4 py-1.5 rounded-full text-white text-xs font-semibold">
+                                        {{ $post->category }}
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center text-gray-500 text-sm mb-3">
+                                        <i class="far fa-calendar mr-2"></i>
+                                        <span>{{ $post->published_at->format('d M Y') }}</span>
+                                        <span class="mx-2">•</span>
+                                        <i class="far fa-clock mr-1"></i>
+                                        <span>{{ $post->reading_time }} min</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-primary transition-colors">
+                                        <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
+                                    </h3>
+                                    <p class="text-gray-600 mb-4">{{ $post->excerpt }}</p>
+                                    <a href="{{ route('blog.show', $post->slug) }}" class="inline-flex items-center text-primary font-semibold hover:gap-2 transition-all">
+                                        Selengkapnya
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                        @else
+                        <div class="text-center py-12">
+                            <i class="fas fa-newspaper text-gray-300 text-5xl mb-4"></i>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada artikel</h3>
+                            <p class="text-gray-500">Tidak ada artikel yang ditemukan untuk kriteria pencarian ini.</p>
+                        </div>
+                        @endif
+                    </div>
+
+                    <!-- Pagination -->
+                    @if($posts->hasPages())
+                    <div class="flex justify-center" data-aos="fade-up">
+                        <div class="pagination-modern">
+                            @if($posts->onFirstPage())
+                                <span class="page-btn cursor-not-allowed opacity-50">
+                                    <i class="fas fa-chevron-left"></i>
+                                </span>
+                            @else
+                                <a href="{{ $posts->previousPageUrl() }}" class="page-btn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            @endif
+
+                            @foreach(range(1, $posts->lastPage()) as $page)
+                                @if($page == $posts->currentPage())
+                                    <span class="page-btn active">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $posts->url($page) }}" class="page-btn">{{ $page }}</a>
+                                @endif
+                            @endforeach
+
+                            @if($posts->hasMorePages())
+                                <a href="{{ $posts->nextPageUrl() }}" class="page-btn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            @else
+                                <span class="page-btn cursor-not-allowed opacity-50">
+                                    <i class="fas fa-chevron-right"></i>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    @endif
                 </div>
-            </div>
-            <h2 class="text-3xl font-bold mb-3">{{ $featuredPost->title }}</h2>
-            <p class="text-white/90 text-lg">{{ $featuredPost->excerpt }}</p>
-        </div>
-    </div>
-    <div class="p-8">
-        <a href="{{ route('blog.show', $featuredPost->slug) }}" 
-           class="read-more-btn relative px-8 py-4 bg-gradient-to-r from-primary to-green-700 text-white rounded-xl font-semibold hover:shadow-xl transition-all inline-block">
-            Baca Selengkapnya
-            <i class="fas fa-arrow-right ml-2"></i>
-        </a>
-    </div>
-</div>
-@endif
 
-<!-- Ganti bagian Latest Articles dengan: -->
-<div class="mb-12">
-    <div class="flex items-center justify-between mb-8">
-        <h2 class="text-3xl font-bold text-gray-800">Artikel Terbaru</h2>
-        <div class="flex items-center space-x-2">
-            <a href="{{ route('blog.index') }}" 
-               class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold">Semua</a>
-            @foreach($categories->take(3) as $category)
-                <a href="{{ route('blog.category', $category) }}" 
-                   class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-200">
-                   {{ $category }}
-                </a>
-            @endforeach
-        </div>
-    </div>
+                <!-- Sidebar -->
+                <div class="lg:w-1/3">
+                    <div class="sidebar-modern space-y-8">
+                        <!-- Popular Posts -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6" data-aos="fade-up">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <i class="fas fa-fire text-orange-500 mr-3"></i>
+                                Populer
+                            </h3>
+                            <div class="space-y-4">
+                                @foreach($popularPosts as $post)
+                                <a href="{{ route('blog.show', $post->slug) }}" class="flex items-start space-x-4 group cursor-pointer">
+                                    <img src="{{ $post->featured_image ? Storage::url($post->featured_image) : 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=100' }}" 
+                                         alt="{{ $post->title }}" 
+                                         class="w-20 h-20 rounded-xl object-cover group-hover:scale-105 transition-transform">
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-gray-800 group-hover:text-primary transition-colors mb-1">
+                                            {{ Str::limit($post->title, 50) }}
+                                        </h4>
+                                        <p class="text-sm text-gray-500">{{ $post->published_at->format('d M Y') }}</p>
+                                    </div>
+                                </a>
+                                @endforeach
+                            </div>
+                        </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        @foreach($posts as $post)
-        <div class="card-modern bg-white rounded-2xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-            <div class="relative h-56">
-                <img src="{{ $post->featured_image ? Storage::url($post->featured_image) : 'https://images.unsplash.com/photo-1574263867128-39eaed201e1c?w=600' }}" 
-                     alt="{{ $post->title }}" 
-                     class="w-full h-full object-cover">
-                <div class="category-badge absolute top-4 left-4 px-4 py-1.5 rounded-full text-white text-xs font-semibold">
-                    {{ $post->category }}
-                </div>
-            </div>
-            <div class="p-6">
-                <div class="flex items-center text-gray-500 text-sm mb-3">
-                    <i class="far fa-calendar mr-2"></i>
-                    <span>{{ $post->published_at->format('d M Y') }}</span>
-                    <span class="mx-2">•</span>
-                    <i class="far fa-clock mr-1"></i>
-                    <span>{{ $post->reading_time }} min</span>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-primary transition-colors">
-                    <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
-                </h3>
-                <p class="text-gray-600 mb-4">{{ $post->excerpt }}</p>
-                <a href="{{ route('blog.show', $post->slug) }}" class="inline-flex items-center text-primary font-semibold hover:gap-2 transition-all">
-                    Selengkapnya
-                    <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-            </div>
-        </div>
-        @endforeach
-    </div>
-</div>
-
-<!-- Ganti bagian Popular Posts dengan: -->
-<div class="bg-white rounded-2xl shadow-lg p-6" data-aos="fade-up">
-    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-        <i class="fas fa-fire text-orange-500 mr-3"></i>
-        Populer
-    </h3>
-    <div class="space-y-4">
-        @foreach($popularPosts as $post)
-        <a href="{{ route('blog.show', $post->slug) }}" class="flex items-start space-x-4 group cursor-pointer">
-            <img src="{{ $post->featured_image ? Storage::url($post->featured_image) : 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=100' }}" 
-                 alt="{{ $post->title }}" 
-                 class="w-20 h-20 rounded-xl object-cover group-hover:scale-105 transition-transform">
-            <div class="flex-1">
-                <h4 class="font-semibold text-gray-800 group-hover:text-primary transition-colors mb-1">
-                    {{ Str::limit($post->title, 50) }}
-                </h4>
-                <p class="text-sm text-gray-500">{{ $post->published_at->format('d M Y') }}</p>
-            </div>
-        </a>
-        @endforeach
-    </div>
-</div>
-
-<!-- Ganti bagian Categories dengan: -->
-<div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-lg p-6" data-aos="fade-up" data-aos-delay="100">
-    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-        <i class="fas fa-folder-open text-primary mr-3"></i>
-        Kategori
-    </h3>
-    <div class="flex flex-wrap gap-2">
-        @foreach($categories as $category)
-        <a href="{{ route('blog.category', $category) }}" 
-           class="tag-modern px-4 py-2 rounded-xl text-sm font-semibold text-primary">
-            {{ $category }}
-        </a>
-        @endforeach
-    </div>
-</div>
+                        <!-- Categories -->
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-lg p-6" data-aos="fade-up" data-aos-delay="100">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <i class="fas fa-folder-open text-primary mr-3"></i>
+                                Kategori
+                            </h3>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($categories as $category)
+                                <a href="{{ route('blog.category', $category) }}" 
+                                   class="tag-modern px-4 py-2 rounded-xl text-sm font-semibold text-primary">
+                                    {{ $category }}
+                                </a>
+                                @endforeach
+                            </div>
+                        </div>
 
                         <!-- Newsletter -->
                         <div class="bg-gradient-to-br from-primary to-green-700 rounded-2xl shadow-xl p-8 text-white" data-aos="fade-up" data-aos-delay="200">
@@ -472,41 +521,15 @@
                                 <h3 class="text-2xl font-bold mb-2">Newsletter</h3>
                                 <p class="text-white/90">Dapatkan artikel terbaru langsung ke email Anda</p>
                             </div>
-                            <div class="space-y-3">
+                            <form class="space-y-3">
                                 <input type="email" 
                                        placeholder="Email Anda" 
                                        class="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50">
-                                <button class="w-full px-6 py-3 bg-white text-primary rounded-xl font-semibold hover:bg-gray-100 transition-all">
+                                <button type="submit" class="w-full px-6 py-3 bg-white text-primary rounded-xl font-semibold hover:bg-gray-100 transition-all">
                                     <i class="fas fa-paper-plane mr-2"></i>
                                     Berlangganan
                                 </button>
-                            </div>
-                        </div>
-
-                        <!-- Social Media -->
-                        <div class="bg-white rounded-2xl shadow-lg p-6" data-aos="fade-up" data-aos-delay="300">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                                <i class="fas fa-share-alt text-primary mr-3"></i>
-                                Ikuti Kami
-                            </h3>
-                            <div class="grid grid-cols-2 gap-3">
-                                <a href="#" class="flex items-center justify-center space-x-2 bg-blue-600 text-white px-4 py-3 rounded-xl hover:bg-blue-700 transition-all">
-                                    <i class="fab fa-facebook-f"></i>
-                                    <span class="font-semibold">Facebook</span>
-                                </a>
-                                <a href="#" class="flex items-center justify-center space-x-2 bg-sky-500 text-white px-4 py-3 rounded-xl hover:bg-sky-600 transition-all">
-                                    <i class="fab fa-twitter"></i>
-                                    <span class="font-semibold">Twitter</span>
-                                </a>
-                                <a href="#" class="flex items-center justify-center space-x-2 bg-pink-600 text-white px-4 py-3 rounded-xl hover:bg-pink-700 transition-all">
-                                    <i class="fab fa-instagram"></i>
-                                    <span class="font-semibold">Instagram</span>
-                                </a>
-                                <a href="#" class="flex items-center justify-center space-x-2 bg-red-600 text-white px-4 py-3 rounded-xl hover:bg-red-700 transition-all">
-                                    <i class="fab fa-youtube"></i>
-                                    <span class="font-semibold">YouTube</span>
-                                </a>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -516,16 +539,16 @@
 
     @include('layouts.footer')
 
-   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script>
-    // Initialize AOS
-    AOS.init({
-        duration: 800,
-        once: true,
-        offset: 100
-    });
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
 
-    // Mobile Menu Functionality
+        // Mobile Menu Functionality
     const burgerButton = document.getElementById('burger-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileDropdownBtn = document.getElementById('mobile-dropdown-btn');
@@ -707,6 +730,6 @@
         card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(card);
     });
-</script>
+    </script>
 </body>
 </html>

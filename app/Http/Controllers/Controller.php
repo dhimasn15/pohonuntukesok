@@ -1,18 +1,13 @@
 <?php
+// app/Http\Controllers\Controller.php
 
 namespace App\Http\Controllers;
 
-abstract class Controller
-{
-    public function index()
-    {
-          // Ambil kampanye aktif terbaru (3 kampanye)
-        $popularCampaigns = Campaign::where('status', 'active')
-            ->with('user')
-            ->latest()
-            ->take(3)
-            ->get();
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 
-        return view('home', compact('popularCampaigns'));
-    }
+class Controller extends BaseController
+{
+    use AuthorizesRequests, ValidatesRequests;
 }

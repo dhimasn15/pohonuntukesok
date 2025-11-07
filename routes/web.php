@@ -109,3 +109,45 @@ Route::get('/lokasi/daftar', function () {
     return view('lokasi.daftar');
 })->name('lokasi.daftar');
 
+
+
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\UserBlogController;
+use App\Http\Controllers\Admin\AdminBlog as AdminBlogController;
+
+// Public Blog Routes (untuk membaca)
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+Route::get('/blog/category/{category}', [BlogController::class, 'category'])->name('blog.category');
+
+// User Blog Routes (untuk menulis - butuh login)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my-blog', [UserBlogController::class, 'index'])->name('user.blog.index');
+    Route::get('/my-blog/create', [UserBlogController::class, 'create'])->name('user.blog.create');
+    Route::post('/my-blog', [UserBlogController::class, 'store'])->name('user.blog.store');
+    Route::get('/my-blog/{blog}/edit', [UserBlogController::class, 'edit'])->name('user.blog.edit');
+    Route::put('/my-blog/{blog}', [UserBlogController::class, 'update'])->name('user.blog.update');
+    Route::delete('/my-blog/{blog}', [UserBlogController::class, 'destroy'])->name('user.blog.destroy');
+});
+
+// Admin Blog Routes (untuk approval dan management)
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/blog', [AdminBlogController::class, 'index'])->name('admin.blog.index');
+    Route::get('/blog/pending', [AdminBlogController::class, 'pending'])->name('admin.blog.pending');
+    Route::post('/blog/{blog}/approve', [AdminBlogController::class, 'approve'])->name('admin.blog.approve');
+    Route::get('/blog/{blog}/reject', [AdminBlogController::class, 'showRejectForm'])->name('admin.blog.show-reject-form');
+    Route::post('/blog/{blog}/reject', [AdminBlogController::class, 'reject'])->name('admin.blog.reject');
+    
+    // Management lainnya
+    Route::get('/blog/create', [AdminBlogController::class, 'create'])->name('admin.blog.create');
+    Route::post('/blog', [AdminBlogController::class, 'store'])->name('admin.blog.store');
+    Route::get('/blog/{blog}/edit', [AdminBlogController::class, 'edit'])->name('admin.blog.edit');
+    Route::put('/blog/{blog}', [AdminBlogController::class, 'update'])->name('admin.blog.update');
+    Route::delete('/blog/{blog}', [AdminBlogController::class, 'destroy'])->name('admin.blog.destroy');
+    Route::post('/blog/{blog}/toggle-featured', [AdminBlogController::class, 'toggleFeatured'])->name('admin.blog.toggle-featured');
+});
+
+// CKEditor Upload Route
+Route::post('/ckeditor/upload', [UserBlogController::class, 'uploadImage'])
+    ->name('ckeditor.upload')
+    ->middleware('auth');

@@ -40,7 +40,7 @@
             <a href="{{ route('about')}}" class="hover:text-accent transition-colors flex items-center group">
                 <i class="fas fa-info-circle mr-2"></i> Tentang Kami
             </a>
-            <a href="{{ route('blog')}}" class="hover:text-accent transition-colors flex items-center group">
+            <a href="{{ route('blog.index')}}" class="hover:text-accent transition-colors flex items-center group">
                 <i class="fas fa-newspaper mr-2"></i> Blog
             </a>
             
@@ -114,7 +114,7 @@
                     <i class="fas fa-info-circle mr-3"></i> Tentang Kami
                 </a>
                 
-                <a href="{{ route('blog')}}" class="w-full text-center py-3 hover:text-accent transition-color" onclick="closeMobileMenu()">
+                <a href="{{ route('blog.index')}}" class="w-full text-center py-3 hover:text-accent transition-color" onclick="closeMobileMenu()">
                     <i class="fas fa-newspaper mr-3"></i> Blog
                 </a>
                 

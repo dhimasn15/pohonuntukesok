@@ -309,6 +309,7 @@
                         </button>
                     </div>
                 </div>
+                
             </div>
         </div>
 
@@ -388,6 +389,10 @@
                    {{ $category }}
                 </a>
             @endforeach
+            <a href="{{ route('user.blog.create') }}" 
+                   class="bg-primary text-green px-6 py-3 rounded-lg hover:bg-green-800 transition-colors font-semibold">
+                    <i class="fas fa-plus mr-2"></i> Buat Post Baru
+                </a>
         </div>
     </div>
 

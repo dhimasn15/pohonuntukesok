@@ -63,6 +63,11 @@
                         <i class="fas fa-seedling mr-3"></i>
                         Kelola Kampanye
                     </a>
+                    <a href="{{ route('admin.blog.index') }}" 
+                       class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                        <i class="fas fa-seedling mr-3"></i>
+                        Kelola Blog
+                    </a>
                 </div>
             </nav>
         </div>

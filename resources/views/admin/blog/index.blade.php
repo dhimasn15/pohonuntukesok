@@ -78,10 +78,16 @@
                     <h1 class="text-3xl font-bold text-primary">Kelola Blog</h1>
                     <p class="text-gray-600">Manajemen artikel dan konten blog</p>
                 </div>
-                <a href="{{ route('admin.blog.create') }}" 
-                   class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-green-800 transition-colors font-semibold">
-                    <i class="fas fa-plus mr-2"></i> Buat Post Baru
-                </a>
+                <div class="flex space-x-4">
+                    <a href="{{ route('admin.blog.pending') }}" 
+                       class="bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition-colors font-semibold">
+                        <i class="fas fa-clock mr-2"></i> Pending Approval
+                    </a>
+                    <a href="{{ route('admin.blog.create') }}" 
+                       class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-green-800 transition-colors font-semibold">
+                        <i class="fas fa-plus mr-2"></i> Buat Post Baru
+                    </a>
+                </div>
             </div>
 
             @if(session('success'))
@@ -110,7 +116,10 @@
                             <i class="fas fa-check-circle text-green-600 text-xl"></i>
                         </div>
                         <div>
-                            <div class="text-2xl font-bold text-gray-900">{{ $posts->where('status', 'published')->count() }}</div>
+                            @php
+                                $approvedCount = $posts->where('approval_status', 'approved')->where('status', 'published')->count();
+                            @endphp
+                            <div class="text-2xl font-bold text-gray-900">{{ $approvedCount }}</div>
                             <div class="text-gray-600">Published</div>
                         </div>
                     </div>
@@ -119,11 +128,14 @@
                 <div class="bg-white rounded-2xl shadow-lg p-6">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
-                            <i class="fas fa-pencil-alt text-yellow-600 text-xl"></i>
+                            <i class="fas fa-clock text-yellow-600 text-xl"></i>
                         </div>
                         <div>
-                            <div class="text-2xl font-bold text-gray-900">{{ $posts->where('status', 'draft')->count() }}</div>
-                            <div class="text-gray-600">Draft</div>
+                            @php
+                                $pendingCount = $posts->where('approval_status', 'pending')->where('status', 'published')->count();
+                            @endphp
+                            <div class="text-2xl font-bold text-gray-900">{{ $pendingCount }}</div>
+                            <div class="text-gray-600">Pending</div>
                         </div>
                     </div>
                 </div>
@@ -146,7 +158,7 @@
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-semibold text-primary">
                         <i class="fas fa-list mr-2"></i>
-                        Daftar Post
+                        Daftar Semua Post
                     </h3>
                 </div>
                 <div class="overflow-x-auto">
@@ -154,6 +166,7 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Penulis</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
@@ -176,9 +189,18 @@
                                             @endif
                                             <div>
                                                 <div class="text-sm font-medium text-gray-900">{{ Str::limit($post->title, 50) }}</div>
-                                                <div class="text-sm text-gray-500">Oleh: {{ $post->author_name }}</div>
+                                                <div class="text-sm text-gray-500">
+                                                    @if($post->is_featured)
+                                                        <i class="fas fa-star text-yellow-500 mr-1"></i>
+                                                    @endif
+                                                    Views: {{ $post->view_count }}
+                                                </div>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">{{ $post->author_name }}</div>
+                                        <div class="text-sm text-gray-500">{{ $post->user->name }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
@@ -186,17 +208,34 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center space-x-2">
-                                            @if($post->status === 'published')
+                                        <div class="flex flex-col space-y-1">
+                                            <!-- Status Approval -->
+                                            @if($post->approval_status === 'approved')
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                    <i class="fas fa-check mr-1"></i> Published
+                                                    <i class="fas fa-check mr-1"></i> Approved
+                                                </span>
+                                            @elseif($post->approval_status === 'pending')
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                    <i class="fas fa-clock mr-1"></i> Pending
                                                 </span>
                                             @else
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                    <i class="fas fa-times mr-1"></i> Rejected
+                                                </span>
+                                            @endif
+
+                                            <!-- Status Publish -->
+                                            @if($post->status === 'published')
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                    <i class="fas fa-globe mr-1"></i> Published
+                                                </span>
+                                            @else
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                                     <i class="fas fa-pencil-alt mr-1"></i> Draft
                                                 </span>
                                             @endif
-                                            
+
+                                            <!-- Featured -->
                                             @if($post->is_featured)
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
                                                     <i class="fas fa-star mr-1"></i> Featured
@@ -208,15 +247,21 @@
                                         <div class="text-sm text-gray-900">
                                             {{ $post->published_at ? $post->published_at->format('d M Y') : $post->created_at->format('d M Y') }}
                                         </div>
-                                        <div class="text-sm text-gray-500">Views: {{ $post->view_count }}</div>
+                                        <div class="text-sm text-gray-500">
+                                            @if($post->approved_at)
+                                                Approved: {{ $post->approved_at->format('d M Y') }}
+                                            @endif
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
-                                            <a href="{{ route('blog.show', $post->slug) }}" 
-                                               target="_blank"
-                                               class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-                                                <i class="fas fa-eye mr-1"></i> View
-                                            </a>
+                                            @if($post->status === 'published' && $post->approval_status === 'approved')
+                                                <a href="{{ route('blog.show', $post->slug) }}" 
+                                                   target="_blank"
+                                                   class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                                                    <i class="fas fa-eye mr-1"></i> View
+                                                </a>
+                                            @endif
                                             <a href="{{ route('admin.blog.edit', $post) }}" 
                                                class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 transition-colors">
                                                 <i class="fas fa-edit mr-1"></i> Edit

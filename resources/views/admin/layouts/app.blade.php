@@ -90,6 +90,12 @@
                                 Kelola Kampanye
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.blog*') ? 'active' : '' }}" href="{{ route('admin.blog') }}">
+                                <i class="fas fa-seedling me-2"></i>
+                                Kelola Blog
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>

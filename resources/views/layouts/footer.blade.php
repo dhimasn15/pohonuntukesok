@@ -44,6 +44,8 @@
                                 class="fas fa-chevron-right text-xs mr-2"></i> Kampanye</a></li>
                     <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
                                 class="fas fa-chevron-right text-xs mr-2"></i> Blog</a></li>
+                    <li><a href="{{route('user.blog.index')}}" class="text-gray-400 hover:text-accent transition-colors"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i>Buat Blog</a></li>
                     <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
                                 class="fas fa-chevron-right text-xs mr-2"></i> FAQ</a></li>
                 </ul>

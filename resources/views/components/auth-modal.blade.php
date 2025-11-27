@@ -7,7 +7,7 @@
             <div class="flex-shrink-0 flex items-center justify-between p-6 border-b border-gray-100">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                        <i class="fas fa-tree text-white text-lg"></i>
+                        <img src="{{ asset('img/logo-tittle.png') }}" alt="" width="25">
                     </div>
                     <h2 class="text-xl font-bold text-gray-900" id="auth-modal-title">Masuk ke Akun</h2>
                 </div>

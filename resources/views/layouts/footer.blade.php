@@ -5,8 +5,7 @@
             <!-- About -->
             <div data-aos="fade-up" data-aos-delay="100">
                 <div class="flex items-center text-2xl font-bold mb-4">
-                    <i class="fas fa-tree mr-2"></i>
-                    <span>PohonUntukEsok</span>
+                    <img src="{{ asset('img/logo.png') }}" alt="PohonUntukEsok Logo" class="w-25 ">
                 </div>
                 <p class="text-gray-400 mb-4">
                     Platform donasi pohon untuk menghijaukan Indonesia. Bersama kita bisa menciptakan perubahan
@@ -36,18 +35,16 @@
             <div data-aos="fade-up" data-aos-delay="200">
                 <h3 class="text-lg font-bold mb-4">Tautan Cepat</h3>
                 <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
+                    <li><a href="{{route('home')}}" class="text-gray-400 hover:text-accent transition-colors"><i
                                 class="fas fa-chevron-right text-xs mr-2"></i> Beranda</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
+                    <li><a href="{{route('about')}}" class="text-gray-400 hover:text-accent transition-colors"><i
                                 class="fas fa-chevron-right text-xs mr-2"></i> Tentang Kami</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
+                    <li><a href="{{route('kampanye')}}" class="text-gray-400 hover:text-accent transition-colors"><i
                                 class="fas fa-chevron-right text-xs mr-2"></i> Kampanye</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
+                    <li><a href="{{route('blog.index')}}" class="text-gray-400 hover:text-accent transition-colors"><i
                                 class="fas fa-chevron-right text-xs mr-2"></i> Blog</a></li>
                     <li><a href="{{route('user.blog.index')}}" class="text-gray-400 hover:text-accent transition-colors"><i
-                                class="fas fa-chevron-right text-xs mr-2"></i>Buat Blog</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
-                                class="fas fa-chevron-right text-xs mr-2"></i> FAQ</a></li>
+                                class="fas fa-chevron-right text-xs mr-2"></i> Buat Blog</a></li>
                 </ul>
             </div>
 
@@ -70,15 +67,15 @@
                 <ul class="space-y-3">
                     <li class="flex items-start">
                         <i class="fas fa-map-marker-alt text-accent mt-1 mr-3"></i>
-                        <span class="text-gray-400">Jl. Hijau Lestari No. 42, Jakarta Selatan, Indonesia</span>
+                        <span class="text-gray-400">Jl. Cendrawasih Raya Bintaro Jaya No.65, RT.4/RW.3, Sawah Baru, Kec. Ciputat, Kota Tangerang Selatan, Banten 15413</span>
                     </li>
                     <li class="flex items-center">
                         <i class="fas fa-phone-alt text-accent mr-3"></i>
-                        <span class="text-gray-400">+62 21 1234 5678</span>
+                        <span class="text-gray-400">+62 895 1610 7824</span>
                     </li>
                     <li class="flex items-center">
                         <i class="fas fa-envelope text-accent mr-3"></i>
-                        <span class="text-gray-400">info@pohonuntukesok.org</span>
+                        <span class="text-gray-400">pohonuntukesok@gmail.com</span>
                     </li>
                 </ul>
             </div>

@@ -59,11 +59,13 @@
                             }
                         @endphp
                         
-                        <img src="{{ $avatarUrl }}" 
+                        <a href="{{route('profil-user')}}">
+                            <img src="{{ $avatarUrl }}" 
                              alt="{{ Auth::user()->name }}" 
                              class="w-8 h-8 rounded-full object-cover border-2 border-white/50 hover:border-accent transition-colors"
                              onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=2D4F2B&color=ffffff&size=64&bold=true'">
                         <span class="text-white">{{ Auth::user()->name }}</span>
+                        
                     </div>
                     <button onclick="showLogoutConfirmation()" class="px-4 py-2 border border-white rounded-lg hover:bg-white hover:text-primary transition-colors">
                         <i class="fas fa-sign-out-alt mr-2"></i> Keluar

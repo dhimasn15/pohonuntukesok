@@ -39,6 +39,16 @@ class Campaign extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function donations()
+    {
+        return $this->hasMany(Donation::class);
+    }
+
+    public function paidDonations()
+    {
+        return $this->hasMany(Donation::class)->where('status', 'paid');
+    }
+
     public function getProgressPercentageAttribute()
     {
         if ($this->target_trees == 0) return 0;

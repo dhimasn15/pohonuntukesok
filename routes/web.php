@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\UserProfilController;
+use App\Http\User;
 use App\Models\Campaign;
 
 // Authentication Routes
@@ -71,6 +73,9 @@ Route::get('/donasi', function () {
 Route::get('/blog', function () {
     return view('blog');
 })->name('blog');
+
+// routes/web.php
+Route::get('/profil-user', [UserProfilController::class, 'show'])->name('profil-user');
 
 // ==============================================
 
@@ -151,3 +156,16 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 Route::post('/ckeditor/upload', [UserBlogController::class, 'uploadImage'])
     ->name('ckeditor.upload')
     ->middleware('auth');
+// ============================================================================
+
+// Payment & Donation Routes
+Route::post('/donate', [\App\Http\Controllers\DonationController::class, 'createDonation'])->name('donate');
+Route::get('/my-donations', [\App\Http\Controllers\DonationController::class, 'myDonations'])->middleware('auth')->name('my.donations');
+Route::get('/donation/{donationId}', [\App\Http\Controllers\DonationController::class, 'getDonation'])->name('donation.show');
+Route::get('/donation/{donationId}/success', [\App\Http\Controllers\DonationController::class, 'showSuccess'])->name('donation.success');
+Route::get('/donation/{donationId}/status', [\App\Http\Controllers\DonationController::class, 'checkStatus'])->name('donation.status');
+Route::get('/campaign/{campaignId}/donations', [\App\Http\Controllers\DonationController::class, 'getCampaignDonations'])->name('campaign.donations');
+
+// Xendit Webhook (no CSRF required)
+Route::post('/xendit/webhook', [\App\Http\Controllers\XenditWebhookController::class, 'handle'])->withoutMiddleware('web');
+

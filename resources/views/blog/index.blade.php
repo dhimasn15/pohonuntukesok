@@ -21,7 +21,7 @@
         }
     </script>
     <style>
-       @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
         * {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -263,6 +263,25 @@
             background-size: 1000px 100%;
             animation: shimmer 2s infinite;
         }
+
+        /* New styles for create blog button */
+        .create-blog-btn {
+            background: linear-gradient(135deg, #FFAB00 0%, #FF9800 100%);
+            box-shadow: 0 4px 15px rgba(255, 171, 0, 0.3);
+            transition: all 0.3s ease;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .create-blog-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 171, 0, 0.4);
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            color: white;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 via-white to-green-50">
@@ -298,18 +317,25 @@
                     Temukan informasi terbaru, tips berkebun, dan cerita inspiratif untuk masa depan yang lebih hijau
                 </p>
 
-                <!-- Search Bar -->
-                <div class="max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-                    <form action="{{ route('blog.index') }}" method="GET" class="relative">
-                        <input type="text" 
-                               name="search"
-                               value="{{ request('search') }}"
-                               placeholder="Cari artikel tentang lingkungan..." 
-                               class="search-modern w-full px-6 py-5 rounded-2xl text-gray-800 placeholder-gray-500 focus:outline-none text-lg">
-                        <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-green-700 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
+                <!-- Search Bar and Create Blog Button -->
+                <div class="max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex flex-col md:flex-row gap-4 items-center justify-center">
+                        <div class="relative flex-1 max-w-2xl">
+                            <input type="text" 
+                                   placeholder="Cari artikel tentang lingkungan..." 
+                                   class="search-modern w-full px-6 py-5 rounded-2xl text-gray-800 placeholder-gray-500 focus:outline-none text-lg">
+                            <button class="absolute right-3 top-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-green-700 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Create Blog Button - FIXED -->
+                        <a href="http://localhost:8000/my-blog" 
+                           class="create-blog-btn px-8 py-5 rounded-2xl font-bold text-lg flex items-center space-x-3 whitespace-nowrap">
+                            <i class="fas fa-plus-circle text-xl"></i>
+                            <span>Buat Blog</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -393,7 +419,6 @@
                             </div>
                         </div>
 
-                        @if($posts->count() > 0)
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             @foreach($posts as $post)
                             <div class="card-modern bg-white rounded-2xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
@@ -425,54 +450,28 @@
                             </div>
                             @endforeach
                         </div>
-                        @else
-                        <div class="text-center py-12">
-                            <i class="fas fa-newspaper text-gray-300 text-5xl mb-4"></i>
-                            <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada artikel</h3>
-                            <p class="text-gray-500">Tidak ada artikel yang ditemukan untuk kriteria pencarian ini.</p>
-                        </div>
-                        @endif
                     </div>
-
-                    <!-- Pagination -->
-                    @if($posts->hasPages())
-                    <div class="flex justify-center" data-aos="fade-up">
-                        <div class="pagination-modern">
-                            @if($posts->onFirstPage())
-                                <span class="page-btn cursor-not-allowed opacity-50">
-                                    <i class="fas fa-chevron-left"></i>
-                                </span>
-                            @else
-                                <a href="{{ $posts->previousPageUrl() }}" class="page-btn">
-                                    <i class="fas fa-chevron-left"></i>
-                                </a>
-                            @endif
-
-                            @foreach(range(1, $posts->lastPage()) as $page)
-                                @if($page == $posts->currentPage())
-                                    <span class="page-btn active">{{ $page }}</span>
-                                @else
-                                    <a href="{{ $posts->url($page) }}" class="page-btn">{{ $page }}</a>
-                                @endif
-                            @endforeach
-
-                            @if($posts->hasMorePages())
-                                <a href="{{ $posts->nextPageUrl() }}" class="page-btn">
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
-                            @else
-                                <span class="page-btn cursor-not-allowed opacity-50">
-                                    <i class="fas fa-chevron-right"></i>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    @endif
                 </div>
 
                 <!-- Sidebar -->
                 <div class="lg:w-1/3">
                     <div class="sidebar-modern space-y-8">
+                        <!-- Create Blog Card - FIXED -->
+                        <div class="bg-gradient-to-br from-accent to-orange-500 rounded-2xl shadow-xl p-6 text-white" data-aos="fade-up">
+                            <div class="text-center mb-4">
+                                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-edit text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-2">Mulai Menulis</h3>
+                                <p class="text-white/90 text-sm mb-4">Bagikan pengetahuan dan pengalaman Anda tentang lingkungan</p>
+                            </div>
+                            <a href="http://localhost:8000/my-blog" 
+                               class="create-blog-btn w-full px-6 py-4 bg-white text-orange-600 rounded-xl font-bold hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>Buat Blog Baru</span>
+                            </a>
+                        </div>
+
                         <!-- Popular Posts -->
                         <div class="bg-white rounded-2xl shadow-lg p-6" data-aos="fade-up">
                             <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
@@ -521,15 +520,41 @@
                                 <h3 class="text-2xl font-bold mb-2">Newsletter</h3>
                                 <p class="text-white/90">Dapatkan artikel terbaru langsung ke email Anda</p>
                             </div>
-                            <form class="space-y-3">
+                            <div class="space-y-3">
                                 <input type="email" 
                                        placeholder="Email Anda" 
                                        class="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50">
-                                <button type="submit" class="w-full px-6 py-3 bg-white text-primary rounded-xl font-semibold hover:bg-gray-100 transition-all">
+                                <button class="w-full px-6 py-3 bg-white text-primary rounded-xl font-semibold hover:bg-gray-100 transition-all">
                                     <i class="fas fa-paper-plane mr-2"></i>
                                     Berlangganan
                                 </button>
-                            </form>
+                            </div>
+                        </div>
+
+                        <!-- Social Media -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6" data-aos="fade-up" data-aos-delay="300">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <i class="fas fa-share-alt text-primary mr-3"></i>
+                                Ikuti Kami
+                            </h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <a href="#" class="flex items-center justify-center space-x-2 bg-blue-600 text-white px-4 py-3 rounded-xl hover:bg-blue-700 transition-all">
+                                    <i class="fab fa-facebook-f"></i>
+                                    <span class="font-semibold">Facebook</span>
+                                </a>
+                                <a href="#" class="flex items-center justify-center space-x-2 bg-sky-500 text-white px-4 py-3 rounded-xl hover:bg-sky-600 transition-all">
+                                    <i class="fab fa-twitter"></i>
+                                    <span class="font-semibold">Twitter</span>
+                                </a>
+                                <a href="#" class="flex items-center justify-center space-x-2 bg-pink-600 text-white px-4 py-3 rounded-xl hover:bg-pink-700 transition-all">
+                                    <i class="fab fa-instagram"></i>
+                                    <span class="font-semibold">Instagram</span>
+                                </a>
+                                <a href="#" class="flex items-center justify-center space-x-2 bg-red-600 text-white px-4 py-3 rounded-xl hover:bg-red-700 transition-all">
+                                    <i class="fab fa-youtube"></i>
+                                    <span class="font-semibold">YouTube</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -549,187 +574,187 @@
         });
 
         // Mobile Menu Functionality
-    const burgerButton = document.getElementById('burger-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileDropdownBtn = document.getElementById('mobile-dropdown-btn');
-    const mobileDropdownMenu = document.getElementById('mobile-dropdown-menu');
+        const burgerButton = document.getElementById('burger-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileDropdownBtn = document.getElementById('mobile-dropdown-btn');
+        const mobileDropdownMenu = document.getElementById('mobile-dropdown-menu');
 
-    // Toggle mobile menu
-    function toggleMobileMenu() {
-        const isActive = mobileMenu.classList.contains('active');
-        
-        // Toggle menu visibility
-        mobileMenu.classList.toggle('active');
-        burgerButton.classList.toggle('active');
-        
-        // Toggle body overflow
-        document.body.style.overflow = isActive ? '' : 'hidden';
-        
-        // Reset dropdown menu when closing main menu
-        if (!mobileMenu.classList.contains('active')) {
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const isActive = mobileMenu.classList.contains('active');
+            
+            // Toggle menu visibility
+            mobileMenu.classList.toggle('active');
+            burgerButton.classList.toggle('active');
+            
+            // Toggle body overflow
+            document.body.style.overflow = isActive ? '' : 'hidden';
+            
+            // Reset dropdown menu when closing main menu
+            if (!mobileMenu.classList.contains('active')) {
+                mobileDropdownMenu.classList.remove('show');
+                const icon = mobileDropdownBtn.querySelector('i.fa-chevron-down');
+                icon.style.transform = '';
+            }
+        }
+
+        // Toggle mobile dropdown menu
+        function toggleMobileDropdown() {
+            mobileDropdownMenu.classList.toggle('show');
+            const icon = mobileDropdownBtn.querySelector('i.fa-chevron-down');
+            
+            if (mobileDropdownMenu.classList.contains('show')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = '';
+            }
+        }
+
+        // Close mobile menu
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            burgerButton.classList.remove('active');
             mobileDropdownMenu.classList.remove('show');
+            document.body.style.overflow = '';
+            
+            // Reset dropdown icon
             const icon = mobileDropdownBtn.querySelector('i.fa-chevron-down');
             icon.style.transform = '';
+            
+            // Reset burger animation
+            const spans = burgerButton.getElementsByTagName('span');
+            spans[0].style.transform = '';
+            spans[1].style.opacity = '';
+            spans[2].style.transform = '';
         }
-    }
 
-    // Toggle mobile dropdown menu
-    function toggleMobileDropdown() {
-        mobileDropdownMenu.classList.toggle('show');
-        const icon = mobileDropdownBtn.querySelector('i.fa-chevron-down');
-        
-        if (mobileDropdownMenu.classList.contains('show')) {
-            icon.style.transform = 'rotate(180deg)';
-        } else {
-            icon.style.transform = '';
+        // Event Listeners
+        if (burgerButton) {
+            burgerButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMobileMenu();
+            });
         }
-    }
 
-    // Close mobile menu
-    function closeMobileMenu() {
-        mobileMenu.classList.remove('active');
-        burgerButton.classList.remove('active');
-        mobileDropdownMenu.classList.remove('show');
-        document.body.style.overflow = '';
-        
-        // Reset dropdown icon
-        const icon = mobileDropdownBtn.querySelector('i.fa-chevron-down');
-        icon.style.transform = '';
-        
-        // Reset burger animation
-        const spans = burgerButton.getElementsByTagName('span');
-        spans[0].style.transform = '';
-        spans[1].style.opacity = '';
-        spans[2].style.transform = '';
-    }
+        if (mobileDropdownBtn) {
+            mobileDropdownBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMobileDropdown();
+            });
+        }
 
-    // Event Listeners
-    if (burgerButton) {
-        burgerButton.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleMobileMenu();
+        // Close mobile menu when clicking on a link
+        const mobileLinks = document.querySelectorAll('#mobile-menu a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
         });
-    }
 
-    if (mobileDropdownBtn) {
-        mobileDropdownBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleMobileDropdown();
+        // Close menu when clicking anywhere
+        document.addEventListener('click', function(e) {
+            if (mobileMenu.classList.contains('active')) {
+                // Only prevent closing if clicking the burger button itself
+                if (burgerButton.contains(e.target)) {
+                    return;
+                }
+                closeMobileMenu();
+            }
         });
-    }
 
-    // Close mobile menu when clicking on a link
-    const mobileLinks = document.querySelectorAll('#mobile-menu a');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            closeMobileMenu();
+        // Close mobile menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
         });
-    });
 
-    // Close menu when clicking anywhere
-            document.addEventListener('click', function(e) {
-                if (mobileMenu.classList.contains('active')) {
-                    // Only prevent closing if clicking the burger button itself
-                    if (burgerButton.contains(e.target)) {
-                        return;
-                    }
-                    closeMobileMenu();
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
+        });
 
-    // Close mobile menu on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-            closeMobileMenu();
-        }
-    });
+        // Navbar scroll effect
+        let lastScroll = 0;
+        const navbar = document.getElementById('main-nav');
 
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll <= 0) {
+                navbar.classList.remove('shadow-lg');
+            } else {
+                navbar.classList.add('shadow-lg');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Search functionality placeholder
+        const searchInputs = document.querySelectorAll('input[type="text"]');
+        searchInputs.forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    console.log('Searching for:', input.value);
+                    // Add your search functionality here
+                }
+            });
+        });
+
+        // Add loading states for buttons
+        document.querySelectorAll('button, a').forEach(element => {
+            element.addEventListener('click', function(e) {
+                if (this.classList.contains('shimmer-btn') || this.classList.contains('ripple-btn')) {
+                    // Add loading animation
+                    const originalContent = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalContent;
+                    }, 2000);
+                }
+            });
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                closeMobileMenu();
             }
         });
-    });
 
-    // Navbar scroll effect
-    let lastScroll = 0;
-    const navbar = document.getElementById('main-nav');
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
 
-        if (currentScroll <= 0) {
-            navbar.classList.remove('shadow-lg');
-        } else {
-            navbar.classList.add('shadow-lg');
-        }
-
-        lastScroll = currentScroll;
-    });
-
-    // Search functionality placeholder
-    const searchInputs = document.querySelectorAll('input[type="text"]');
-    searchInputs.forEach(input => {
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                console.log('Searching for:', input.value);
-                // Add your search functionality here
-            }
+        // Observe elements for scroll animations
+        document.querySelectorAll('.card-modern').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
         });
-    });
-
-    // Add loading states for buttons
-    document.querySelectorAll('button, a').forEach(element => {
-        element.addEventListener('click', function(e) {
-            if (this.classList.contains('shimmer-btn') || this.classList.contains('ripple-btn')) {
-                // Add loading animation
-                const originalContent = this.innerHTML;
-                this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
-                
-                setTimeout(() => {
-                    this.innerHTML = originalContent;
-                }, 2000);
-            }
-        });
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 1024) {
-            closeMobileMenu();
-        }
-    });
-
-    // Add intersection observer for animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Observe elements for scroll animations
-    document.querySelectorAll('.card-modern').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(card);
-    });
     </script>
 </body>
 </html>

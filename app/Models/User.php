@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany; // Tambahkan ini
+use Illuminate\Database\Eloquent\Relations\HasOne; // Tambahkan ini
 
 class User extends Authenticatable
 {
@@ -17,30 +18,28 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-        protected $fillable = [
+    protected $fillable = [
         'name',
         'email',
         'password',
-            'google_id',
-            'avatar',
-            'role',
-            'is_active',
+        'google_id',
+        'avatar',
+        'role',
+        'is_active',
     ];
-
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>
      */
-     protected $hidden = [
+    protected $hidden = [
         'password',
         'remember_token',
     ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        
     ];
 
     /**
@@ -55,7 +54,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-     public function isAdmin()
+
+    /**
+     * Get the posts for the user.
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+    
+    public function isAdmin()
     {
         return $this->role === 'admin';
     }
@@ -69,9 +77,10 @@ class User extends Authenticatable
     {
         return $this->is_active;
     }
-     // Relationship dengan Farmer
-    public function farmer()
+
+    // Relationship dengan Farmer
+    public function farmer(): HasOne
     {
         return $this->hasOne(Farmer::class);
     }
-}
+}   

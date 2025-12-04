@@ -158,6 +158,10 @@
                         <i class="fas fa-blog mr-3"></i>
                         Kelola Blog
                     </a>
+                    <a href="{{ route('admin.relawan') }}" class="flex items-center px-4 py-3 bg-primary text-white rounded-lg">
+                        <i class="fas fa-hands-helping mr-3"></i>
+                        Kelola Relawan
+                    </a>
                 </div>
             </nav>
         </div>

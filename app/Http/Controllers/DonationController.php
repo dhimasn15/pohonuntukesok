@@ -70,10 +70,14 @@ class DonationController extends Controller
             // Create Xendit service and invoice
             $xenditService = new XenditService();
             
+            // Build success URL
+            $successUrl = route('donation.success-check');
+            
             $invoice = $xenditService->createInvoice(
                 $externalId,
                 (int) $request->amount,
-                "Donasi untuk kampanye: {$campaign->title}"
+                "Donasi untuk kampanye: {$campaign->title}",
+                $successUrl
             );
 
             \Log::info('Xendit invoice created', [
@@ -192,5 +196,79 @@ class DonationController extends Controller
                 'campaign_id' => $donation->campaign_id,
             ],
         ]);
+    }
+
+    /**
+     * Handle donation success callback from payment gateway
+     */
+    public function handleSuccess($donationId)
+    {
+        try {
+            $donation = Donation::findOrFail($donationId);
+
+            // Check if donation is paid
+            if ($donation->status === 'paid') {
+                // Set success message in session
+                session()->flash('success', "✓ Donasi Berhasil! Terima kasih telah mendonasikan {$donation->trees_count} pohon untuk kampanye '{$donation->campaign->title}'");
+                session()->flash('donation_id', $donation->id);
+                session()->flash('campaign_id', $donation->campaign_id);
+
+                return redirect()->route('home');
+            }
+
+            // If not paid, redirect to donation details
+            return redirect()->route('donation.success', $donation->id);
+
+        } catch (\Exception $e) {
+            \Log::error('Donation Success Handler Error: ' . $e->getMessage());
+            return redirect()->route('home')->with('error', 'Terjadi kesalahan saat memproses donasi');
+        }
+    }
+
+    /**
+     * Handle success redirect from Xendit payment page
+     * This endpoint is called by Xendit after successful payment
+     */
+    public function successCheck(Request $request)
+    {
+        try {
+            // Xendit may pass external_id as query parameter
+            // Try to find donation by external_id if provided
+            $externalId = $request->query('external_id');
+            $donation = null;
+
+            if ($externalId) {
+                $donation = Donation::where('external_id', $externalId)->first();
+            }
+
+            // If not found by external_id, get the most recent paid donation
+            if (!$donation) {
+                $donation = Donation::where('status', 'paid')
+                    ->orderBy('updated_at', 'desc')
+                    ->first();
+            }
+
+            if ($donation) {
+                // Set success message
+                session()->flash('success', "✓ Donasi Berhasil! Terima kasih telah mendonasikan {$donation->trees_count} pohon untuk kampanye '{$donation->campaign->title}'");
+                session()->flash('donation_id', $donation->id);
+                session()->flash('campaign_id', $donation->campaign_id);
+
+                \Log::info('Donation success check - redirecting to home', [
+                    'donation_id' => $donation->id,
+                    'external_id' => $donation->external_id,
+                ]);
+
+                return redirect()->route('home');
+            }
+
+            // Fallback if no recent paid donation found
+            \Log::warning('No paid donation found in successCheck');
+            return redirect()->route('home')->with('info', 'Pembayaran sedang diproses. Mohon tunggu...');
+
+        } catch (\Exception $e) {
+            \Log::error('Donation Success Check Error: ' . $e->getMessage());
+            return redirect()->route('home')->with('error', 'Terjadi kesalahan saat memproses pembayaran');
+        }
     }
 }

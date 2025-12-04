@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API Endpoints</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .section { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
+        button { padding: 8px 16px; margin: 5px; cursor: pointer; }
+        pre { background: #f0f0f0; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Test Location API Endpoints</h1>
+    
+    <div class="section">
+        <h3>1. Test Provinces Endpoint</h3>
+        <button onclick="testProvinces()">Test /api/provinces</button>
+        <pre id="provinces-output"></pre>
+    </div>
+
+    <div class="section">
+        <h3>2. Test Regencies Endpoint</h3>
+        <button onclick="testRegencies()">Test /api/regencies/11</button>
+        <pre id="regencies-output"></pre>
+    </div>
+
+    <div class="section">
+        <h3>3. Test Districts Endpoint</h3>
+        <button onclick="testDistricts()">Test /api/districts/1101</button>
+        <pre id="districts-output"></pre>
+    </div>
+
+    <div class="section">
+        <h3>4. Test Villages Endpoint</h3>
+        <button onclick="testVillages()">Test /api/villages?district_id=1101010</button>
+        <pre id="villages-output"></pre>
+    </div>
+
+    <script>
+        async function testProvinces() {
+            try {
+                const response = await fetch('/api/provinces');
+                const data = await response.json();
+                document.getElementById('provinces-output').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('provinces-output').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        async function testRegencies() {
+            try {
+                const response = await fetch('/api/regencies/11');
+                const data = await response.json();
+                document.getElementById('regencies-output').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('regencies-output').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        async function testDistricts() {
+            try {
+                const response = await fetch('/api/districts/1101');
+                const data = await response.json();
+                document.getElementById('districts-output').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('districts-output').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        async function testVillages() {
+            try {
+                const response = await fetch('/api/villages?district_id=1101010');
+                const data = await response.json();
+                document.getElementById('villages-output').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('villages-output').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        window.onload = function() {
+            console.log('Page loaded. Click buttons to test API endpoints.');
+        }
+    </script>
+</body>
+</html>

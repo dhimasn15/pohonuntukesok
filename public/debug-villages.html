@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Villages Debug Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fafafa;
+        }
+        .test-section h2 {
+            margin-top: 0;
+            color: #666;
+        }
+        .button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .button:hover {
+            background: #45a049;
+        }
+        .button.secondary {
+            background: #2196F3;
+        }
+        .button.secondary:hover {
+            background: #0b7dda;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-left: 4px solid #2196F3;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .result.error {
+            border-left-color: #f44336;
+            color: #d32f2f;
+        }
+        .result.success {
+            border-left-color: #4CAF50;
+            color: #2e7d32;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 100%;
+            max-width: 300px;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status.loading {
+            background: #FFC107;
+            color: #333;
+        }
+        .status.success {
+            background: #4CAF50;
+            color: white;
+        }
+        .status.error {
+            background: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐛 API Villages Debug Test</h1>
+        
+        <div class="test-section">
+            <h2>1. Test Get Provinces</h2>
+            <button class="button" onclick="testGetProvinces()">Get Provinces</button>
+            <div id="provinces-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. Test Get Regencies</h2>
+            <div class="form-group">
+                <label for="province-input">Province ID (from provinces above):</label>
+                <input type="text" id="province-input" placeholder="e.g., 11" value="">
+            </div>
+            <button class="button" onclick="testGetRegencies()">Get Regencies</button>
+            <div id="regencies-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. Test Get Districts</h2>
+            <div class="form-group">
+                <label for="regency-input">Regency ID (from regencies above):</label>
+                <input type="text" id="regency-input" placeholder="e.g., 1101" value="">
+            </div>
+            <button class="button" onclick="testGetDistricts()">Get Districts</button>
+            <div id="districts-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>4. Test Get Villages (THE CRITICAL ONE)</h2>
+            <div class="form-group">
+                <label for="district-input">District ID (from districts above):</label>
+                <input type="text" id="district-input" placeholder="e.g., 1101010" value="1101010">
+            </div>
+            <button class="button secondary" onclick="testGetVillages()">Get Villages</button>
+            <div id="villages-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>5. Network Debug</h2>
+            <p>Open Browser DevTools (F12) → Network tab to see actual requests</p>
+            <button class="button secondary" onclick="testDirectFetch()">Direct Fetch Test</button>
+            <div id="fetch-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>6. Manual Form Test</h2>
+            <p>Test the actual form dropdowns behavior:</p>
+            <div class="form-group">
+                <label for="manual-province">Province:</label>
+                <select id="manual-province" onchange="onProvinceChange()">
+                    <option value="">-- Loading... --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="manual-regency">Regency:</label>
+                <select id="manual-regency" onchange="onRegencyChange()" disabled>
+                    <option value="">-- Select Province First --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="manual-district">District:</label>
+                <select id="manual-district" onchange="onDistrictChange()" disabled>
+                    <option value="">-- Select Regency First --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="manual-village">Village:</label>
+                <select id="manual-village" disabled>
+                    <option value="">-- Select District First --</option>
+                </select>
+            </div>
+            <div id="manual-debug"></div>
+        </div>
+    </div>
+
+    <script>
+        // Helper to display results
+        function displayResult(elementId, data, isError = false) {
+            const element = document.getElementById(elementId);
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'result ' + (isError ? 'error' : 'success');
+            
+            if (typeof data === 'object') {
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+            } else {
+                resultDiv.textContent = data;
+            }
+            
+            element.innerHTML = '';
+            element.appendChild(resultDiv);
+        }
+
+        // Test 1: Get Provinces
+        async function testGetProvinces() {
+            const resultEl = document.getElementById('provinces-result');
+            resultEl.innerHTML = '<div class="status loading">Loading...</div>';
+            
+            try {
+                const response = await fetch('/api/provinces');
+                console.log('Provinces Response Status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('Provinces Data:', data);
+                
+                displayResult('provinces-result', {
+                    status: 'OK',
+                    count: data.length,
+                    sample: data.slice(0, 3)
+                });
+            } catch (error) {
+                console.error('Error fetching provinces:', error);
+                displayResult('provinces-result', error.message, true);
+            }
+        }
+
+        // Test 2: Get Regencies
+        async function testGetRegencies() {
+            const provinceId = document.getElementById('province-input').value;
+            
+            if (!provinceId) {
+                displayResult('regencies-result', 'Please enter Province ID first', true);
+                return;
+            }
+            
+            const resultEl = document.getElementById('regencies-result');
+            resultEl.innerHTML = '<div class="status loading">Loading...</div>';
+            
+            try {
+                const response = await fetch(`/api/regencies/${provinceId}`);
+                console.log(`Regencies (${provinceId}) Response Status:`, response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('Regencies Data:', data);
+                
+                displayResult('regencies-result', {
+                    status: 'OK',
+                    provinceId: provinceId,
+                    count: data.length,
+                    sample: data.slice(0, 3)
+                });
+            } catch (error) {
+                console.error('Error fetching regencies:', error);
+                displayResult('regencies-result', error.message, true);
+            }
+        }
+
+        // Test 3: Get Districts
+        async function testGetDistricts() {
+            const regencyId = document.getElementById('regency-input').value;
+            
+            if (!regencyId) {
+                displayResult('districts-result', 'Please enter Regency ID first', true);
+                return;
+            }
+            
+            const resultEl = document.getElementById('districts-result');
+            resultEl.innerHTML = '<div class="status loading">Loading...</div>';
+            
+            try {
+                const response = await fetch(`/api/districts/${regencyId}`);
+                console.log(`Districts (${regencyId}) Response Status:`, response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('Districts Data:', data);
+                
+                displayResult('districts-result', {
+                    status: 'OK',
+                    regencyId: regencyId,
+                    count: data.length,
+                    sample: data.slice(0, 3)
+                });
+            } catch (error) {
+                console.error('Error fetching districts:', error);
+                displayResult('districts-result', error.message, true);
+            }
+        }
+
+        // Test 4: Get Villages (THE IMPORTANT ONE)
+        async function testGetVillages() {
+            const districtId = document.getElementById('district-input').value;
+            
+            if (!districtId) {
+                displayResult('villages-result', 'Please enter District ID first', true);
+                return;
+            }
+            
+            const resultEl = document.getElementById('villages-result');
+            resultEl.innerHTML = '<div class="status loading">Loading...</div>';
+            
+            try {
+                const url = `/api/villages?district_id=${districtId}`;
+                console.log('Fetching villages from:', url);
+                
+                const response = await fetch(url);
+                console.log(`Villages (${districtId}) Response Status:`, response.status);
+                console.log('Response Headers:', {
+                    'Content-Type': response.headers.get('content-type'),
+                    'Content-Length': response.headers.get('content-length')
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('Villages Data:', data);
+                
+                displayResult('villages-result', {
+                    status: 'OK',
+                    districtId: districtId,
+                    count: data.length,
+                    data: data
+                });
+            } catch (error) {
+                console.error('Error fetching villages:', error);
+                displayResult('villages-result', {
+                    error: error.message,
+                    url: `/api/villages?district_id=${districtId}`
+                }, true);
+            }
+        }
+
+        // Test 5: Direct Fetch
+        async function testDirectFetch() {
+            const resultEl = document.getElementById('fetch-result');
+            resultEl.innerHTML = '<div class="status loading">Testing...</div>';
+            
+            try {
+                const promises = [
+                    fetch('/api/villages?district_id=1101010').then(r => ({name: 'villages', status: r.status, ok: r.ok})),
+                    fetch('/api/provinces').then(r => ({name: 'provinces', status: r.status, ok: r.ok})),
+                ];
+                
+                const results = await Promise.all(promises);
+                displayResult('fetch-result', results);
+            } catch (error) {
+                displayResult('fetch-result', error.message, true);
+            }
+        }
+
+        // Manual Form Tests
+        async function loadProvinces() {
+            try {
+                const response = await fetch('/api/provinces');
+                const data = await response.json();
+                
+                const select = document.getElementById('manual-province');
+                select.innerHTML = '<option value="">-- Select Province --</option>';
+                
+                data.forEach(province => {
+                    const option = document.createElement('option');
+                    option.value = province.id;
+                    option.textContent = province.name;
+                    select.appendChild(option);
+                });
+                
+                logDebug('Loaded ' + data.length + ' provinces');
+            } catch (error) {
+                logDebug('Error loading provinces: ' + error.message, true);
+            }
+        }
+
+        async function onProvinceChange() {
+            const provinceId = document.getElementById('manual-province').value;
+            const regencySelect = document.getElementById('manual-regency');
+            
+            if (!provinceId) {
+                regencySelect.disabled = true;
+                regencySelect.innerHTML = '<option value="">-- Select Province First --</option>';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/regencies/${provinceId}`);
+                const data = await response.json();
+                
+                regencySelect.innerHTML = '<option value="">-- Select Regency --</option>';
+                data.forEach(regency => {
+                    const option = document.createElement('option');
+                    option.value = regency.id;
+                    option.textContent = regency.name;
+                    regencySelect.appendChild(option);
+                });
+                
+                regencySelect.disabled = false;
+                logDebug('Loaded ' + data.length + ' regencies for province ' + provinceId);
+            } catch (error) {
+                logDebug('Error loading regencies: ' + error.message, true);
+            }
+        }
+
+        async function onRegencyChange() {
+            const regencyId = document.getElementById('manual-regency').value;
+            const districtSelect = document.getElementById('manual-district');
+            
+            if (!regencyId) {
+                districtSelect.disabled = true;
+                districtSelect.innerHTML = '<option value="">-- Select Regency First --</option>';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/districts/${regencyId}`);
+                const data = await response.json();
+                
+                districtSelect.innerHTML = '<option value="">-- Select District --</option>';
+                data.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.id;
+                    option.textContent = district.name;
+                    districtSelect.appendChild(option);
+                });
+                
+                districtSelect.disabled = false;
+                logDebug('Loaded ' + data.length + ' districts for regency ' + regencyId);
+            } catch (error) {
+                logDebug('Error loading districts: ' + error.message, true);
+            }
+        }
+
+        async function onDistrictChange() {
+            const districtId = document.getElementById('manual-district').value;
+            const villageSelect = document.getElementById('manual-village');
+            
+            if (!districtId) {
+                villageSelect.disabled = true;
+                villageSelect.innerHTML = '<option value="">-- Select District First --</option>';
+                return;
+            }
+            
+            logDebug('Loading villages for district ' + districtId + '...');
+            
+            try {
+                const url = `/api/villages?district_id=${districtId}`;
+                console.log('Fetching from:', url);
+                
+                const response = await fetch(url);
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Villages response:', data);
+                
+                villageSelect.innerHTML = '<option value="">-- Select Village --</option>';
+                
+                if (Array.isArray(data) && data.length > 0) {
+                    data.forEach(village => {
+                        const option = document.createElement('option');
+                        option.value = village.id;
+                        option.textContent = village.name;
+                        villageSelect.appendChild(option);
+                    });
+                    villageSelect.disabled = false;
+                    logDebug('✅ Loaded ' + data.length + ' villages for district ' + districtId);
+                } else {
+                    logDebug('⚠️ No villages found for district ' + districtId, true);
+                    villageSelect.disabled = true;
+                }
+            } catch (error) {
+                logDebug('❌ Error loading villages: ' + error.message, true);
+                villageSelect.disabled = true;
+            }
+        }
+
+        function logDebug(message, isError = false) {
+            const debugDiv = document.getElementById('manual-debug');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'result ' + (isError ? 'error' : 'success');
+            logEntry.textContent = message;
+            debugDiv.insertBefore(logEntry, debugDiv.firstChild);
+        }
+
+        // Load provinces on page load
+        window.addEventListener('DOMContentLoaded', loadProvinces);
+    </script>
+</body>
+</html>

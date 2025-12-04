@@ -1,0 +1,148 @@
+/* Global Responsive Fix */
+
+/* Prevent horizontal scroll on all devices */
+html {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Ensure all containers respect viewport width */
+.container {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Fix for absolute positioned elements that overflow */
+main {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Fix for sections */
+section {
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+/* Ensure fixed elements don't overflow */
+nav, .navbar, header {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Fix modal elements */
+.modal, .modal-overlay, [role="dialog"] {
+    max-width: 100%;
+}
+
+/* Responsive adjustments for touch devices */
+@media (max-width: 768px) {
+    /* Hide decorative shapes on mobile */
+    .shape,
+    .floating-shapes .shape,
+    .organic-shape {
+        display: none !important;
+    }
+    
+    /* Reduce padding on mobile for better space usage */
+    .px-6 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* Ensure cards don't overflow */
+    .card, .card-modern, .card-hover {
+        max-width: 100%;
+    }
+    
+    /* Fix alerts on mobile */
+    .alert {
+        left: 10px !important;
+        right: 10px !important;
+        max-width: calc(100% - 20px) !important;
+    }
+    
+    /* Ensure forms are responsive */
+    input, select, textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Fix horizontal scroll in tables */
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    table thead {
+        display: block;
+    }
+    
+    table tbody {
+        display: block;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    /* Tighten spacing on very small screens */
+    * {
+        max-width: 100%;
+    }
+    
+    /* Ensure no element breaks out of viewport */
+    html, body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Reduce side padding for better content visibility */
+    .px-4 {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    .px-6 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* Prevent text selection on accidentally long content */
+body {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fix webkit scrollbar overflow */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(45, 79, 43, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(45, 79, 43, 0.5);
+}

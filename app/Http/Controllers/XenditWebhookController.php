@@ -34,21 +34,24 @@ class XenditWebhookController extends Controller
                 // Update donation status based on payment status
                 if ($status === 'PAID') {
                     DB::transaction(function () use ($donation, $data) {
-                        $donation->update([
-                            'status' => 'paid',
-                            'paid_at' => now(),
-                        ]);
+                        // Mark donation as paid and create farmer plant order
+                        $donation->markAsPaid();
 
-                        // Update campaign current trees count
-                        $campaign = $donation->campaign;
-                        $campaign->increment('current_trees', $donation->trees_count);
-
-                        Log::info('Donation marked as paid', [
+                        Log::info('Donation marked as paid and order created', [
                             'donation_id' => $donation->id,
-                            'campaign_id' => $campaign->id,
+                            'campaign_id' => $donation->campaign_id,
                             'trees_count' => $donation->trees_count,
                         ]);
                     });
+
+                    // Store success message in cache for redirect
+                    \Cache::put('donation_success_' . $donation->id, [
+                        'campaign_title' => $donation->campaign->title,
+                        'trees_count' => $donation->trees_count,
+                        'amount' => $donation->amount,
+                        'timestamp' => now(),
+                    ], now()->addMinutes(5));
+
                 } elseif ($status === 'EXPIRED') {
                     $donation->update(['status' => 'expired']);
                     Log::info('Donation expired', ['donation_id' => $donation->id]);

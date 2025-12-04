@@ -26,7 +26,9 @@ class Campaign extends Model
         'status',
         'current_trees',
         'total_donors',
-        'user_id'
+        'user_id',
+        'farmer_plant_id',
+        'trees_from_farmer'
     ];
 
     protected $casts = [
@@ -49,10 +51,28 @@ class Campaign extends Model
         return $this->hasMany(Donation::class)->where('status', 'paid');
     }
 
+    public function farmerPlant()
+    {
+        return $this->belongsTo(FarmerPlant::class, 'farmer_plant_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(FarmerPlantOrder::class);
+    }
+
     public function getProgressPercentageAttribute()
     {
-        if ($this->target_trees == 0) return 0;
-        return round(($this->current_trees / $this->target_trees) * 100);
+        if (empty($this->target_trees) || $this->target_trees <= 0) {
+            return 0;
+        }
+
+        $percentage = round(($this->current_trees / $this->target_trees) * 100);
+
+        // Clamp to 0-100 to avoid negative or overflow values
+        $percentage = (int) max(0, min(100, $percentage));
+
+        return $percentage;
     }
 
     public function getDaysLeftAttribute()

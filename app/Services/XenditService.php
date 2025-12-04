@@ -45,10 +45,11 @@ class XenditService
      * @param string $externalId - External ID untuk referensi
      * @param int $amount - Amount dalam Rupiah
      * @param string $description - Deskripsi invoice
+     * @param string $successUrl - URL untuk redirect setelah pembayaran sukses
      * @return array - Invoice details
      * @throws \Exception
      */
-    public function createInvoice($externalId, $amount, $description = "Invoice")
+    public function createInvoice($externalId, $amount, $description = "Invoice", $successUrl = null)
     {
         try {
             // Validate inputs
@@ -68,12 +69,19 @@ class XenditService
                 'description' => $description,
             ]);
 
+            // Generate redirect URLs if not provided
+            if (empty($successUrl)) {
+                $successUrl = url('/donation-success-check');
+            }
+
             // Create invoice request object
             $createInvoiceRequest = new CreateInvoiceRequest([
                 'external_id' => $externalId,
                 'amount' => $amount,
                 'description' => $description,
                 'invoice_duration' => 86400, // 24 hours
+                'success_redirect_url' => $successUrl,
+                'failure_redirect_url' => url('/'),
             ]);
 
             // Call API

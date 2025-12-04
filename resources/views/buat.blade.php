@@ -243,33 +243,60 @@
         
         .form-input {
             width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.75rem;
-            transition: all 0.3s ease;
-            background-color: white;
+            padding: 0.85rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.625rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #ffffff;
             font-size: 0.95rem;
+            font-family: inherit;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-input:hover {
+            border-color: #d1d5db;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
         }
         
         .form-input:focus {
             outline: none;
             border-color: #81C784;
-            box-shadow: 0 0 0 3px rgba(129, 199, 132, 0.2);
-            transform: translateY(-2px);
+            box-shadow: 0 0 0 4px rgba(129, 199, 132, 0.15), 0 2px 8px 0 rgba(129, 199, 132, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        /* Enhanced Dropdown Styling */
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.85rem center;
+            background-size: 1.25rem;
+            padding-right: 2.75rem;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .form-select:focus {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232D4F2B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        }
+        
+        .form-select:disabled {
+            background-color: #f3f4f6;
+            border-color: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .form-select:disabled:hover {
+            border-color: #e5e7eb;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
         }
         
         .form-textarea {
             min-height: 120px;
             resize: vertical;
-        }
-        
-        .form-select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1rem;
-            padding-right: 2.5rem;
         }
         
         .file-upload {
@@ -489,6 +516,44 @@
             display: block;
         }
 
+        /* Enhanced Loading State */
+        .form-select.loading {
+            border-color: #3b82f6;
+            background-color: #f0f9ff;
+            opacity: 0.85;
+            position: relative;
+        }
+        
+        .form-select.loading::after {
+            content: '';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            margin-top: -8px;
+            border: 2px solid #3b82f6;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Enhanced Error State */
+        .form-select.error {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+            color: #dc2626;
+        }
+        
+        .form-select.error:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+        }
+
         /* Category Badge */
         .category-badge {
             background: linear-gradient(135deg, #2D4F2B 0%, #3d6b3a 100%);
@@ -541,29 +606,220 @@
         }
 
         /* Error styling */
-.field-error {
-    color: #ef4444;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-}
+        .field-error {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
 
-.form-input.error {
-    border-color: #ef4444;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-}
+        .form-input.error {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
 
-/* Tombol styling */
-#submit-btn {
-    display: none;
-}
+        /* Tombol styling */
+        #submit-btn {
+            display: none;
+        }
 
-#submit-btn[style*="inline-flex"] {
-    display: inline-flex !important;
-}
+        #submit-btn[style*="inline-flex"] {
+            display: inline-flex !important;
+        }
 
-#next-btn[style*="none"] {
-    display: none !important;
-}
+        #next-btn[style*="none"] {
+            display: none !important;
+        }
+
+        /* Style untuk dropdown loading dan error states */
+        select.loading {
+            background-color: #f9fafb;
+            border-color: #d1d5db;
+            color: #6b7280;
+        }
+
+        select.error {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+
+        /* Style untuk dropdown bertingkat */
+        .location-dropdowns {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.875rem;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            
+        }
+        
+        .location-dropdowns:hover {
+            border-color: #d1d5db;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .location-dropdowns > div {
+            margin-bottom: 1.125rem;
+        }
+
+        .location-dropdowns > div:last-child {
+            margin-bottom: 0;
+        }
+        
+        .location-dropdowns label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.6rem;
+            color: #374151;
+            letter-spacing: 0.3px;
+        }
+        
+        .location-dropdowns label::after {
+            content: '*';
+            color: #ef4444;
+            margin-left: 0.25rem;
+        }
+
+        /* Loading animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Enhanced Dropdown Styles */
+        .dropdown-container {
+            position: relative;
+            margin-bottom: 1.25rem;
+            
+        }
+        
+        .dropdown-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2D4F2B;
+            
+        }
+        
+        .dropdown-wrapper {
+            position: relative;
+        }
+        
+        .dropdown-indicator {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            transition: transform 0.3s ease;
+            color: #6b7280;
+             
+        }
+        
+        .form-select:focus + .dropdown-indicator {
+            color: #2D4F2B;
+            transform: translateY(-50%) rotate(180deg);
+            
+        }
+        
+        .dropdown-status {
+            position: absolute;
+            right: 2.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            
+        }
+        
+        .dropdown-status.loading {
+            animation: spin 1s linear infinite;
+            color: #3b82f6;
+        }
+        
+        .dropdown-status.error {
+            color: #ef4444;
+        }
+        
+        .dropdown-status.success {
+            color: #10b981;
+        }
+        
+        /* Dropdown Options Enhancement */
+        .form-select option {
+            padding: 0.75rem;
+            font-size: 0.95rem;
+        }
+        
+        .form-select option:first-child {
+            color: #9ca3af;
+        }
+        
+        .form-select option:not(:first-child) {
+            color: #374151;
+        }
+        
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            .location-dropdowns {
+                padding: 1rem;
+                border-radius: 0.75rem;
+                margin: -0.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .form-input,
+            .form-select {
+                padding: 0.75rem 0.875rem;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            .form-select {
+                background-position: right 0.75rem center;
+                padding-right: 2.5rem;
+            }
+            
+            .form-input:focus,
+            .form-select:focus {
+                transform: none; /* Disable transform on mobile */
+            }
+            
+            .location-dropdowns > div {
+                margin-bottom: 1rem;
+            }
+            
+            .location-dropdowns label {
+                font-size: 0.9rem;
+            }
+            
+            .dropdown-indicator {
+                right: 0.75rem;
+            }
+            
+            .dropdown-status {
+                right: 2.25rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .location-dropdowns {
+                padding: 0.875rem;
+            }
+            
+            .form-input,
+            .form-select {
+                padding: 0.7rem 0.75rem;
+                border-radius: 0.5rem;
+            }
+            
+            .location-dropdowns > div {
+                margin-bottom: 0.875rem;
+            }
+        }
+
+        .loading {
+            animation: pulse 2s infinite;
+        }
 
         @media (max-width: 768px) {
             .step-indicator {
@@ -597,6 +853,12 @@
                 width: 100%;
             }
         }
+
+        .fa-chevron-down{
+            display:none;
+        }
+
+    
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 via-white to-green-50 min-h-screen">
@@ -737,39 +999,94 @@
                                             <div class="form-help">Buat judul yang menarik dan jelas untuk kampanye Anda</div>
                                         </div>
                                         
-                                        <div class="form-group">
-                                            <label for="campaign-category" class="form-label required">Kategori</label>
-                                            <select id="campaign-category" name="category" class="form-input form-select" required>
-                                                <option value="">Pilih Kategori</option>
-                                                <option value="reboisasi" {{ old('category') == 'reboisasi' ? 'selected' : '' }}>Reboisasi</option>
-                                                <option value="mangrove" {{ old('category') == 'mangrove' ? 'selected' : '' }}>Penanaman Mangrove</option>
-                                                <option value="perkotaan" {{ old('category') == 'perkotaan' ? 'selected' : '' }}>Hijaukan Perkotaan</option>
-                                                <option value="edukasi" {{ old('category') == 'edukasi' ? 'selected' : '' }}>Edukasi Lingkungan</option>
-                                                <option value="lainnya" {{ old('category') == 'lainnya' ? 'selected' : '' }}>Lainnya</option>
-                                            </select>
+                                        <!-- Enhanced Category Dropdown -->
+                                        <div class="dropdown-container">
+                                            <label for="campaign-category" class="required">Kategori</label>
+                                            <div class="dropdown-wrapper">
+                                                <select id="campaign-category" name="category" class="form-input form-select" required>
+                                                    <option value="">Pilih Kategori Kampanye</option>
+                                                    <option value="reboisasi" {{ old('category') == 'reboisasi' ? 'selected' : '' }}>Reboisasi</option>
+                                                    <option value="mangrove" {{ old('category') == 'mangrove' ? 'selected' : '' }}>Penanaman Mangrove</option>
+                                                    <option value="perkotaan" {{ old('category') == 'perkotaan' ? 'selected' : '' }}>Hijaukan Perkotaan</option>
+                                                </select>
+                                                <div class="dropdown-indicator">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                            </div>
                                             <div class="error-message">Pilih kategori kampanye</div>
                                         </div>
                                         
+                                        <!-- Enhanced Location Dropdowns -->
                                         <div class="form-group">
-                                            <label for="campaign-location" class="form-label required">Lokasi Penanaman</label>
-                                            <select id="campaign-location" name="location" class="form-input form-select" required>
-                                                <option value="">Pilih Lokasi Penanaman</option>
-                                                <option value="Jakarta" {{ old('location') == 'Jakarta' ? 'selected' : '' }}>Jakarta</option>
-                                                <option value="Bogor" {{ old('location') == 'Bogor' ? 'selected' : '' }}>Bogor</option>
-                                                <option value="Depok" {{ old('location') == 'Depok' ? 'selected' : '' }}>Depok</option>
-                                                <option value="Tangerang" {{ old('location') == 'Tangerang' ? 'selected' : '' }}>Tangerang</option>
-                                                <option value="Bekasi" {{ old('location') == 'Bekasi' ? 'selected' : '' }}>Bekasi</option>
-                                                <option value="Jawa Barat" {{ old('location') == 'Jawa Barat' ? 'selected' : '' }}>Jawa Barat (Luar Jabodetabek)</option>
-                                                <option value="Jawa Tengah" {{ old('location') == 'Jawa Tengah' ? 'selected' : '' }}>Jawa Tengah</option>
-                                                <option value="Jawa Timur" {{ old('location') == 'Jawa Timur' ? 'selected' : '' }}>Jawa Timur</option>
-                                                <option value="Bali" {{ old('location') == 'Bali' ? 'selected' : '' }}>Bali</option>
-                                                <option value="Sumatera" {{ old('location') == 'Sumatera' ? 'selected' : '' }}>Sumatera</option>
-                                                <option value="Kalimantan" {{ old('location') == 'Kalimantan' ? 'selected' : '' }}>Kalimantan</option>
-                                                <option value="Sulawesi" {{ old('location') == 'Sulawesi' ? 'selected' : '' }}>Sulawesi</option>
-                                                <option value="Papua" {{ old('location') == 'Papua' ? 'selected' : '' }}>Papua</option>
-                                                <option value="lainnya" {{ old('location') == 'lainnya' ? 'selected' : '' }}>Lainnya</option>
-                                            </select>
-                                            <div class="error-message">Lokasi penanaman harus dipilih</div>
+                                            <label class="form-label required">Lokasi Penanaman</label>
+                                            <div class="location-dropdowns">
+                                                <!-- Provinsi -->
+                                                <div class="dropdown-container">
+                                                    <label for="provinsi-select" class="dropdown-label">Provinsi</label>
+                                                    <div class="dropdown-wrapper">
+                                                        <select id="provinsi-select" name="province_id" class="form-input form-select" required>
+                                                            <option value="">Pilih Provinsi</option>
+                                                        </select>
+                                                        <div class="dropdown-indicator">
+                                                            <i class="drop fas fa-chevron-down"></i>
+                                                        </div>
+                                                        <div class="dropdown-status" id="province-status"></div>
+                                                    </div>
+                                                    <div class="error-message">Pilih provinsi</div>
+                                                </div>
+                                                
+                                                <!-- Kabupaten/Kota -->
+                                                <div class="dropdown-container">
+                                                    <label for="kabupaten-select" class="dropdown-label">Kabupaten/Kota</label>
+                                                    <div class="dropdown-wrapper">
+                                                        <select id="kabupaten-select" name="regency_id" class="form-input form-select" required disabled>
+                                                            <option value="">Pilih Kabupaten/Kota</option>
+                                                        </select>
+                                                        <div class="dropdown-indicator">
+                                                            <i class="fas fa-chevron-down"></i>
+                                                        </div>
+                                                        <div class="dropdown-status" id="regency-status"></div>
+                                                    </div>
+                                                    <div class="error-message">Pilih kabupaten/kota</div>
+                                                </div>
+                                                
+                                                <!-- Kecamatan -->
+                                                <div class="dropdown-container">
+                                                    <label for="kecamatan-select" class="dropdown-label">Kecamatan</label>
+                                                    <div class="dropdown-wrapper">
+                                                        <select id="kecamatan-select" name="district_id" class="form-input form-select" required disabled>
+                                                            <option value="">Pilih Kecamatan</option>
+                                                        </select>
+                                                        <div class="dropdown-indicator">
+                                                            <i class="fas fa-chevron-down"></i>
+                                                        </div>
+                                                        <div class="dropdown-status" id="district-status"></div>
+                                                    </div>
+                                                    <div class="error-message">Pilih kecamatan</div>
+                                                </div>
+                                                
+                                                <!-- Kelurahan -->
+                                                <div class="dropdown-container">
+                                                    <label for="kelurahan-select" class="dropdown-label">Kelurahan</label>
+                                                    <div class="dropdown-wrapper">
+                                                        <select id="kelurahan-select" name="village_id" class="form-input form-select" required disabled>
+                                                            <option value="">Pilih Kelurahan</option>
+                                                        </select>
+                                                        <div class="dropdown-indicator">
+                                                            <i class="fas fa-chevron-down"></i>
+                                                        </div>
+                                                        <div class="dropdown-status" id="village-status"></div>
+                                                    </div>
+                                                    <div class="error-message">Pilih kelurahan</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Input tersembunyi untuk menyimpan data lengkap -->
+                                            <input type="hidden" id="full-location" name="location">
+                                            <input type="hidden" id="province-id" name="province_id">
+                                            <input type="hidden" id="regency-id" name="regency_id">
+                                            <input type="hidden" id="district-id" name="district_id">
+                                            <input type="hidden" id="village-id" name="village_id">
                                         </div>
                                         
                                         <div class="form-group">
@@ -806,22 +1123,26 @@
                                             <div class="form-help">Sebutkan manfaat lingkungan dan sosial dari kampanye ini</div>
                                         </div>
                                         
-                                        <div class="form-group">
-                                            <label for="tree-type" class="form-label required">Jenis Pohon</label>
-                                            <select id="tree-type" name="tree_type" class="form-input form-select" required>
-                                                <option value="">Pilih Jenis Pohon</option>
-                                                <option value="Mangrove" {{ old('tree_type') == 'Mangrove' ? 'selected' : '' }}>Mangrove</option>
-                                                <option value="Pohon Buah" {{ old('tree_type') == 'Pohon Buah' ? 'selected' : '' }}>Pohon Buah</option>
-                                                <option value="Pohon Trembesi" {{ old('tree_type') == 'Pohon Trembesi' ? 'selected' : '' }}>Pohon Trembesi</option>
-                                                <option value="Pohon Mahoni" {{ old('tree_type') == 'Pohon Mahoni' ? 'selected' : '' }}>Pohon Mahoni</option>
-                                                <option value="Pohon Jati" {{ old('tree_type') == 'Pohon Jati' ? 'selected' : '' }}>Pohon Jati</option>
-                                                <option value="Bambu" {{ old('tree_type') == 'Bambu' ? 'selected' : '' }}>Bambu</option>
-                                                <option value="Pohon Pinus" {{ old('tree_type') == 'Pohon Pinus' ? 'selected' : '' }}>Pohon Pinus</option>
-                                                <option value="Pohon Akasia" {{ old('tree_type') == 'Pohon Akasia' ? 'selected' : '' }}>Pohon Akasia</option>
-                                                <option value="Pohon Sengon" {{ old('tree_type') == 'Pohon Sengon' ? 'selected' : '' }}>Pohon Sengon</option>
-                                                <option value="lainnya" {{ old('tree_type') == 'lainnya' ? 'selected' : '' }}>Lainnya</option>
-                                            </select>
-                                            <div class="error-message">Jenis pohon harus dipilih</div>
+                                        <!-- Enhanced Tree Type Dropdown -->
+                                        <div class="dropdown-container">
+                                            <label for="tree-type" class="dropdown-label required">Jenis Pohon</label>
+                                            <div class="dropdown-wrapper">
+                                                <select id="tree-type" name="tree_type" class="form-input form-select" required>
+                                                    <option value="">Pilih Jenis Pohon dari Petani</option>
+                                                    @foreach($farmerPlants as $plant)
+                                                        <option value="{{ $plant->jenis_tanaman }}" {{ old('tree_type') == $plant->jenis_tanaman ? 'selected' : '' }}>
+                                                            {{ $plant->jenis_tanaman }} ({{ $plant->stok }} stok dari {{ $plant->nama_lengkap }})
+                                                        </option>
+                                                    @endforeach
+                                                    @if(count($farmerPlants) === 0)
+                                                        <option value="" disabled>Tidak ada pohon tersedia dari petani</option>
+                                                    @endif
+                                                </select>
+                                                <div class="dropdown-indicator">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                            </div>
+                                            <div class="error-message">Jenis pohon harus dipilih dari daftar petani terdaftar</div>
                                         </div>
                                         
                                         <div class="form-group">
@@ -857,47 +1178,65 @@
                                     
                                     <div class="space-y-6">
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div class="form-group">
-                                                <label for="target-trees" class="form-label required">Target Jumlah Pohon</label>
-                                                <select id="target-trees" name="target_trees" class="form-input form-select" required>
-                                                    <option value="">Pilih Target Pohon</option>
-                                                    <option value="30" {{ old('target_trees') == '30' ? 'selected' : '' }}>30 Pohon</option>
-                                                    <option value="60" {{ old('target_trees') == '60' ? 'selected' : '' }}>60 Pohon</option>
-                                                    <option value="120" {{ old('target_trees') == '120' ? 'selected' : '' }}>120 Pohon</option>
-                                                    <option value="250" {{ old('target_trees') == '250' ? 'selected' : '' }}>250 Pohon</option>
-                                                    <option value="500" {{ old('target_trees') == '500' ? 'selected' : '' }}>500 Pohon</option>
-                                                    <option value="1000" {{ old('target_trees') == '1000' ? 'selected' : '' }}>1000 Pohon</option>
-                                                </select>
+                                            <!-- Enhanced Target Trees Dropdown -->
+                                            <div class="dropdown-container">
+                                                <label for="target-trees" class="dropdown-label required">Target Jumlah Pohon</label>
+                                                <div class="dropdown-wrapper">
+                                                    <select id="target-trees" name="target_trees" class="form-input form-select" required>
+                                                        <option value="">Pilih Target Pohon</option>
+                                                        <option value="30" {{ old('target_trees') == '30' ? 'selected' : '' }}>30 Pohon</option>
+                                                        <option value="60" {{ old('target_trees') == '60' ? 'selected' : '' }}>60 Pohon</option>
+                                                        <option value="120" {{ old('target_trees') == '120' ? 'selected' : '' }}>120 Pohon</option>
+                                                        <option value="250" {{ old('target_trees') == '250' ? 'selected' : '' }}>250 Pohon</option>
+                                                        <option value="500" {{ old('target_trees') == '500' ? 'selected' : '' }}>500 Pohon</option>
+                                                        <option value="1000" {{ old('target_trees') == '1000' ? 'selected' : '' }}>1000 Pohon</option>
+                                                    </select>
+                                                    <div class="dropdown-indicator">
+                                                        <i class="fas fa-chevron-down"></i>
+                                                    </div>
+                                                </div>
                                                 <div class="error-message">Target pohon harus dipilih</div>
                                             </div>
                                             
-                                            <div class="form-group">
-                                                <label for="tree-price" class="form-label required">Biaya per Pohon (Rp)</label>
-                                                <select id="tree-price" name="tree_price" class="form-input form-select" required>
-                                                    <option value="">Pilih Biaya per Pohon</option>
-                                                    <option value="10000" {{ old('tree_price') == '10000' ? 'selected' : '' }}>Rp 10.000</option>
-                                                    <option value="15000" {{ old('tree_price') == '15000' ? 'selected' : '' }}>Rp 15.000</option>
-                                                    <option value="20000" {{ old('tree_price') == '20000' ? 'selected' : '' }}>Rp 20.000</option>
-                                                    <option value="25000" {{ old('tree_price') == '25000' ? 'selected' : '' }}>Rp 25.000</option>
-                                                    <option value="30000" {{ old('tree_price') == '30000' ? 'selected' : '' }}>Rp 30.000</option>
-                                                    <option value="50000" {{ old('tree_price') == '50000' ? 'selected' : '' }}>Rp 50.000</option>
-                                                </select>
+                                            <!-- Enhanced Tree Price Dropdown -->
+                                            <div class="dropdown-container">
+                                                <label for="tree-price" class="dropdown-label required">Biaya per Pohon (Rp)</label>
+                                                <div class="dropdown-wrapper">
+                                                    <select id="tree-price" name="tree_price" class="form-input form-select" required>
+                                                        <option value="">Pilih Biaya per Pohon</option>
+                                                        <option value="10000" {{ old('tree_price') == '10000' ? 'selected' : '' }}>Rp 10.000</option>
+                                                        <option value="15000" {{ old('tree_price') == '15000' ? 'selected' : '' }}>Rp 15.000</option>
+                                                        <option value="20000" {{ old('tree_price') == '20000' ? 'selected' : '' }}>Rp 20.000</option>
+                                                        <option value="25000" {{ old('tree_price') == '25000' ? 'selected' : '' }}>Rp 25.000</option>
+                                                        <option value="30000" {{ old('tree_price') == '30000' ? 'selected' : '' }}>Rp 30.000</option>
+                                                        <option value="50000" {{ old('tree_price') == '50000' ? 'selected' : '' }}>Rp 50.000</option>
+                                                    </select>
+                                                    <div class="dropdown-indicator">
+                                                        <i class="fas fa-chevron-down"></i>
+                                                    </div>
+                                                </div>
                                                 <div class="error-message">Biaya per pohon harus dipilih</div>
                                                 <div class="form-help">Termasuk biaya bibit, penanaman, dan perawatan</div>
                                             </div>
                                         </div>
                                         
-                                        <div class="form-group">
-                                            <label for="campaign-duration" class="form-label required">Durasi Kampanye (hari)</label>
-                                            <select id="campaign-duration" name="campaign_duration" class="form-input form-select" required>
-                                                <option value="">Pilih Durasi Kampanye</option>
-                                                <option value="7" {{ old('campaign_duration') == '7' ? 'selected' : '' }}>7 Hari</option>
-                                                <option value="14" {{ old('campaign_duration') == '14' ? 'selected' : '' }}>14 Hari</option>
-                                                <option value="30" {{ old('campaign_duration') == '30' ? 'selected' : '' }}>30 Hari</option>
-                                                <option value="60" {{ old('campaign_duration') == '60' ? 'selected' : '' }}>60 Hari</option>
-                                                <option value="90" {{ old('campaign_duration') == '90' ? 'selected' : '' }}>90 Hari</option>
-                                                <option value="180" {{ old('campaign_duration') == '180' ? 'selected' : '' }}>180 Hari</option>
-                                            </select>
+                                        <!-- Enhanced Campaign Duration Dropdown -->
+                                        <div class="dropdown-container">
+                                            <label for="campaign-duration" class="dropdown-label required">Durasi Kampanye (hari)</label>
+                                            <div class="dropdown-wrapper">
+                                                <select id="campaign-duration" name="campaign_duration" class="form-input form-select" required>
+                                                    <option value="">Pilih Durasi Kampanye</option>
+                                                    <option value="7" {{ old('campaign_duration') == '7' ? 'selected' : '' }}>7 Hari</option>
+                                                    <option value="14" {{ old('campaign_duration') == '14' ? 'selected' : '' }}>14 Hari</option>
+                                                    <option value="30" {{ old('campaign_duration') == '30' ? 'selected' : '' }}>30 Hari</option>
+                                                    <option value="60" {{ old('campaign_duration') == '60' ? 'selected' : '' }}>60 Hari</option>
+                                                    <option value="90" {{ old('campaign_duration') == '90' ? 'selected' : '' }}>90 Hari</option>
+                                                    <option value="180" {{ old('campaign_duration') == '180' ? 'selected' : '' }}>180 Hari</option>
+                                                </select>
+                                                <div class="dropdown-indicator">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                            </div>
                                             <div class="error-message">Durasi kampanye harus dipilih</div>
                                             <div class="form-help">Kampanye dapat berlangsung 7 hari hingga 6 bulan</div>
                                         </div>
@@ -978,405 +1317,795 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 100,
-        });
 
-        // Mobile Menu Toggle
-        const burgerButton = document.getElementById('burger-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileDropdownBtn = document.getElementById('mobile-dropdown-btn');
-        const mobileDropdownMenu = document.getElementById('mobile-dropdown-menu');
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100,
+    });
 
+    // Mobile Menu Toggle
+    const burgerButton = document.getElementById('burger-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileDropdownBtn = document.getElementById('mobile-dropdown-btn');
+    const mobileDropdownMenu = document.getElementById('mobile-dropdown-menu');
+
+    if (burgerButton && mobileMenu) {
         burgerButton.addEventListener('click', () => {
             burgerButton.classList.toggle('active');
             mobileMenu.classList.toggle('active');
         });
+    }
 
+    if (mobileDropdownBtn && mobileDropdownMenu) {
         mobileDropdownBtn.addEventListener('click', () => {
             mobileDropdownMenu.classList.toggle('show');
             const icon = mobileDropdownBtn.querySelector('i.fa-chevron-down');
-            icon.classList.toggle('rotate-180');
+            if (icon) icon.classList.toggle('rotate-180');
         });
+    }
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                burgerButton.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                mobileDropdownMenu.classList.remove('show');
-                const icon = mobileDropdownBtn.querySelector('i.fa-chevron-down');
-                icon.classList.remove('rotate-180');
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (burgerButton) burgerButton.classList.remove('active');
+            if (mobileMenu) mobileMenu.classList.remove('active');
+            if (mobileDropdownMenu) mobileDropdownMenu.classList.remove('show');
+            const icon = mobileDropdownBtn?.querySelector('i.fa-chevron-down');
+            if (icon) icon.classList.remove('rotate-180');
+        });
+    });
+
+    // Location Selection Handler
+    document.addEventListener('DOMContentLoaded', function() {
+        // Element references
+        const provinceSelect = document.getElementById('provinsi-select');
+        const regencySelect = document.getElementById('kabupaten-select');
+        const districtSelect = document.getElementById('kecamatan-select');
+        const villageSelect = document.getElementById('kelurahan-select');
+        const fullLocationInput = document.getElementById('full-location');
+
+        // Status indicators
+        const provinceStatus = document.getElementById('province-status');
+        const regencyStatus = document.getElementById('regency-status');
+        const districtStatus = document.getElementById('district-status');
+        const villageStatus = document.getElementById('village-status');
+
+        // Load provinces on page load
+        loadProvinces();
+
+        // Event listeners untuk dropdown berjenjang
+        if (provinceSelect) {
+            provinceSelect.addEventListener('change', function() {
+                const provinceId = this.value;
+                if (provinceId) {
+                    loadRegencies(provinceId);
+                    resetDropdown(regencySelect);
+                    resetDropdown(districtSelect);
+                    resetDropdown(villageSelect);
+                } else {
+                    resetDropdown(regencySelect, true);
+                    resetDropdown(districtSelect, true);
+                    resetDropdown(villageSelect, true);
+                }
+                updateFullLocation();
             });
-        });
+        }
 
-        // Campaign Form Functionality - FIXED VERSION
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('campaign-form');
-            const steps = document.querySelectorAll('.step');
-            const stepContents = document.querySelectorAll('.step-content');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const submitBtn = document.getElementById('submit-btn');
-            let currentStep = 1;
+        if (regencySelect) {
+            regencySelect.addEventListener('change', function() {
+                const regencyId = this.value;
+                if (regencyId) {
+                    loadDistricts(regencyId);
+                    resetDropdown(districtSelect);
+                    resetDropdown(villageSelect);
+                } else {
+                    resetDropdown(districtSelect, true);
+                    resetDropdown(villageSelect, true);
+                }
+                updateFullLocation();
+            });
+        }
 
-            console.log('Form initialized - current step:', currentStep);
+        if (districtSelect) {
+            districtSelect.addEventListener('change', function() {
+                const districtId = this.value;
+                if (districtId) {
+                    loadVillages(districtId);
+                    resetDropdown(villageSelect);
+                } else {
+                    resetDropdown(villageSelect, true);
+                }
+                updateFullLocation();
+            });
+        }
 
-            // Image Preview
-            const campaignImage = document.getElementById('campaign-image');
-            const imagePreview = document.getElementById('image-preview');
-            
-            if (campaignImage && imagePreview) {
-                campaignImage.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            imagePreview.src = e.target.result;
-                            imagePreview.style.display = 'block';
-                        }
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
+        if (villageSelect) {
+            villageSelect.addEventListener('change', function() {
+                updateFullLocation();
+            });
+        }
 
-            // Planting Method Selection
-            document.querySelectorAll('.planting-method-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected style from all options
-                    document.querySelectorAll('.planting-method-option').forEach(opt => {
-                        opt.style.borderColor = '#e5e7eb';
-                        opt.style.backgroundColor = 'white';
+        // Fungsi untuk memuat data provinsi
+        async function loadProvinces() {
+            try {
+                showLoading(provinceSelect, provinceStatus, 'Memuat provinsi...');
+                const response = await fetch('{{ url("/api/provinces") }}');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const provinces = await response.json();
+                
+                // Clear existing options
+                while (provinceSelect.options.length > 1) {
+                    provinceSelect.remove(1);
+                }
+                
+                // Add new options
+                if (Array.isArray(provinces) && provinces.length > 0) {
+                    provinces.forEach(province => {
+                        const option = document.createElement('option');
+                        option.value = province.id;
+                        option.textContent = province.name;
+                        provinceSelect.appendChild(option);
                     });
                     
-                    // Add selected style to clicked option
-                    this.style.borderColor = '#2D4F2B';
-                    this.style.backgroundColor = '#f0f9f0';
+                    provinceSelect.classList.remove('loading', 'error');
+                    showSuccess(provinceStatus, 'Data provinsi dimuat');
                     
-                    // Check the radio button
-                    const radio = this.querySelector('input[type="radio"]');
-                    radio.checked = true;
+                    // Auto-select old value if exists
+                    const oldProvinceId = "{{ old('province_id') }}";
+                    if (oldProvinceId) {
+                        provinceSelect.value = oldProvinceId;
+                        provinceSelect.dispatchEvent(new Event('change'));
+                    }
+                } else {
+                    showError(provinceSelect, provinceStatus, 'Data provinsi tidak ditemukan');
+                }
+            } catch (error) {
+                console.error('Error loading provinces:', error);
+                showError(provinceSelect, provinceStatus, 'Gagal memuat data provinsi');
+            }
+        }
+
+        // Fungsi untuk memuat data kabupaten/kota
+        async function loadRegencies(provinceId) {
+            try {
+                showLoading(regencySelect, regencyStatus, 'Memuat kabupaten/kota...');
+                const response = await fetch(`{{ url('/api/regencies') }}/${provinceId}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const regencies = await response.json();
+                
+                // Clear existing options
+                while (regencySelect.options.length > 1) {
+                    regencySelect.remove(1);
+                }
+                
+                // Add new options
+                if (Array.isArray(regencies) && regencies.length > 0) {
+                    regencies.forEach(regency => {
+                        const option = document.createElement('option');
+                        option.value = regency.id;
+                        option.textContent = regency.name;
+                        regencySelect.appendChild(option);
+                    });
+                    
+                    regencySelect.disabled = false;
+                    regencySelect.classList.remove('loading', 'error');
+                    showSuccess(regencyStatus, 'Data kabupaten/kota dimuat');
+                    
+                    // Auto-select old value if exists
+                    const oldRegencyId = "{{ old('regency_id') }}";
+                    if (oldRegencyId) {
+                        regencySelect.value = oldRegencyId;
+                        regencySelect.dispatchEvent(new Event('change'));
+                    }
+                } else {
+                    showError(regencySelect, regencyStatus, 'Data kabupaten/kota tidak ditemukan');
+                }
+            } catch (error) {
+                console.error('Error loading regencies:', error);
+                showError(regencySelect, regencyStatus, 'Gagal memuat data kabupaten/kota');
+            }
+        }
+
+        // Fungsi untuk memuat data kecamatan
+        async function loadDistricts(regencyId) {
+            try {
+                showLoading(districtSelect, districtStatus, 'Memuat kecamatan...');
+                const response = await fetch(`{{ url('/api/districts') }}/${regencyId}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const districts = await response.json();
+                
+                // Clear existing options
+                while (districtSelect.options.length > 1) {
+                    districtSelect.remove(1);
+                }
+                
+                // Add new options
+                if (Array.isArray(districts) && districts.length > 0) {
+                    districts.forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district.id;
+                        option.textContent = district.name;
+                        districtSelect.appendChild(option);
+                    });
+                    
+                    districtSelect.disabled = false;
+                    districtSelect.classList.remove('loading', 'error');
+                    showSuccess(districtStatus, 'Data kecamatan dimuat');
+                    
+                    // Auto-select old value if exists
+                    const oldDistrictId = "{{ old('district_id') }}";
+                    if (oldDistrictId) {
+                        districtSelect.value = oldDistrictId;
+                        districtSelect.dispatchEvent(new Event('change'));
+                    }
+                } else {
+                    showError(districtSelect, districtStatus, 'Data kecamatan tidak ditemukan');
+                }
+            } catch (error) {
+                console.error('Error loading districts:', error);
+                showError(districtSelect, districtStatus, 'Gagal memuat data kecamatan');
+            }
+        }
+
+        // Fungsi untuk memuat data kelurahan
+        async function loadVillages(districtId) {
+            try {
+                showLoading(villageSelect, villageStatus, 'Memuat kelurahan...');
+                
+                // Fetch villages data from backend
+                const response = await fetch(`{{ url('/api/villages') }}?district_id=${districtId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const villages = await response.json();
+                
+                // Clear existing options
+                while (villageSelect.options.length > 1) {
+                    villageSelect.remove(1);
+                }
+                
+                // Add new options
+                if (Array.isArray(villages) && villages.length > 0) {
+                    villages.forEach(village => {
+                        const option = document.createElement('option');
+                        option.value = village.id;
+                        option.textContent = village.name;
+                        villageSelect.appendChild(option);
+                    });
+                    
+                    villageSelect.disabled = false;
+                    villageSelect.classList.remove('loading', 'error');
+                    showSuccess(villageStatus, 'Data kelurahan dimuat');
+                    
+                    // Auto-select old value if exists
+                    const oldVillageId = "{{ old('village_id') }}";
+                    if (oldVillageId) {
+                        villageSelect.value = oldVillageId;
+                    }
+                } else {
+                    showError(villageSelect, villageStatus, 'Data kelurahan tidak ditemukan');
+                }
+            } catch (error) {
+                console.error('Error loading villages:', error);
+                showError(villageSelect, villageStatus, 'Gagal memuat data kelurahan');
+            }
+        }
+
+        // Fungsi untuk reset dropdown
+        function resetDropdown(selectElement, disable = false) {
+            if (!selectElement) return;
+            while (selectElement.options.length > 1) {
+                selectElement.remove(1);
+            }
+            selectElement.value = '';
+            if (disable) {
+                selectElement.disabled = true;
+            }
+            selectElement.classList.remove('loading', 'error');
+        }
+
+        // Fungsi untuk menampilkan loading state
+        function showLoading(selectElement, statusElement, message) {
+            if (!selectElement || !statusElement) return;
+            while (selectElement.options.length > 1) {
+                selectElement.remove(1);
+            }
+            const option = document.createElement('option');
+            option.value = '';
+            option.textContent = message;
+            option.disabled = true;
+            selectElement.appendChild(option);
+            selectElement.classList.add('loading');
+            
+            statusElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            statusElement.classList.add('loading');
+            statusElement.classList.remove('error', 'success');
+        }
+
+        // Fungsi untuk menampilkan error state
+        function showError(selectElement, statusElement, message) {
+            if (!selectElement || !statusElement) return;
+            while (selectElement.options.length > 1) {
+                selectElement.remove(1);
+            }
+            const option = document.createElement('option');
+            option.value = '';
+            option.textContent = message;
+            option.disabled = true;
+            selectElement.appendChild(option);
+            selectElement.classList.add('error');
+            
+            statusElement.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+            statusElement.classList.add('error');
+            statusElement.classList.remove('loading', 'success');
+        }
+
+        // Fungsi untuk menampilkan success state
+        function showSuccess(statusElement, message) {
+            if (!statusElement) return;
+            statusElement.innerHTML = '<i class="fas fa-check-circle"></i>';
+            statusElement.classList.add('success');
+            statusElement.classList.remove('loading', 'error');
+            
+            // Remove success indicator after 2 seconds
+            setTimeout(() => {
+                statusElement.innerHTML = '';
+                statusElement.classList.remove('success');
+            }, 2000);
+        }
+
+        // Fungsi untuk update lokasi lengkap
+        function updateFullLocation() {
+            if (!fullLocationInput) return;
+            
+            const provinceText = provinceSelect?.options[provinceSelect?.selectedIndex]?.textContent || '';
+            const regencyText = regencySelect?.options[regencySelect?.selectedIndex]?.textContent || '';
+            const districtText = districtSelect?.options[districtSelect?.selectedIndex]?.textContent || '';
+            const villageText = villageSelect?.options[villageSelect?.selectedIndex]?.textContent || '';
+            
+            const locationParts = [];
+            if (villageText) locationParts.push(villageText);
+            if (districtText) locationParts.push(`Kec. ${districtText}`);
+            if (regencyText) locationParts.push(regencyText);
+            if (provinceText) locationParts.push(`Prov. ${provinceText}`);
+            
+            fullLocationInput.value = locationParts.join(', ');
+            
+            // Update hidden location IDs
+            document.getElementById('province-id').value = provinceSelect?.value || '';
+            document.getElementById('regency-id').value = regencySelect?.value || '';
+            document.getElementById('district-id').value = districtSelect?.value || '';
+            document.getElementById('village-id').value = villageSelect?.value || '';
+        }
+
+        // Validasi khusus untuk lokasi
+        function validateLocationStep() {
+            const province = provinceSelect?.value;
+            const regency = regencySelect?.value;
+            const district = districtSelect?.value;
+            const village = villageSelect?.value;
+            
+            let isValid = true;
+            
+            // Reset error states
+            [provinceSelect, regencySelect, districtSelect, villageSelect].forEach(select => {
+                if (select) {
+                    select.classList.remove('error');
+                    const errorDiv = select.parentNode.querySelector('.field-error');
+                    if (errorDiv) errorDiv.remove();
+                }
+            });
+            
+            // Validasi setiap level
+            if (!province) {
+                showFieldError(provinceSelect, 'Pilih provinsi');
+                isValid = false;
+            }
+            if (!regency) {
+                showFieldError(regencySelect, 'Pilih kabupaten/kota');
+                isValid = false;
+            }
+            if (!district) {
+                showFieldError(districtSelect, 'Pilih kecamatan');
+                isValid = false;
+            }
+            if (!village) {
+                showFieldError(villageSelect, 'Pilih kelurahan');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+        // Campaign Form Functionality
+        const form = document.getElementById('campaign-form');
+        const steps = document.querySelectorAll('.step');
+        const stepContents = document.querySelectorAll('.step-content');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        let currentStep = 1;
+
+        console.log('Form initialized - current step:', currentStep);
+
+        // Image Preview
+        const campaignImage = document.getElementById('campaign-image');
+        const imagePreview = document.getElementById('image-preview');
+        
+        if (campaignImage && imagePreview) {
+            campaignImage.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Planting Method Selection
+        document.querySelectorAll('.planting-method-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected style from all options
+                document.querySelectorAll('.planting-method-option').forEach(opt => {
+                    opt.style.borderColor = '#e5e7eb';
+                    opt.style.backgroundColor = 'white';
                 });
+                
+                // Add selected style to clicked option
+                this.style.borderColor = '#2D4F2B';
+                this.style.backgroundColor = '#f0f9f0';
+                
+                // Check the radio button
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+            });
+        });
+
+        // Update Steps
+        function updateSteps() {
+            const stepContainers = document.querySelectorAll('.step-container');
+            
+            stepContainers.forEach((container, index) => {
+                const step = container.querySelector('.step');
+                const stepLabel = container.querySelector('.step-label');
+                
+                if (index + 1 < currentStep) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                    if (stepLabel) {
+                        stepLabel.classList.add('completed');
+                        stepLabel.classList.remove('active');
+                    }
+                } else if (index + 1 === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                    if (stepLabel) {
+                        stepLabel.classList.add('active');
+                        stepLabel.classList.remove('completed');
+                    }
+                } else {
+                    step.classList.remove('active', 'completed');
+                    if (stepLabel) {
+                        stepLabel.classList.remove('active', 'completed');
+                    }
+                }
             });
 
-            // Update Steps
-            function updateSteps() {
-                const stepContainers = document.querySelectorAll('.step-container');
-                
-                stepContainers.forEach((container, index) => {
-                    const step = container.querySelector('.step');
-                    const stepLabel = container.querySelector('.step-label');
-                    
-                    if (index + 1 < currentStep) {
-                        step.classList.add('completed');
-                        step.classList.remove('active');
-                        if (stepLabel) {
-                            stepLabel.classList.add('completed');
-                            stepLabel.classList.remove('active');
-                        }
-                    } else if (index + 1 === currentStep) {
-                        step.classList.add('active');
-                        step.classList.remove('completed');
-                        if (stepLabel) {
-                            stepLabel.classList.add('active');
-                            stepLabel.classList.remove('completed');
-                        }
-                    } else {
-                        step.classList.remove('active', 'completed');
-                        if (stepLabel) {
-                            stepLabel.classList.remove('active', 'completed');
-                        }
-                    }
-                });
-
-                stepContents.forEach(content => {
-                    if (parseInt(content.dataset.step) === currentStep) {
-                        content.classList.add('active');
-                        // Remove required attributes from hidden steps to prevent HTML5 validation
-                        content.querySelectorAll('[required]').forEach(field => {
-                            field.setAttribute('data-required', 'true');
-                            field.removeAttribute('required');
-                        });
-                    } else {
-                        content.classList.remove('active');
-                        // Add back required attributes when step is hidden
-                        content.querySelectorAll('[data-required="true"]').forEach(field => {
-                            field.setAttribute('required', 'true');
-                        });
-                    }
-                });
-
-                // Update buttons
-                if (prevBtn) prevBtn.disabled = currentStep === 1;
-                
-                const totalSteps = stepContainers.length;
-                if (currentStep === totalSteps) {
-                    if (nextBtn) nextBtn.style.display = 'none';
-                    if (submitBtn) submitBtn.style.display = 'inline-flex';
-                    generatePreview();
+            stepContents.forEach(content => {
+                if (parseInt(content.dataset.step) === currentStep) {
+                    content.classList.add('active');
+                    // Remove required attributes from hidden steps to prevent HTML5 validation
+                    content.querySelectorAll('[required]').forEach(field => {
+                        field.setAttribute('data-required', 'true');
+                        field.removeAttribute('required');
+                    });
                 } else {
-                    if (nextBtn) nextBtn.style.display = 'inline-flex';
-                    if (submitBtn) submitBtn.style.display = 'none';
+                    content.classList.remove('active');
+                    // Add back required attributes when step is hidden
+                    content.querySelectorAll('[data-required="true"]').forEach(field => {
+                        field.setAttribute('required', 'true');
+                    });
+                }
+            });
+
+            // Update buttons
+            if (prevBtn) prevBtn.disabled = currentStep === 1;
+            
+            const totalSteps = stepContainers.length;
+            if (currentStep === totalSteps) {
+                if (nextBtn) nextBtn.style.display = 'none';
+                if (submitBtn) submitBtn.style.display = 'inline-flex';
+                generatePreview();
+            } else {
+                if (nextBtn) nextBtn.style.display = 'inline-flex';
+                if (submitBtn) submitBtn.style.display = 'none';
+            }
+        }
+
+        // Navigation
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                if (validateStep(currentStep)) {
+                    currentStep++;
+                    updateSteps();
+                }
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                currentStep--;
+                updateSteps();
+            });
+        }
+
+        // Manual validation (disable HTML5 validation)
+        function validateStep(step) {
+            let isValid = true;
+            const currentStepContent = document.querySelector(`.step-content[data-step="${step}"]`);
+            
+            if (!currentStepContent) return false;
+            
+            // Validasi khusus untuk step 1 (lokasi)
+            if (step === 1) {
+                isValid = validateLocationStep();
+                if (!isValid) {
+                    alert('Mohon lengkapi semua data lokasi sebelum melanjutkan.');
+                    return false;
                 }
             }
+            
+            // Temporarily add required attributes for validation
+            currentStepContent.querySelectorAll('[data-required="true"]').forEach(field => {
+                field.setAttribute('required', 'true');
+            });
 
-            // Navigation
-            if (nextBtn) {
-                nextBtn.addEventListener('click', function() {
-                    if (validateStep(currentStep)) {
-                        currentStep++;
-                        updateSteps();
-                    }
-                });
-            }
-
-            if (prevBtn) {
-                prevBtn.addEventListener('click', function() {
-                    currentStep--;
-                    updateSteps();
-                });
-            }
-
-            // Manual validation (disable HTML5 validation)
-            function validateStep(step) {
-                let isValid = true;
-                const currentStepContent = document.querySelector(`.step-content[data-step="${step}"]`);
+            const requiredFields = currentStepContent.querySelectorAll('[required]');
+            
+            requiredFields.forEach(field => {
+                field.classList.remove('error');
                 
-                if (!currentStepContent) return false;
-                
-                // Temporarily add required attributes for validation
-                currentStepContent.querySelectorAll('[data-required="true"]').forEach(field => {
-                    field.setAttribute('required', 'true');
-                });
-
-                const requiredFields = currentStepContent.querySelectorAll('[required]');
-                
-                requiredFields.forEach(field => {
-                    field.classList.remove('error');
-                    
-                    if (field.type === 'file') {
-                        if (field.files.length === 0) {
-                            isValid = false;
-                            field.classList.add('error');
-                            showFieldError(field, 'File gambar harus diupload');
-                        }
-                    } else if (field.type === 'select-one') {
-                        if (!field.value) {
-                            isValid = false;
-                            field.classList.add('error');
-                            showFieldError(field, 'Pilihan ini harus dipilih');
-                        }
-                    } else if (field.type === 'date') {
-                        if (!field.value) {
-                            isValid = false;
-                            field.classList.add('error');
-                            showFieldError(field, 'Tanggal harus diisi');
-                        }
-                    } else if (!field.value.trim()) {
+                if (field.type === 'file') {
+                    if (field.files.length === 0) {
                         isValid = false;
                         field.classList.add('error');
-                        showFieldError(field, 'Field ini harus diisi');
+                        showFieldError(field, 'File gambar harus diupload');
                     }
-                });
-
-                // Remove required attributes after validation to prevent HTML5 validation
-                currentStepContent.querySelectorAll('[required]').forEach(field => {
-                    field.removeAttribute('required');
-                });
-
-                if (!isValid) {
-                    alert('Mohon lengkapi semua field yang diperlukan sebelum melanjutkan.');
-                    // Scroll to first error
-                    const firstError = currentStepContent.querySelector('.error');
-                    if (firstError) {
-                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else if (field.type === 'select-one') {
+                    if (!field.value) {
+                        isValid = false;
+                        field.classList.add('error');
+                        showFieldError(field, 'Pilihan ini harus dipilih');
                     }
+                } else if (field.type === 'date') {
+                    if (!field.value) {
+                        isValid = false;
+                        field.classList.add('error');
+                        showFieldError(field, 'Tanggal harus diisi');
+                    }
+                } else if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('error');
+                    showFieldError(field, 'Field ini harus diisi');
                 }
-                
-                return isValid;
+            });
+
+            // Remove required attributes after validation to prevent HTML5 validation
+            currentStepContent.querySelectorAll('[required]').forEach(field => {
+                field.removeAttribute('required');
+            });
+
+            if (!isValid) {
+                alert('Mohon lengkapi semua field yang diperlukan sebelum melanjutkan.');
+                // Scroll to first error
+                const firstError = currentStepContent.querySelector('.error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
             }
+            
+            return isValid;
+        }
 
-            function showFieldError(field, message) {
-                // Remove existing error message
-                const existingError = field.parentNode.querySelector('.field-error');
-                if (existingError) {
-                    existingError.remove();
-                }
-                
-                // Add error message
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'field-error text-red-500 text-sm mt-1';
-                errorDiv.textContent = message;
-                field.parentNode.appendChild(errorDiv);
+        function showFieldError(field, message) {
+            if (!field) return;
+            // Remove existing error message
+            const existingError = field.parentNode.querySelector('.field-error');
+            if (existingError) {
+                existingError.remove();
             }
+            
+            // Add error message
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error text-red-500 text-sm mt-1';
+            errorDiv.textContent = message;
+            field.parentNode.appendChild(errorDiv);
+        }
 
-            // Generate Preview
-            function generatePreview() {
-                const previewContent = document.getElementById('preview-content');
-                if (!previewContent) return;
-                
-                // Get form values
-                const title = document.getElementById('campaign-title')?.value || '';
-                const category = document.getElementById('campaign-category')?.value || '';
-                const location = document.getElementById('campaign-location')?.value || '';
-                const description = document.getElementById('campaign-description')?.value || '';
-                const treeType = document.getElementById('tree-type')?.value || '';
-                const targetTrees = document.getElementById('target-trees')?.value || '0';
-                const treePrice = document.getElementById('tree-price')?.value || '0';
-                const duration = document.getElementById('campaign-duration')?.value || '0';
-                const plantingDate = document.getElementById('planting-date')?.value || '';
-                const plantingMethod = document.querySelector('input[name="planting_method"]:checked')?.value || '';
-                
-                // Format date
-                let formattedDate = 'Belum ditentukan';
-                if (plantingDate) {
-                    try {
-                        formattedDate = new Date(plantingDate).toLocaleDateString('id-ID', {
-                            weekday: 'long',
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        });
-                    } catch (e) {
-                        formattedDate = plantingDate;
-                    }
+        // Generate Preview
+        function generatePreview() {
+            const previewContent = document.getElementById('preview-content');
+            if (!previewContent) return;
+            
+            // Get form values
+            const title = document.getElementById('campaign-title')?.value || '';
+            const category = document.getElementById('campaign-category')?.value || '';
+            const fullLocation = document.getElementById('full-location')?.value || '';
+            const description = document.getElementById('campaign-description')?.value || '';
+            const treeType = document.getElementById('tree-type')?.value || '';
+            const targetTrees = document.getElementById('target-trees')?.value || '0';
+            const treePrice = document.getElementById('tree-price')?.value || '0';
+            const duration = document.getElementById('campaign-duration')?.value || '0';
+            const plantingDate = document.getElementById('planting-date')?.value || '';
+            const plantingMethod = document.querySelector('input[name="planting_method"]:checked')?.value || '';
+            
+            // Format date
+            let formattedDate = 'Belum ditentukan';
+            if (plantingDate) {
+                try {
+                    formattedDate = new Date(plantingDate).toLocaleDateString('id-ID', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                } catch (e) {
+                    formattedDate = plantingDate;
                 }
-                
-                // Calculate total funding
-                const totalFunding = (parseInt(targetTrees) * parseInt(treePrice) || 0).toLocaleString('id-ID');
-                
-                // Get planting method text
-                const plantingMethodText = {
-                    'donatur_ikut': 'Donatur Bisa Ikut',
-                    'donatur_tidak_ikut': 'Donatur Tidak Ikut',
-                    'komunitas': 'Komunitas'
-                }[plantingMethod] || 'Belum dipilih';
-                
-                // Generate preview HTML
-                previewContent.innerHTML = `
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
-                        ${imagePreview && imagePreview.style.display !== 'none' ? 
-                            `<img src="${imagePreview.src}" alt="${title}" class="w-full h-48 object-cover">` : 
-                            '<div class="w-full h-48 bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center"><i class="fas fa-tree text-6xl text-green-300"></i></div>'
-                        }
-                        <div class="p-6">
-                            <span class="inline-block category-badge text-white text-xs px-3 py-1 rounded-full mb-3">${getCategoryName(category)}</span>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-3">${title || 'Judul Kampanye'}</h3>
-                            <p class="text-gray-600 mb-4 leading-relaxed">${description ? description.substring(0, 150) + '...' : 'Deskripsi kampanye'}</p>
-                            <div class="grid grid-cols-2 gap-4 text-sm mb-4">
-                                <div class="flex items-center text-gray-700">
-                                    <i class="fas fa-map-marker-alt text-green-600 mr-2"></i>
-                                    <span>${location || 'Lokasi'}</span>
-                                </div>
-                                <div class="flex items-center text-gray-700">
-                                    <i class="fas fa-tree text-green-600 mr-2"></i>
-                                    <span>${treeType || 'Jenis Pohon'}</span>
-                                </div>
-                                <div class="flex items-center text-gray-700">
-                                    <i class="fas fa-bullseye text-green-600 mr-2"></i>
-                                    <span>${targetTrees} pohon</span>
-                                </div>
-                                <div class="flex items-center text-gray-700">
-                                    <i class="fas fa-clock text-green-600 mr-2"></i>
-                                    <span>${duration} hari</span>
-                                </div>
-                                <div class="flex items-center text-gray-700">
-                                    <i class="fas fa-users text-green-600 mr-2"></i>
-                                    <span>${plantingMethodText}</span>
-                                </div>
-                                <div class="flex items-center text-gray-700">
-                                    <i class="fas fa-money-bill text-green-600 mr-2"></i>
-                                    <span>Rp ${parseInt(treePrice).toLocaleString('id-ID')}/pohon</span>
-                                </div>
+            }
+            
+            // Calculate total funding
+            const totalFunding = (parseInt(targetTrees) * parseInt(treePrice) || 0).toLocaleString('id-ID');
+            
+            // Get planting method text
+            const plantingMethodText = {
+                'donatur_ikut': 'Donatur Bisa Ikut',
+                'donatur_tidak_ikut': 'Donatur Tidak Ikut',
+                'komunitas': 'Komunitas'
+            }[plantingMethod] || 'Belum dipilih';
+            
+            // Generate preview HTML
+            previewContent.innerHTML = `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
+                    ${imagePreview && imagePreview.style.display !== 'none' ? 
+                        `<img src="${imagePreview.src}" alt="${title}" class="w-full h-48 object-cover">` : 
+                        '<div class="w-full h-48 bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center"><i class="fas fa-tree text-6xl text-green-300"></i></div>'
+                    }
+                    <div class="p-6">
+                        <span class="inline-block category-badge text-white text-xs px-3 py-1 rounded-full mb-3">${getCategoryName(category)}</span>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">${title || 'Judul Kampanye'}</h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">${description ? description.substring(0, 150) + '...' : 'Deskripsi kampanye'}</p>
+                        <div class="grid grid-cols-2 gap-4 text-sm mb-4">
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-map-marker-alt text-green-600 mr-2"></i>
+                                <span>${fullLocation || 'Lokasi penanaman'}</span>
                             </div>
-                            <div class="mt-4 pt-4 border-t border-gray-200">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-xl font-bold text-green-700">Rp ${totalFunding}</span>
-                                    <span class="text-sm text-gray-500">Total dana dibutuhkan</span>
-                                </div>
-                                <div class="text-sm text-gray-500">
-                                    <i class="fas fa-calendar-alt mr-1"></i> Perkiraan penanaman: ${formattedDate}
-                                </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-tree text-green-600 mr-2"></i>
+                                <span>${treeType || 'Jenis Pohon'}</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-bullseye text-green-600 mr-2"></i>
+                                <span>${targetTrees} pohon</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-clock text-green-600 mr-2"></i>
+                                <span>${duration} hari</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-users text-green-600 mr-2"></i>
+                                <span>${plantingMethodText}</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-money-bill text-green-600 mr-2"></i>
+                                <span>Rp ${parseInt(treePrice).toLocaleString('id-ID')}/pohon</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xl font-bold text-green-700">Rp ${totalFunding}</span>
+                                <span class="text-sm text-gray-500">Total dana dibutuhkan</span>
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                <i class="fas fa-calendar-alt mr-1"></i> Perkiraan penanaman: ${formattedDate}
                             </div>
                         </div>
                     </div>
-                `;
-            }
+                </div>
+            `;
+        }
 
-            // Helper function to get category name
-            function getCategoryName(categoryValue) {
-                const categories = {
-                    'reboisasi': 'Reboisasi Hutan',
-                    'mangrove': 'Penanaman Mangrove',
-                    'perkotaan': 'Hijaukan Perkotaan',
-                    'edukasi': 'Edukasi Lingkungan',
-                    'lainnya': 'Lainnya'
-                };
-                return categories[categoryValue] || 'Lainnya';
-            }
+        // Helper function to get category name
+        function getCategoryName(categoryValue) {
+            const categories = {
+                'reboisasi': 'Reboisasi Hutan',
+                'mangrove': 'Penanaman Mangrove',
+                'perkotaan': 'Hijaukan Perkotaan',
+                'edukasi': 'Edukasi Lingkungan',
+                'lainnya': 'Lainnya'
+            };
+            return categories[categoryValue] || 'Lainnya';
+        }
 
-            // Form Submission Handler
-            if (form && submitBtn) {
-                // Disable HTML5 validation on form
-                form.setAttribute('novalidate', 'true');
+        // Form Submission Handler
+        if (form && submitBtn) {
+            // Disable HTML5 validation on form
+            form.setAttribute('novalidate', 'true');
 
-                submitBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    console.log('Submit button clicked - validating all steps...');
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                console.log('Submit button clicked - validating all steps...');
 
-                    // Validate terms agreement
-                    const termsAgreement = document.getElementById('terms-agreement');
-                    if (!termsAgreement || !termsAgreement.checked) {
-                        alert('Anda harus menyetujui syarat dan ketentuan sebelum mengirim kampanye.');
-                        termsAgreement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        return false;
-                    }
+                // Validate terms agreement
+                const termsAgreement = document.getElementById('terms-agreement');
+                if (!termsAgreement || !termsAgreement.checked) {
+                    alert('Anda harus menyetujui syarat dan ketentuan sebelum mengirim kampanye.');
+                    termsAgreement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return false;
+                }
 
-                    // Validate all steps manually
-                    let allValid = true;
-                    const stepsToValidate = [1, 2, 3]; // Step 4 is preview only
+                // Validate all steps manually
+                let allValid = true;
+                const stepsToValidate = [1, 2, 3]; // Step 4 is preview only
 
-                    stepsToValidate.forEach(step => {
-                        if (!validateStep(step)) {
-                            allValid = false;
-                            // Switch to the first invalid step
-                            if (allValid === false && currentStep !== step) {
-                                currentStep = step;
-                                updateSteps();
-                            }
+                stepsToValidate.forEach(step => {
+                    if (!validateStep(step)) {
+                        allValid = false;
+                        // Switch to the first invalid step
+                        if (allValid === false && currentStep !== step) {
+                            currentStep = step;
+                            updateSteps();
                         }
-                    });
-
-                    if (!allValid) {
-                        alert('Mohon lengkapi semua field yang diperlukan di semua step sebelum mengirim kampanye.');
-                        return false;
                     }
-
-                    console.log('All validation passed - submitting form...');
-                    
-                    // Show loading state
-                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...';
-                    submitBtn.disabled = true;
-
-                    // Submit form programmatically
-                    setTimeout(() => {
-                        form.submit();
-                    }, 1000);
                 });
-            }
 
-            // Initialize steps
-            updateSteps();
-        });
+                if (!allValid) {
+                    alert('Mohon lengkapi semua field yang diperlukan di semua step sebelum mengirim kampanye.');
+                    return false;
+                }
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const nav = document.getElementById('main-nav');
+                console.log('All validation passed - submitting form...');
+                
+                // Show loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...';
+                submitBtn.disabled = true;
+
+                // Submit form programmatically
+                setTimeout(() => {
+                    form.submit();
+                }, 1000);
+            });
+        }
+
+        // Initialize steps
+        updateSteps();
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const nav = document.getElementById('main-nav');
+        if (nav) {
             if (window.scrollY > 50) {
                 nav.classList.add('shadow-lg');
                 nav.style.backgroundColor = 'rgba(45, 79, 43, 0.95)';
@@ -1384,33 +2113,34 @@
                 nav.classList.remove('shadow-lg');
                 nav.style.backgroundColor = '';
             }
-        });
+        }
+    });
 
-        // Ripple effect for buttons
-        document.querySelectorAll('.ripple-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                ripple.classList.add('ripple');
-                
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
+    // Ripple effect for buttons
+    document.querySelectorAll('.ripple-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
         });
+    });
 
-        // Initialize GSAP
-        gsap.registerPlugin(ScrollTrigger);
-    </script>
+    // Initialize GSAP
+    gsap.registerPlugin(ScrollTrigger);
+</script> 
 </body>
 </html>

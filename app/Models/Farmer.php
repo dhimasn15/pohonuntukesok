@@ -41,6 +41,11 @@ class Farmer extends Model
         return $this->hasMany(FarmerPlant::class);
     }
 
+    public function plantOrders()
+    {
+        return $this->hasMany(FarmerPlantOrder::class);
+    }
+
     public function isApproved()
     {
         return $this->status === 'approved';

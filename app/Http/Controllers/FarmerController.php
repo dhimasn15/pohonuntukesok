@@ -81,7 +81,20 @@ class FarmerController extends Controller
         $farmer = Farmer::where('user_id', Auth::id())->firstOrFail();
         $plants = $farmer->plants()->latest()->get();
         
-        return view('petani.dashboard', compact('farmer', 'plants'));
+        // Get orders for farmer plants
+        $orders = $farmer->plantOrders()
+            ->with(['campaign', 'farmerPlant', 'donation'])
+            ->latest()
+            ->get();
+        
+        // Statistics
+        $totalOrders = $orders->count();
+        $pendingOrders = $orders->where('status', 'pending')->count();
+        $confirmedOrders = $orders->where('status', 'confirmed')->count();
+        $completedOrders = $orders->where('status', 'completed')->count();
+        $totalStockUsed = $orders->sum('quantity');
+        
+        return view('petani.dashboard', compact('farmer', 'plants', 'orders', 'totalOrders', 'pendingOrders', 'confirmedOrders', 'completedOrders', 'totalStockUsed'));
     }
 
     // Kelola tanaman

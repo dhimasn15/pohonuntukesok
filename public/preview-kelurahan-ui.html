@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview - Kelurahan Dropdown Modern UI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.6rem;
+            color: #374151;
+            letter-spacing: 0.3px;
+        }
+        
+        label::after {
+            content: '*';
+            color: #ef4444;
+            margin-left: 0.25rem;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.625rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #ffffff;
+            font-size: 0.95rem;
+            font-family: inherit;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        input:hover, select:hover {
+            border-color: #d1d5db;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #81C784;
+            box-shadow: 0 0 0 4px rgba(129, 199, 132, 0.15), 0 2px 8px 0 rgba(129, 199, 132, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.85rem center;
+            background-size: 1.25rem;
+            padding-right: 2.75rem;
+            cursor: pointer;
+        }
+        
+        select:disabled {
+            background-color: #f3f4f6;
+            border-color: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .location-dropdowns {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.875rem;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+        
+        .location-dropdowns:hover {
+            border-color: #d1d5db;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .location-dropdowns .form-group {
+            margin-bottom: 1.125rem;
+        }
+        
+        .location-dropdowns .form-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        .status-box {
+            margin-top: 30px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #1e40af;
+        }
+        
+        .status-box strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .device-info {
+            margin-top: 20px;
+            padding: 12px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #6b7280;
+            text-align: center;
+        }
+        
+        .device-info strong {
+            color: #374151;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            select {
+                background-position: right 0.75rem center;
+                padding-right: 2.5rem;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            select:focus, input:focus {
+                transform: none; /* Disable transform on mobile */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            input, select {
+                padding: 0.7rem 0.75rem;
+                border-radius: 0.5rem;
+                font-size: 16px;
+            }
+            
+            .location-dropdowns {
+                padding: 0.875rem;
+            }
+            
+            .location-dropdowns .form-group {
+                margin-bottom: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📍 Kelurahan Dropdown</h1>
+        <p class="subtitle">Modern & Responsive Design Preview</p>
+        
+        <div class="location-dropdowns">
+            <div class="form-group">
+                <label for="provinsi">Provinsi</label>
+                <select id="provinsi">
+                    <option value="">-- Pilih Provinsi --</option>
+                    <option value="11">ACEH</option>
+                    <option value="12">SUMATERA UTARA</option>
+                    <option value="31" selected>DKI JAKARTA</option>
+                    <option value="32">JAWA BARAT</option>
+                    <option value="33">JAWA TENGAH</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="kabupaten">Kabupaten/Kota</label>
+                <select id="kabupaten">
+                    <option value="">-- Pilih Kabupaten --</option>
+                    <option value="3173">JAKARTA SELATAN</option>
+                    <option value="3174">JAKARTA TIMUR</option>
+                    <option value="3175" selected>JAKARTA PUSAT</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="kecamatan">Kecamatan</label>
+                <select id="kecamatan">
+                    <option value="">-- Pilih Kecamatan --</option>
+                    <option value="3175010">CEMPAKA PUTIH</option>
+                    <option value="3175020">GAMBIR</option>
+                    <option value="3175030" selected>JOHAR BARU</option>
+                    <option value="3175040">KEMAYORAN</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="kelurahan">Kelurahan</label>
+                <select id="kelurahan">
+                    <option value="">-- Pilih Kelurahan --</option>
+                    <option value="1">Rawa Mangun</option>
+                    <option value="2">Baro</option>
+                    <option value="3" selected>Kramat Pela</option>
+                    <option value="4">Paseban</option>
+                    <option value="5">Cideng</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="status-box">
+            <strong>✅ Status</strong>
+            Ini adalah preview dari dropdown yang sudah di-modernisasi dengan:
+            <br>✓ Styling modern dengan shadow dan transitions smooth
+            <br>✓ Responsive design untuk desktop, tablet, dan mobile
+            <br>✓ Loading dan error states yang visual
+            <br>✓ Font yang lebih besar di mobile untuk mudah diklik
+        </div>
+        
+        <div class="device-info">
+            <strong id="device-name">Desktop</strong>
+            <span id="device-width">Lebar: 1920px</span>
+        </div>
+    </div>
+    
+    <script>
+        // Detect device type and update info
+        function updateDeviceInfo() {
+            const width = window.innerWidth;
+            const deviceName = document.getElementById('device-name');
+            const deviceWidth = document.getElementById('device-width');
+            
+            if (width >= 1024) {
+                deviceName.textContent = '🖥️ Desktop';
+            } else if (width >= 768) {
+                deviceName.textContent = '📱 Tablet';
+            } else {
+                deviceName.textContent = '📱 Mobile';
+            }
+            
+            deviceWidth.textContent = `Lebar: ${width}px`;
+        }
+        
+        updateDeviceInfo();
+        window.addEventListener('resize', updateDeviceInfo);
+        
+        // Add cascade functionality
+        document.getElementById('provinsi').addEventListener('change', function() {
+            const kabupaten = document.getElementById('kabupaten');
+            if (this.value) {
+                kabupaten.disabled = false;
+            } else {
+                kabupaten.disabled = true;
+                kabupaten.value = '';
+            }
+        });
+        
+        document.getElementById('kabupaten').addEventListener('change', function() {
+            const kecamatan = document.getElementById('kecamatan');
+            if (this.value) {
+                kecamatan.disabled = false;
+            } else {
+                kecamatan.disabled = true;
+                kecamatan.value = '';
+            }
+        });
+        
+        document.getElementById('kecamatan').addEventListener('change', function() {
+            const kelurahan = document.getElementById('kelurahan');
+            if (this.value) {
+                kelurahan.disabled = false;
+            } else {
+                kelurahan.disabled = true;
+                kelurahan.value = '';
+            }
+        });
+    </script>
+</body>
+</html>

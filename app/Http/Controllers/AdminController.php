@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Farmer;
+use App\Models\Volunteer;
 use App\Models\Campaign;
 use App\Models\FarmerPlant;
 use Illuminate\Http\Request;
@@ -136,5 +137,53 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.kampanye', compact('campaigns'));
+    }
+
+    // Kelola Relawan
+    public function manageVolunteers()
+    {
+        $pendingVolunteers = Volunteer::where('status', 'pending')
+            ->with('user')
+            ->get();
+
+        $approvedVolunteers = Volunteer::where('status', 'approved')
+            ->with('user')
+            ->get();
+
+        $rejectedVolunteers = Volunteer::where('status', 'rejected')
+            ->with('user')
+            ->get();
+
+        return view('admin.relawan', compact('pendingVolunteers', 'approvedVolunteers', 'rejectedVolunteers'));
+    }
+
+    // Setujui Relawan
+    public function approveVolunteer($id)
+    {
+        $volunteer = Volunteer::findOrFail($id);
+
+        $volunteer->update([
+            'status' => 'approved',
+            'approved_at' => now(),
+        ]);
+
+        return back()->with('success', 'Relawan berhasil disetujui!');
+    }
+
+    // Tolak Relawan
+    public function rejectVolunteer(Request $request, $id)
+    {
+        $request->validate([
+            'catatan_admin' => 'required|string|min:10',
+        ]);
+
+        $volunteer = Volunteer::findOrFail($id);
+
+        $volunteer->update([
+            'status' => 'rejected',
+            'catatan_admin' => $request->catatan_admin,
+        ]);
+
+        return back()->with('success', 'Relawan berhasil ditolak!');
     }
 }

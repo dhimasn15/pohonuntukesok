@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buat Post Baru - PohonUntukEsok</title>
+    <link rel="icon" type="image/png" href="{{ asset('img/logo-tittle.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('img/logo-tittle.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <!-- Responsive Fix CSS -->
+    <link rel="stylesheet" href="{{ asset('css/responsive-fix.css') }}">
     <script>
         tailwind.config = { 
             theme: {
@@ -112,7 +116,7 @@
                 </div>
                 
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                    Buat Post Baru
+                    Buat <span class="text-accent">Blog Lingkungan Anda Sendiri</span>
                 </h1>
                 
                 <p class="text-xl text-white/90 leading-relaxed">

@@ -54,7 +54,7 @@
                 <ul class="space-y-2">
                     <li><a href="{{ route('petani.daftar')}}" class="text-gray-400 hover:text-accent transition-colors"><i
                                 class="fas fa-chevron-right text-xs mr-2"></i> Daftar Sebagai Petani</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
+                    <li><a href="{{ route('relawan.daftar') }}" class="text-gray-400 hover:text-accent transition-colors"><i
                                 class="fas fa-chevron-right text-xs mr-2"></i> Daftar Relawan</a></li>
                     <li><a href="#" class="text-gray-400 hover:text-accent transition-colors"><i
                                 class="fas fa-chevron-right text-xs mr-2"></i> Daftarkan Lokasi Penanaman</a></li>

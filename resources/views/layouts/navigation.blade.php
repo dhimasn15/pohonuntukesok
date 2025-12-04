@@ -174,7 +174,7 @@
             <!-- Close Button -->
             <div class="absolute top-4 right-4">
                 <button id="mobile-close-btn" class="w-10 h-10 flex items-center justify-center text-white hover:text-accent transition-colors">
-                    <i class="fas fa-times text-xl"></i>
+                    
                 </button>
             </div>
 

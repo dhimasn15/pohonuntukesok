@@ -9,6 +9,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Responsive Fix CSS -->
+    <link rel="stylesheet" href="{{ asset('css/responsive-fix.css') }}">
     <script>
         tailwind.config = { 
             theme: {
@@ -144,12 +146,14 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
+            max-width: 100%;
         }
 
         .shape {
             position: absolute;
             opacity: 0.1;
             animation: float 20s infinite ease-in-out;
+            white-space: nowrap;
         }
 
         @keyframes float {
@@ -159,11 +163,17 @@
             75% { transform: translateY(-30px) rotate(270deg); }
         }
 
-        .shape:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .shape:nth-child(2) { left: 30%; animation-delay: -5s; }
-        .shape:nth-child(3) { left: 50%; animation-delay: -10s; }
-        .shape:nth-child(4) { left: 70%; animation-delay: -15s; }
-        .shape:nth-child(5) { left: 90%; animation-delay: -20s; }
+        .shape:nth-child(1) { left: max(5%, -50px); animation-delay: 0s; }
+        .shape:nth-child(2) { left: max(20%, -50px); animation-delay: -5s; }
+        .shape:nth-child(3) { left: max(35%, -50px); animation-delay: -10s; }
+        .shape:nth-child(4) { left: max(50%, -50px); animation-delay: -15s; }
+        .shape:nth-child(5) { left: max(65%, -50px); animation-delay: -20s; }
+        
+        @media (max-width: 768px) {
+            .shape {
+                display: none;
+            }
+        }
 
         .sidebar-modern {
             position: sticky;

@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\UserProfilController;
 use App\Http\User;
 use App\Models\Campaign;
+use App\Http\Controllers\VolunteerController;
 
 // Authentication Routes
 Route::get('/login', [GoogleAuthController::class, 'showLoginForm'])->name('login');
@@ -17,7 +19,6 @@ Route::post('/logout', [GoogleAuthController::class, 'logout'])->name('logout');
 
 // Google OAuth
 Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('google.login');
-Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
 
 // Di routes/web.php
 Route::get('/debug-user', function () {
@@ -103,12 +104,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/users', [AdminController::class, 'manageUsers'])->name('admin.users');
     Route::post('/users/{id}/toggle-status', [AdminController::class, 'toggleUserStatus'])->name('admin.users.toggle-status');
     Route::get('/kampanye', [AdminController::class, 'manageCampaigns'])->name('admin.kampanye');
+    // Kelola relawan
+    Route::get('/relawan', [AdminController::class, 'manageVolunteers'])->name('admin.relawan');
+    Route::post('/relawan/{id}/approve', [AdminController::class, 'approveVolunteer'])->name('admin.relawan.approve');
+    Route::post('/relawan/{id}/reject', [AdminController::class, 'rejectVolunteer'])->name('admin.relawan.reject');
 });
 
-// Route untuk relawan dan lokasi (placeholder)
-Route::get('/relawan/daftar', function () {
-    return view('relawan.daftar');
-})->name('relawan.daftar');
+// Route untuk relawan
+Route::middleware(['auth'])->group(function () {
+    Route::get('/relawan/daftar', [VolunteerController::class, 'create'])->name('relawan.daftar');
+    Route::post('/relawan/daftar', [VolunteerController::class, 'store'])->name('relawan.store');
+});
 
 Route::get('/lokasi/daftar', function () {
     return view('lokasi.daftar');
@@ -158,13 +164,24 @@ Route::post('/ckeditor/upload', [UserBlogController::class, 'uploadImage'])
     ->middleware('auth');
 // ============================================================================
 
+// API Routes for Location Data
+Route::get('/api/provinces', [\App\Http\Controllers\LocationApiController::class, 'getProvinces']);
+Route::get('/api/regencies/{provinceId}', [\App\Http\Controllers\LocationApiController::class, 'getRegencies']);
+Route::get('/api/districts/{regencyId}', [\App\Http\Controllers\LocationApiController::class, 'getDistricts']);
+Route::get('/api/villages', [\App\Http\Controllers\LocationApiController::class, 'getVillages']);
+
 // Payment & Donation Routes
 Route::post('/donate', [\App\Http\Controllers\DonationController::class, 'createDonation'])->name('donate');
+Route::get('/donation-success-check', [\App\Http\Controllers\DonationController::class, 'successCheck'])->name('donation.success-check');
 Route::get('/my-donations', [\App\Http\Controllers\DonationController::class, 'myDonations'])->middleware('auth')->name('my.donations');
 Route::get('/donation/{donationId}', [\App\Http\Controllers\DonationController::class, 'getDonation'])->name('donation.show');
 Route::get('/donation/{donationId}/success', [\App\Http\Controllers\DonationController::class, 'showSuccess'])->name('donation.success');
+Route::get('/donation/{donationId}/handle-success', [\App\Http\Controllers\DonationController::class, 'handleSuccess'])->name('donation.handle-success');
 Route::get('/donation/{donationId}/status', [\App\Http\Controllers\DonationController::class, 'checkStatus'])->name('donation.status');
 Route::get('/campaign/{campaignId}/donations', [\App\Http\Controllers\DonationController::class, 'getCampaignDonations'])->name('campaign.donations');
+
+// API Routes for Campaign Data (Progress Updates)
+Route::get('/api/campaigns/{campaignId}', [\App\Http\Controllers\CampaignController::class, 'getCampaignData'])->name('api.campaign.data');
 
 // Xendit Webhook (no CSRF required)
 Route::post('/xendit/webhook', [\App\Http\Controllers\XenditWebhookController::class, 'handle'])->withoutMiddleware('web');

@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
+use App\Models\Farmer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,17 @@ class CampaignController extends Controller
 
     public function create()
     {
-        return view('buat');
+        // Fetch farmer plants dari farmer yang approved dengan stok > 0
+        $farmerPlants = DB::table('farmer_plants')
+            ->join('farmers', 'farmer_plants.farmer_id', '=', 'farmers.id')
+            ->where('farmers.status', 'approved')
+            ->where('farmer_plants.status', 'tersedia')
+            ->where('farmer_plants.stok', '>', 0)
+            ->select('farmer_plants.*', 'farmers.nama_lengkap')
+            ->orderBy('farmer_plants.jenis_tanaman')
+            ->get();
+
+        return view('buat', compact('farmerPlants'));
     }
 
     public function store(Request $request)
@@ -38,7 +49,23 @@ class CampaignController extends Controller
             'description' => 'required|string',
             'category' => 'required|string',
             'location' => 'required|string|max:255',
-            'tree_type' => 'required|string|max:255',
+            'province_id' => 'nullable|numeric',
+            'regency_id' => 'nullable|numeric',
+            'district_id' => 'nullable|numeric',
+            'village_id' => 'nullable|numeric',
+            'tree_type' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+                $exists = DB::table('farmer_plants')
+                    ->join('farmers', 'farmer_plants.farmer_id', '=', 'farmers.id')
+                    ->where('farmers.status', 'approved')
+                    ->where('farmer_plants.status', 'tersedia')
+                    ->where('farmer_plants.jenis_tanaman', $value)
+                    ->where('farmer_plants.stok', '>', 0)
+                    ->exists();
+                
+                if (!$exists) {
+                    $fail('Jenis pohon yang dipilih tidak tersedia atau stok habis. Silakan pilih jenis pohon lain.');
+                }
+            }],
             'target_trees' => 'required|integer|min:10',
             'tree_price' => 'required|numeric|min:5000',
             'campaign_duration' => 'required|integer|min:7|max:365',
@@ -58,12 +85,26 @@ class CampaignController extends Controller
                 $imagePath = null;
             }
 
+            // Get farmer plant yang dipilih
+            $farmerPlant = DB::table('farmer_plants')
+                ->join('farmers', 'farmer_plants.farmer_id', '=', 'farmers.id')
+                ->where('farmers.status', 'approved')
+                ->where('farmer_plants.status', 'tersedia')
+                ->where('farmer_plants.jenis_tanaman', $validated['tree_type'])
+                ->where('farmer_plants.stok', '>', 0)
+                ->select('farmer_plants.id', 'farmer_plants.farmer_id', 'farmer_plants.stok')
+                ->first();
+
             // Create campaign
             $campaign = Campaign::create([
                 'title' => $validated['title'],
                 'description' => $validated['description'],
                 'category' => $validated['category'],
                 'location' => $validated['location'],
+                'province_id' => $validated['province_id'] ?? null,
+                'regency_id' => $validated['regency_id'] ?? null,
+                'district_id' => $validated['district_id'] ?? null,
+                'village_id' => $validated['village_id'] ?? null,
                 'tree_type' => $validated['tree_type'],
                 'target_trees' => $validated['target_trees'],
                 'tree_price' => $validated['tree_price'],
@@ -75,7 +116,9 @@ class CampaignController extends Controller
                 'status' => 'active',
                 'current_trees' => 0,
                 'total_donors' => 0,
-                'user_id' => Auth::id()
+                'user_id' => Auth::id(),
+                'farmer_plant_id' => $farmerPlant->id ?? null,
+                'trees_from_farmer' => 0
             ]);
 
             DB::commit();
@@ -134,5 +177,39 @@ class CampaignController extends Controller
     public function show(Campaign $campaign)
     {
         return view('kampanye-detail', compact('campaign'));
+    }
+
+    /**
+     * Get campaign data for progress update (API)
+     */
+    public function getCampaignData($campaignId)
+    {
+        try {
+            $campaign = Campaign::select([
+                'id',
+                'title',
+                'current_trees',
+                'target_trees',
+                'total_donors',
+                'progress_percentage'
+            ])->findOrFail($campaignId);
+
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'id' => $campaign->id,
+                    'title' => $campaign->title,
+                    'current_trees' => $campaign->current_trees,
+                    'target_trees' => $campaign->target_trees,
+                    'total_donors' => $campaign->total_donors,
+                    'progress_percentage' => $campaign->progress_percentage,
+                ],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Campaign tidak ditemukan',
+            ], 404);
+        }
     }
 }

@@ -158,6 +158,102 @@
                                 </div>
                             @endif
                         </div>
+
+                        <!-- Orders/Pesanan -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6 mt-8">
+                            <div class="mb-6">
+                                <h3 class="text-xl font-bold text-primary flex items-center">
+                                    <i class="fas fa-shopping-cart mr-3"></i>Pesanan Tanaman Saya
+                                </h3>
+                                <p class="text-gray-600 text-sm mt-1">Daftar pesanan dari kampanye yang menggunakan tanaman Anda</p>
+                            </div>
+
+                            <!-- Statistik Orders -->
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                                <div class="bg-blue-50 rounded-lg p-4 text-center">
+                                    <div class="text-2xl font-bold text-blue-600">{{ $totalOrders }}</div>
+                                    <div class="text-xs text-gray-600">Total Pesanan</div>
+                                </div>
+                                <div class="bg-yellow-50 rounded-lg p-4 text-center">
+                                    <div class="text-2xl font-bold text-yellow-600">{{ $pendingOrders }}</div>
+                                    <div class="text-xs text-gray-600">Menunggu Konfirmasi</div>
+                                </div>
+                                <div class="bg-purple-50 rounded-lg p-4 text-center">
+                                    <div class="text-2xl font-bold text-purple-600">{{ $confirmedOrders }}</div>
+                                    <div class="text-xs text-gray-600">Dikonfirmasi</div>
+                                </div>
+                                <div class="bg-green-50 rounded-lg p-4 text-center">
+                                    <div class="text-2xl font-bold text-green-600">{{ $completedOrders }}</div>
+                                    <div class="text-xs text-gray-600">Selesai</div>
+                                </div>
+                            </div>
+
+                            <!-- Orders Table/List -->
+                            @if($orders->count() > 0)
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm">
+                                        <thead>
+                                            <tr class="border-b bg-gray-50">
+                                                <th class="px-4 py-3 text-left font-semibold text-gray-700">Kampanye</th>
+                                                <th class="px-4 py-3 text-left font-semibold text-gray-700">Tanaman</th>
+                                                <th class="px-4 py-3 text-center font-semibold text-gray-700">Jumlah</th>
+                                                <th class="px-4 py-3 text-center font-semibold text-gray-700">Status</th>
+                                                <th class="px-4 py-3 text-center font-semibold text-gray-700">Tanggal</th>
+                                                <th class="px-4 py-3 text-center font-semibold text-gray-700">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($orders as $order)
+                                                <tr class="border-b hover:bg-gray-50">
+                                                    <td class="px-4 py-3">
+                                                        <a href="{{ route('kampanye.show', $order->campaign_id) }}" 
+                                                           class="text-primary hover:underline font-medium">
+                                                            {{ $order->campaign->title }}
+                                                        </a>
+                                                    </td>
+                                                    <td class="px-4 py-3">
+                                                        {{ $order->farmerPlant->jenis_tanaman }}
+                                                    </td>
+                                                    <td class="px-4 py-3 text-center font-semibold">
+                                                        {{ $order->quantity }} pohon
+                                                    </td>
+                                                    <td class="px-4 py-3 text-center">
+                                                        @php
+                                                            $statusConfig = [
+                                                                'pending' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-800', 'label' => 'Menunggu Konfirmasi'],
+                                                                'confirmed' => ['bg' => 'bg-purple-100', 'text' => 'text-purple-800', 'label' => 'Dikonfirmasi'],
+                                                                'completed' => ['bg' => 'bg-green-100', 'text' => 'text-green-800', 'label' => 'Selesai'],
+                                                                'cancelled' => ['bg' => 'bg-red-100', 'text' => 'text-red-800', 'label' => 'Dibatalkan'],
+                                                            ];
+                                                            $config = $statusConfig[$order->status] ?? $statusConfig['pending'];
+                                                        @endphp
+                                                        <span class="px-2 py-1 rounded-full text-xs font-medium {{ $config['bg'] }} {{ $config['text'] }}">
+                                                            {{ $config['label'] }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-4 py-3 text-center text-xs text-gray-600">
+                                                        {{ $order->created_at->format('d M Y') }}
+                                                    </td>
+                                                    <td class="px-4 py-3 text-center">
+                                                        @if($order->status === 'pending')
+                                                            <button class="text-primary hover:text-green-700 font-medium text-xs">
+                                                                <i class="fas fa-check mr-1"></i>Konfirmasi
+                                                            </button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @else
+                                <div class="text-center py-8 text-gray-500">
+                                    <i class="fas fa-inbox text-4xl mb-4 opacity-50"></i>
+                                    <p>Belum ada pesanan untuk tanaman Anda</p>
+                                    <p class="text-xs mt-2 text-gray-400">Pesanan akan muncul di sini ketika ada yang memesan pohon Anda</p>
+                                </div>
+                            @endif
+                        </div>
                     @elseif($farmer->isPending())
                         <!-- Status Pending -->
                         <div class="bg-white rounded-2xl shadow-lg p-8 text-center">

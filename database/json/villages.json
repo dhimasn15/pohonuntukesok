@@ -1,0 +1,752 @@
+[
+    {
+        "id": 1,
+        "kecamatan_id": 1101010,
+        "name": "Kelurahan 1"
+    },
+    {
+        "id": 2,
+        "kecamatan_id": 1101010,
+        "name": "Kelurahan 2"
+    },
+    {
+        "id": 3,
+        "kecamatan_id": 1101010,
+        "name": "Kelurahan 3"
+    },
+    {
+        "id": 4,
+        "kecamatan_id": 1101020,
+        "name": "Kelurahan 4"
+    },
+    {
+        "id": 5,
+        "kecamatan_id": 1101020,
+        "name": "Kelurahan 5"
+    },
+    {
+        "id": 6,
+        "kecamatan_id": 1101020,
+        "name": "Kelurahan 6"
+    },
+    {
+        "id": 7,
+        "kecamatan_id": 1101021,
+        "name": "Kelurahan 7"
+    },
+    {
+        "id": 8,
+        "kecamatan_id": 1101021,
+        "name": "Kelurahan 8"
+    },
+    {
+        "id": 9,
+        "kecamatan_id": 1101021,
+        "name": "Kelurahan 9"
+    },
+    {
+        "id": 10,
+        "kecamatan_id": 1101022,
+        "name": "Kelurahan 10"
+    },
+    {
+        "id": 11,
+        "kecamatan_id": 1101022,
+        "name": "Kelurahan 11"
+    },
+    {
+        "id": 12,
+        "kecamatan_id": 1101022,
+        "name": "Kelurahan 12"
+    },
+    {
+        "id": 13,
+        "kecamatan_id": 1101030,
+        "name": "Kelurahan 13"
+    },
+    {
+        "id": 14,
+        "kecamatan_id": 1101030,
+        "name": "Kelurahan 14"
+    },
+    {
+        "id": 15,
+        "kecamatan_id": 1101030,
+        "name": "Kelurahan 15"
+    },
+    {
+        "id": 16,
+        "kecamatan_id": 1101031,
+        "name": "Kelurahan 16"
+    },
+    {
+        "id": 17,
+        "kecamatan_id": 1101031,
+        "name": "Kelurahan 17"
+    },
+    {
+        "id": 18,
+        "kecamatan_id": 1101031,
+        "name": "Kelurahan 18"
+    },
+    {
+        "id": 19,
+        "kecamatan_id": 1101032,
+        "name": "Kelurahan 19"
+    },
+    {
+        "id": 20,
+        "kecamatan_id": 1101032,
+        "name": "Kelurahan 20"
+    },
+    {
+        "id": 21,
+        "kecamatan_id": 1101032,
+        "name": "Kelurahan 21"
+    },
+    {
+        "id": 22,
+        "kecamatan_id": 1101040,
+        "name": "Kelurahan 22"
+    },
+    {
+        "id": 23,
+        "kecamatan_id": 1101040,
+        "name": "Kelurahan 23"
+    },
+    {
+        "id": 24,
+        "kecamatan_id": 1101040,
+        "name": "Kelurahan 24"
+    },
+    {
+        "id": 25,
+        "kecamatan_id": 1101050,
+        "name": "Kelurahan 25"
+    },
+    {
+        "id": 26,
+        "kecamatan_id": 1101050,
+        "name": "Kelurahan 26"
+    },
+    {
+        "id": 27,
+        "kecamatan_id": 1101050,
+        "name": "Kelurahan 27"
+    },
+    {
+        "id": 28,
+        "kecamatan_id": 1101051,
+        "name": "Kelurahan 28"
+    },
+    {
+        "id": 29,
+        "kecamatan_id": 1101051,
+        "name": "Kelurahan 29"
+    },
+    {
+        "id": 30,
+        "kecamatan_id": 1101051,
+        "name": "Kelurahan 30"
+    },
+    {
+        "id": 31,
+        "kecamatan_id": 1102010,
+        "name": "Kelurahan 31"
+    },
+    {
+        "id": 32,
+        "kecamatan_id": 1102010,
+        "name": "Kelurahan 32"
+    },
+    {
+        "id": 33,
+        "kecamatan_id": 1102010,
+        "name": "Kelurahan 33"
+    },
+    {
+        "id": 34,
+        "kecamatan_id": 1102011,
+        "name": "Kelurahan 34"
+    },
+    {
+        "id": 35,
+        "kecamatan_id": 1102011,
+        "name": "Kelurahan 35"
+    },
+    {
+        "id": 36,
+        "kecamatan_id": 1102011,
+        "name": "Kelurahan 36"
+    },
+    {
+        "id": 37,
+        "kecamatan_id": 1102020,
+        "name": "Kelurahan 37"
+    },
+    {
+        "id": 38,
+        "kecamatan_id": 1102020,
+        "name": "Kelurahan 38"
+    },
+    {
+        "id": 39,
+        "kecamatan_id": 1102020,
+        "name": "Kelurahan 39"
+    },
+    {
+        "id": 40,
+        "kecamatan_id": 1102021,
+        "name": "Kelurahan 40"
+    },
+    {
+        "id": 41,
+        "kecamatan_id": 1102021,
+        "name": "Kelurahan 41"
+    },
+    {
+        "id": 42,
+        "kecamatan_id": 1102021,
+        "name": "Kelurahan 42"
+    },
+    {
+        "id": 43,
+        "kecamatan_id": 1102022,
+        "name": "Kelurahan 43"
+    },
+    {
+        "id": 44,
+        "kecamatan_id": 1102022,
+        "name": "Kelurahan 44"
+    },
+    {
+        "id": 45,
+        "kecamatan_id": 1102022,
+        "name": "Kelurahan 45"
+    },
+    {
+        "id": 46,
+        "kecamatan_id": 1102030,
+        "name": "Kelurahan 46"
+    },
+    {
+        "id": 47,
+        "kecamatan_id": 1102030,
+        "name": "Kelurahan 47"
+    },
+    {
+        "id": 48,
+        "kecamatan_id": 1102030,
+        "name": "Kelurahan 48"
+    },
+    {
+        "id": 49,
+        "kecamatan_id": 1102031,
+        "name": "Kelurahan 49"
+    },
+    {
+        "id": 50,
+        "kecamatan_id": 1102031,
+        "name": "Kelurahan 50"
+    },
+    {
+        "id": 51,
+        "kecamatan_id": 1102031,
+        "name": "Kelurahan 51"
+    },
+    {
+        "id": 52,
+        "kecamatan_id": 1102032,
+        "name": "Kelurahan 52"
+    },
+    {
+        "id": 53,
+        "kecamatan_id": 1102032,
+        "name": "Kelurahan 53"
+    },
+    {
+        "id": 54,
+        "kecamatan_id": 1102032,
+        "name": "Kelurahan 54"
+    },
+    {
+        "id": 55,
+        "kecamatan_id": 1102033,
+        "name": "Kelurahan 55"
+    },
+    {
+        "id": 56,
+        "kecamatan_id": 1102033,
+        "name": "Kelurahan 56"
+    },
+    {
+        "id": 57,
+        "kecamatan_id": 1102033,
+        "name": "Kelurahan 57"
+    },
+    {
+        "id": 58,
+        "kecamatan_id": 1102042,
+        "name": "Kelurahan 58"
+    },
+    {
+        "id": 59,
+        "kecamatan_id": 1102042,
+        "name": "Kelurahan 59"
+    },
+    {
+        "id": 60,
+        "kecamatan_id": 1102042,
+        "name": "Kelurahan 60"
+    },
+    {
+        "id": 61,
+        "kecamatan_id": 1102043,
+        "name": "Kelurahan 61"
+    },
+    {
+        "id": 62,
+        "kecamatan_id": 1102043,
+        "name": "Kelurahan 62"
+    },
+    {
+        "id": 63,
+        "kecamatan_id": 1102043,
+        "name": "Kelurahan 63"
+    },
+    {
+        "id": 64,
+        "kecamatan_id": 1103010,
+        "name": "Kelurahan 64"
+    },
+    {
+        "id": 65,
+        "kecamatan_id": 1103010,
+        "name": "Kelurahan 65"
+    },
+    {
+        "id": 66,
+        "kecamatan_id": 1103010,
+        "name": "Kelurahan 66"
+    },
+    {
+        "id": 67,
+        "kecamatan_id": 1103011,
+        "name": "Kelurahan 67"
+    },
+    {
+        "id": 68,
+        "kecamatan_id": 1103011,
+        "name": "Kelurahan 68"
+    },
+    {
+        "id": 69,
+        "kecamatan_id": 1103011,
+        "name": "Kelurahan 69"
+    },
+    {
+        "id": 70,
+        "kecamatan_id": 1103012,
+        "name": "Kelurahan 70"
+    },
+    {
+        "id": 71,
+        "kecamatan_id": 1103012,
+        "name": "Kelurahan 71"
+    },
+    {
+        "id": 72,
+        "kecamatan_id": 1103012,
+        "name": "Kelurahan 72"
+    },
+    {
+        "id": 73,
+        "kecamatan_id": 1103020,
+        "name": "Kelurahan 73"
+    },
+    {
+        "id": 74,
+        "kecamatan_id": 1103020,
+        "name": "Kelurahan 74"
+    },
+    {
+        "id": 75,
+        "kecamatan_id": 1103020,
+        "name": "Kelurahan 75"
+    },
+    {
+        "id": 76,
+        "kecamatan_id": 1103021,
+        "name": "Kelurahan 76"
+    },
+    {
+        "id": 77,
+        "kecamatan_id": 1103021,
+        "name": "Kelurahan 77"
+    },
+    {
+        "id": 78,
+        "kecamatan_id": 1103021,
+        "name": "Kelurahan 78"
+    },
+    {
+        "id": 79,
+        "kecamatan_id": 1103022,
+        "name": "Kelurahan 79"
+    },
+    {
+        "id": 80,
+        "kecamatan_id": 1103022,
+        "name": "Kelurahan 80"
+    },
+    {
+        "id": 81,
+        "kecamatan_id": 1103022,
+        "name": "Kelurahan 81"
+    },
+    {
+        "id": 82,
+        "kecamatan_id": 1103030,
+        "name": "Kelurahan 82"
+    },
+    {
+        "id": 83,
+        "kecamatan_id": 1103030,
+        "name": "Kelurahan 83"
+    },
+    {
+        "id": 84,
+        "kecamatan_id": 1103030,
+        "name": "Kelurahan 84"
+    },
+    {
+        "id": 85,
+        "kecamatan_id": 1103031,
+        "name": "Kelurahan 85"
+    },
+    {
+        "id": 86,
+        "kecamatan_id": 1103031,
+        "name": "Kelurahan 86"
+    },
+    {
+        "id": 87,
+        "kecamatan_id": 1103031,
+        "name": "Kelurahan 87"
+    },
+    {
+        "id": 88,
+        "kecamatan_id": 1103040,
+        "name": "Kelurahan 88"
+    },
+    {
+        "id": 89,
+        "kecamatan_id": 1103040,
+        "name": "Kelurahan 89"
+    },
+    {
+        "id": 90,
+        "kecamatan_id": 1103040,
+        "name": "Kelurahan 90"
+    },
+    {
+        "id": 91,
+        "kecamatan_id": 1103041,
+        "name": "Kelurahan 91"
+    },
+    {
+        "id": 92,
+        "kecamatan_id": 1103041,
+        "name": "Kelurahan 92"
+    },
+    {
+        "id": 93,
+        "kecamatan_id": 1103041,
+        "name": "Kelurahan 93"
+    },
+    {
+        "id": 94,
+        "kecamatan_id": 1103042,
+        "name": "Kelurahan 94"
+    },
+    {
+        "id": 95,
+        "kecamatan_id": 1103042,
+        "name": "Kelurahan 95"
+    },
+    {
+        "id": 96,
+        "kecamatan_id": 1103042,
+        "name": "Kelurahan 96"
+    },
+    {
+        "id": 97,
+        "kecamatan_id": 1103050,
+        "name": "Kelurahan 97"
+    },
+    {
+        "id": 98,
+        "kecamatan_id": 1103050,
+        "name": "Kelurahan 98"
+    },
+    {
+        "id": 99,
+        "kecamatan_id": 1103050,
+        "name": "Kelurahan 99"
+    },
+    {
+        "id": 100,
+        "kecamatan_id": 1103060,
+        "name": "Kelurahan 100"
+    },
+    {
+        "id": 101,
+        "kecamatan_id": 1103060,
+        "name": "Kelurahan 101"
+    },
+    {
+        "id": 102,
+        "kecamatan_id": 1103060,
+        "name": "Kelurahan 102"
+    },
+    {
+        "id": 103,
+        "kecamatan_id": 1103070,
+        "name": "Kelurahan 103"
+    },
+    {
+        "id": 104,
+        "kecamatan_id": 1103070,
+        "name": "Kelurahan 104"
+    },
+    {
+        "id": 105,
+        "kecamatan_id": 1103070,
+        "name": "Kelurahan 105"
+    },
+    {
+        "id": 106,
+        "kecamatan_id": 1103080,
+        "name": "Kelurahan 106"
+    },
+    {
+        "id": 107,
+        "kecamatan_id": 1103080,
+        "name": "Kelurahan 107"
+    },
+    {
+        "id": 108,
+        "kecamatan_id": 1103080,
+        "name": "Kelurahan 108"
+    },
+    {
+        "id": 109,
+        "kecamatan_id": 1103090,
+        "name": "Kelurahan 109"
+    },
+    {
+        "id": 110,
+        "kecamatan_id": 1103090,
+        "name": "Kelurahan 110"
+    },
+    {
+        "id": 111,
+        "kecamatan_id": 1103090,
+        "name": "Kelurahan 111"
+    },
+    {
+        "id": 112,
+        "kecamatan_id": 1103091,
+        "name": "Kelurahan 112"
+    },
+    {
+        "id": 113,
+        "kecamatan_id": 1103091,
+        "name": "Kelurahan 113"
+    },
+    {
+        "id": 114,
+        "kecamatan_id": 1103091,
+        "name": "Kelurahan 114"
+    },
+    {
+        "id": 115,
+        "kecamatan_id": 1103092,
+        "name": "Kelurahan 115"
+    },
+    {
+        "id": 116,
+        "kecamatan_id": 1103092,
+        "name": "Kelurahan 116"
+    },
+    {
+        "id": 117,
+        "kecamatan_id": 1103092,
+        "name": "Kelurahan 117"
+    },
+    {
+        "id": 118,
+        "kecamatan_id": 1104010,
+        "name": "Kelurahan 118"
+    },
+    {
+        "id": 119,
+        "kecamatan_id": 1104010,
+        "name": "Kelurahan 119"
+    },
+    {
+        "id": 120,
+        "kecamatan_id": 1104010,
+        "name": "Kelurahan 120"
+    },
+    {
+        "id": 121,
+        "kecamatan_id": 1104011,
+        "name": "Kelurahan 121"
+    },
+    {
+        "id": 122,
+        "kecamatan_id": 1104011,
+        "name": "Kelurahan 122"
+    },
+    {
+        "id": 123,
+        "kecamatan_id": 1104011,
+        "name": "Kelurahan 123"
+    },
+    {
+        "id": 124,
+        "kecamatan_id": 1104012,
+        "name": "Kelurahan 124"
+    },
+    {
+        "id": 125,
+        "kecamatan_id": 1104012,
+        "name": "Kelurahan 125"
+    },
+    {
+        "id": 126,
+        "kecamatan_id": 1104012,
+        "name": "Kelurahan 126"
+    },
+    {
+        "id": 127,
+        "kecamatan_id": 1104020,
+        "name": "Kelurahan 127"
+    },
+    {
+        "id": 128,
+        "kecamatan_id": 1104020,
+        "name": "Kelurahan 128"
+    },
+    {
+        "id": 129,
+        "kecamatan_id": 1104020,
+        "name": "Kelurahan 129"
+    },
+    {
+        "id": 130,
+        "kecamatan_id": 1104021,
+        "name": "Kelurahan 130"
+    },
+    {
+        "id": 131,
+        "kecamatan_id": 1104021,
+        "name": "Kelurahan 131"
+    },
+    {
+        "id": 132,
+        "kecamatan_id": 1104021,
+        "name": "Kelurahan 132"
+    },
+    {
+        "id": 133,
+        "kecamatan_id": 1104022,
+        "name": "Kelurahan 133"
+    },
+    {
+        "id": 134,
+        "kecamatan_id": 1104022,
+        "name": "Kelurahan 134"
+    },
+    {
+        "id": 135,
+        "kecamatan_id": 1104022,
+        "name": "Kelurahan 135"
+    },
+    {
+        "id": 136,
+        "kecamatan_id": 1104023,
+        "name": "Kelurahan 136"
+    },
+    {
+        "id": 137,
+        "kecamatan_id": 1104023,
+        "name": "Kelurahan 137"
+    },
+    {
+        "id": 138,
+        "kecamatan_id": 1104023,
+        "name": "Kelurahan 138"
+    },
+    {
+        "id": 139,
+        "kecamatan_id": 1104030,
+        "name": "Kelurahan 139"
+    },
+    {
+        "id": 140,
+        "kecamatan_id": 1104030,
+        "name": "Kelurahan 140"
+    },
+    {
+        "id": 141,
+        "kecamatan_id": 1104030,
+        "name": "Kelurahan 141"
+    },
+    {
+        "id": 142,
+        "kecamatan_id": 1104031,
+        "name": "Kelurahan 142"
+    },
+    {
+        "id": 143,
+        "kecamatan_id": 1104031,
+        "name": "Kelurahan 143"
+    },
+    {
+        "id": 144,
+        "kecamatan_id": 1104031,
+        "name": "Kelurahan 144"
+    },
+    {
+        "id": 145,
+        "kecamatan_id": 1104032,
+        "name": "Kelurahan 145"
+    },
+    {
+        "id": 146,
+        "kecamatan_id": 1104032,
+        "name": "Kelurahan 146"
+    },
+    {
+        "id": 147,
+        "kecamatan_id": 1104032,
+        "name": "Kelurahan 147"
+    },
+    {
+        "id": 148,
+        "kecamatan_id": 1104040,
+        "name": "Kelurahan 148"
+    },
+    {
+        "id": 149,
+        "kecamatan_id": 1104040,
+        "name": "Kelurahan 149"
+    },
+    {
+        "id": 150,
+        "kecamatan_id": 1104040,
+        "name": "Kelurahan 150"
+    }
+]

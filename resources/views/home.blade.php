@@ -15,6 +15,8 @@
     <!-- GSAP for advanced animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Responsive Fix CSS -->
+    <link rel="stylesheet" href="{{ asset('css/responsive-fix.css') }}">
     <script>
         tailwind.config = {
             theme: {
@@ -43,6 +45,8 @@
                         'leaf-fall': 'leafFall 10s linear infinite',
                         'ripple': 'ripple 2s linear infinite',
                         'shine': 'shine 3s linear infinite',
+                        'scale-up': 'scaleUp 0.6s ease-out',
+                        'slide-in-up': 'slideInUp 0.5s ease-out',
                     },
                     keyframes: {
                         float: {
@@ -78,6 +82,15 @@
                         shine: {
                             '0%': { transform: 'translateX(-100%) skewX(-15deg)' },
                             '100%': { transform: 'translateX(200%) skewX(-15deg)' },
+                        },
+                        scaleUp: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '70%': { transform: 'scale(1.05)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        slideInUp: {
+                            'from': { transform: 'translateY(50px) scale(0.95)', opacity: '0' },
+                            'to': { transform: 'translateY(0) scale(1)', opacity: '1' },
                         }
                     }
                 }
@@ -98,6 +111,89 @@
             margin-right: auto;
         }
 
+        /* Alert Container untuk pembayaran berhasil */
+        #paymentSuccessModal {
+            z-index: 10002;
+        }
+
+        /* Animasi untuk modal pembayaran berhasil */
+        @keyframes scaleUp {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            70% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes modalRipple {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatIcon {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes modalSlideInUp {
+            from {
+                transform: translateY(50px) scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .animate-scale-up {
+            animation: scaleUp 0.6s ease-out forwards;
+        }
+
+        .animate-modal-ripple {
+            animation: modalRipple 2s ease-out infinite;
+        }
+
+        .animate-modal-ripple-delayed {
+            animation: modalRipple 2s ease-out infinite;
+            animation-delay: 0.5s;
+        }
+
+        .animate-float {
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        /* Confetti effect */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background: #10B981;
+            opacity: 0;
+        }
+
+        .confetti:nth-child(1) { background: #10B981; }
+        .confetti:nth-child(2) { background: #34D399; }
+        .confetti:nth-child(3) { background: #059669; }
+        .confetti:nth-child(4) { background: #84CC16; }
+        .confetti:nth-child(5) { background: #65A30D; }
+
         /* Alert Styles */
         .alert {
             position: fixed;
@@ -105,6 +201,7 @@
             right: 20px;
             z-index: 10000;
             max-width: 400px;
+            max-width: calc(100% - 40px);
             border-radius: 12px;
             padding: 16px 20px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -113,6 +210,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            overflow: hidden;
         }
 
         .alert.show {
@@ -184,13 +282,19 @@
                 top: 80px;
                 right: 10px;
                 left: 10px;
-                max-width: none;
+                max-width: calc(100% - 20px) !important;
                 transform: translateY(-100px);
             }
 
             .alert.show {
                 transform: translateY(0);
             }
+        }
+        
+        /* Prevent horizontal scroll */
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         /* Hero Section Styles */
@@ -201,6 +305,7 @@
             align-items: center;
             position: relative;
             overflow: hidden;
+            max-width: 100%;
         }
 
         .hero-content {
@@ -221,6 +326,7 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
+            max-width: 100%;
         }
 
         .shape {
@@ -228,6 +334,7 @@
             top: 80px;
             opacity: 0.1;
             animation: float 20s infinite ease-in-out;
+            white-space: nowrap;
         }
 
         @keyframes float {
@@ -237,11 +344,17 @@
             75% { transform: translateY(-30px) rotate(270deg); }
         }
 
-        .shape:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .shape:nth-child(2) { left: 30%; animation-delay: -5s; }
-        .shape:nth-child(3) { left: 50%; animation-delay: -10s; }
-        .shape:nth-child(4) { left: 70%; animation-delay: -15s; }
-        .shape:nth-child(5) { left: 90%; animation-delay: -20s; }
+        .shape:nth-child(1) { left: max(5%, -50px); animation-delay: 0s; }
+        .shape:nth-child(2) { left: max(20%, -50px); animation-delay: -5s; }
+        .shape:nth-child(3) { left: max(35%, -50px); animation-delay: -10s; }
+        .shape:nth-child(4) { left: max(50%, -50px); animation-delay: -15s; }
+        .shape:nth-child(5) { left: max(65%, -50px); animation-delay: -20s; }
+        
+        @media (max-width: 768px) {
+            .shape {
+                display: none;
+            }
+        }
 
         .cta-button {
             background: linear-gradient(135deg, #2D4F2B 0%, #3d6b3a 100%);
@@ -594,6 +707,79 @@
 <!-- Alert Container -->
 <div id="alertContainer"></div>
 
+<!-- Modal Pembayaran Berhasil -->
+<div id="paymentSuccessModal" class="fixed inset-0 hidden items-center justify-center p-4 bg-black/50 backdrop-blur-sm z-[10002]">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all duration-500 scale-95 opacity-0 modal-content">
+        <!-- Header dengan gradient -->
+        <div class="relative h-40 bg-gradient-to-r from-emerald-500 to-green-600 flex items-center justify-center">
+            <!-- Background pattern -->
+            <div class="absolute inset-0 opacity-20">
+                <div class="absolute top-4 left-4 text-3xl">🌿</div>
+                <div class="absolute bottom-4 right-4 text-3xl">🌱</div>
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl">🌳</div>
+            </div>
+            
+            <!-- Success Icon dengan animasi -->
+            <div class="relative z-10">
+                <div class="w-24 h-24 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
+                        <i class="fas fa-check-circle text-5xl text-emerald-600 animate-scale-up"></i>
+                    </div>
+                </div>
+                <!-- Ripple effect -->
+                <div class="absolute inset-0 w-24 h-24 rounded-full border-4 border-white/30 animate-modal-ripple"></div>
+                <div class="absolute inset-0 w-24 h-24 rounded-full border-4 border-white/20 animate-modal-ripple-delayed"></div>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="p-8 text-center">
+            <h3 class="text-2xl font-bold text-gray-800 mb-3">Pembayaran Berhasil! 🎉</h3>
+            <div id="paymentMessage" class="text-gray-600 mb-6 leading-relaxed">
+                Terima kasih atas kontribusi Anda untuk bumi yang lebih hijau!
+            </div>
+            
+            <!-- Detail transaksi -->
+            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4 mb-6 text-left">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-600">Jumlah Donasi</span>
+                    <span class="font-bold text-emerald-700 text-lg" id="paymentAmount">Rp 50.000</span>
+                </div>
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-600">Jumlah Pohon</span>
+                    <span class="font-bold text-emerald-700" id="paymentTrees">5 Pohon</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600">Kode Transaksi</span>
+                    <span class="font-mono text-sm text-gray-700" id="paymentCode">TRX-789012</span>
+                </div>
+            </div>
+            
+            <!-- Action buttons -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <button onclick="viewCampaignDetails()" 
+                        class="px-6 py-3 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center gap-2 group">
+                    <i class="fas fa-tree group-hover:animate-bounce"></i>
+                    Lihat Detail
+                </button>
+                <button onclick="closePaymentSuccess()" 
+                        class="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:border-emerald-500 hover:text-emerald-600 transition-all duration-300 flex items-center justify-center gap-2">
+                    <i class="fas fa-times"></i>
+                    Tutup
+                </button>
+            </div>
+            
+            <!-- Additional info -->
+            <div class="mt-6 pt-6 border-t border-gray-100">
+                <p class="text-sm text-gray-500">
+                    <i class="fas fa-clock mr-1"></i>
+                    Anda akan menerima email konfirmasi dalam 5 menit
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Include Navigation -->
 @include('layouts.navigation')
 
@@ -890,7 +1076,7 @@
 <!-- Scripts -->
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-<!-- Script untuk Alert System -->
+<!-- Script untuk Alert System dan Payment Success Modal -->
 <script>
 // Alert System
 function showAlert(type, title, message, duration = 5000) {
@@ -935,6 +1121,91 @@ function showAlert(type, title, message, duration = 5000) {
     return alert;
 }
 
+// Function untuk menampilkan modal pembayaran berhasil
+function showPaymentSuccess(data) {
+    const modal = document.getElementById('paymentSuccessModal');
+    const modalContent = modal.querySelector('.modal-content');
+    
+    // Set data
+    if (data.message) {
+        document.getElementById('paymentMessage').innerHTML = data.message;
+    }
+    if (data.amount) {
+        document.getElementById('paymentAmount').textContent = data.amount;
+    }
+    if (data.trees) {
+        document.getElementById('paymentTrees').textContent = data.trees + ' Pohon';
+    }
+    if (data.code) {
+        document.getElementById('paymentCode').textContent = data.code;
+    }
+    
+    // Show modal
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    // Trigger animation
+    setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+    }, 10);
+    
+    // Add confetti effect
+    createConfetti();
+}
+
+// Function untuk menutup modal
+function closePaymentSuccess() {
+    const modal = document.getElementById('paymentSuccessModal');
+    const modalContent = modal.querySelector('.modal-content');
+    
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    modalContent.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+    }, 300);
+}
+
+// Function untuk melihat detail campaign
+function viewCampaignDetails() {
+    // Redirect ke halaman kampanye atau detail
+    window.location.href = '/kampanye';
+}
+
+// Function untuk membuat efek confetti
+function createConfetti() {
+    const modal = document.getElementById('paymentSuccessModal');
+    const header = modal.querySelector('.relative.h-40');
+    
+    // Remove existing confetti
+    const existingConfetti = modal.querySelectorAll('.confetti');
+    existingConfetti.forEach(c => c.remove());
+    
+    // Create new confetti
+    for (let i = 0; i < 20; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = Math.random() * 100 + '%';
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        confetti.style.opacity = '0.8';
+        header.appendChild(confetti);
+        
+        // Animate confetti
+        gsap.to(confetti, {
+            y: Math.random() * -200 + 100,
+            x: Math.random() * 200 - 100,
+            rotation: Math.random() * 360,
+            opacity: 0,
+            duration: 2,
+            ease: "power2.out",
+            delay: Math.random() * 0.5
+        });
+    }
+}
+
 function getAlertIcon(type) {
     const icons = {
         success: '<i class="fas fa-check-circle"></i>',
@@ -945,11 +1216,43 @@ function getAlertIcon(type) {
     return icons[type] || icons.info;
 }
 
+// Special alert for donation success - menggunakan modal baru
+function showDonationSuccessAlert(message) {
+    // Parse data dari message jika ada
+    let amount = 'Rp 50.000'; // Default
+    let trees = 5;
+    
+    // Ekstrak informasi dari message jika ada
+    const amountMatch = message.match(/Rp\s?[\d.,]+/);
+    if (amountMatch) {
+        amount = amountMatch[0];
+    }
+    
+    const treesMatch = message.match(/(\d+)\s?pohon/i);
+    if (treesMatch) {
+        trees = parseInt(treesMatch[1]);
+    }
+    
+    const data = {
+        message: message,
+        amount: amount,
+        trees: trees,
+        code: 'TRX-' + Math.random().toString(36).substr(2, 8).toUpperCase()
+    };
+    
+    showPaymentSuccess(data);
+}
+
 // Check for session messages and show alerts
 document.addEventListener('DOMContentLoaded', function() {
-    // Check for success message
+    // Check for success message - use payment success modal if it's about donation
     @if(session('success'))
-        showAlert('success', 'Berhasil!', '{{ session('success') }}');
+        const successMessage = '{{ session('success') }}';
+        if (successMessage.includes('Donasi Berhasil') || successMessage.includes('pembayaran berhasil') || successMessage.includes('Pembayaran Berhasil')) {
+            showDonationSuccessAlert(successMessage.replace('✓ Donasi Berhasil! ', ''));
+        } else {
+            showAlert('success', 'Berhasil!', successMessage);
+        }
     @endif
 
     // Check for error message
@@ -987,6 +1290,20 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 500);
         @endif
     @endif
+});
+
+// Event listener untuk ESC key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closePaymentSuccess();
+    }
+});
+
+// Event listener untuk klik di luar modal
+document.getElementById('paymentSuccessModal')?.addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+        closePaymentSuccess();
+    }
 });
 
 // Enhanced form submission with loading states

@@ -9,6 +9,7 @@ use App\Http\Controllers\UserProfilController;
 use App\Http\User;
 use App\Models\Campaign;
 use App\Http\Controllers\VolunteerController;
+use App\Http\Controllers\Auth\SocialController;
 
 // Authentication Routes
 Route::get('/login', [GoogleAuthController::class, 'showLoginForm'])->name('login');
@@ -19,6 +20,11 @@ Route::post('/logout', [GoogleAuthController::class, 'logout'])->name('logout');
 
 // Google OAuth
 Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('google.login');
+
+// Social OAuth (Google)
+// Pastikan route names 'social.redirect' dan 'social.callback' tersedia
+Route::get('auth/{provider}/redirect', [SocialController::class, 'redirect'])->name('social.redirect');
+Route::get('auth/{provider}/callback', [SocialController::class, 'callback'])->name('social.callback');
 
 // Di routes/web.php
 Route::get('/debug-user', function () {

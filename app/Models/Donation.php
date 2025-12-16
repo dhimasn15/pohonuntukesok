@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Schema;
 
 class Donation extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
         'campaign_id',
@@ -24,12 +27,24 @@ class Donation extends Model
         'donor_email',
         'message',
         'paid_at',
+        'trees_count', // ensure trees_count can be mass assigned
+    ];
+
+    protected $attributes = [
+        'trees_count' => 1,
+        'status' => 'pending',
     ];
 
     protected $casts = [
         'amount' => 'decimal:2',
         'paid_at' => 'datetime',
+        'trees_count' => 'integer',
     ];
+
+    /**
+     * Table name (optional if follows convention)
+     */
+    protected $table = 'donations';
 
     // Relationship to Campaign
     public function campaign(): BelongsTo

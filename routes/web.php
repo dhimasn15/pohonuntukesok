@@ -120,6 +120,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/relawan/daftar', [VolunteerController::class, 'create'])->name('relawan.daftar');
     Route::post('/relawan/daftar', [VolunteerController::class, 'store'])->name('relawan.store');
+    Route::get('/relawan/dashboard', [VolunteerController::class, 'dashboard'])->name('relawan.dashboard');
 });
 
 Route::get('/lokasi/daftar', function () {
@@ -188,6 +189,16 @@ Route::get('/campaign/{campaignId}/donations', [\App\Http\Controllers\DonationCo
 
 // API Routes for Campaign Data (Progress Updates)
 Route::get('/api/campaigns/{campaignId}', [\App\Http\Controllers\CampaignController::class, 'getCampaignData'])->name('api.campaign.data');
+
+// API Routes - Pastikan ada di bagian atas atau buat group terpisah
+Route::prefix('api')->group(function () {
+    Route::get('campaigns/{id}', [App\Http\Controllers\Api\CampaignController::class, 'show'])->name('api.campaigns.show');
+    Route::get('campaigns/{campaignId}/donations', [App\Http\Controllers\Api\CampaignController::class, 'getDonations'])->name('api.campaigns.donations');
+    
+    // Campaign real-time updates
+    Route::get('campaigns/{campaignId}/donations-recent', [App\Http\Controllers\Api\CampaignController::class, 'getRecentDonations'])->name('api.campaigns.donations.recent');
+    Route::get('campaigns/{campaignId}/stats', [App\Http\Controllers\Api\CampaignController::class, 'getDonationStats'])->name('api.campaigns.stats');
+});
 
 // Xendit Webhook (no CSRF required)
 Route::post('/xendit/webhook', [\App\Http\Controllers\XenditWebhookController::class, 'handle'])->withoutMiddleware('web');

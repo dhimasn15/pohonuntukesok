@@ -203,6 +203,10 @@
                                 ->values()
                                 ->take(8);
 
+            // Donasi
+            $donations = \App\Models\Donation::where('user_id', $user->id)->latest()->take(5)->get();
+            $donationsTotal = $donations->sum('amount');
+
         } catch (\Throwable $e) {
             // Fallbacks in case DB access fails for some reason
             if (!isset($userPosts)) {
@@ -214,6 +218,8 @@
             $totalViews = $userPosts->sum('view_count');
             $popularUserPosts = $userPosts->sortByDesc('view_count')->take(5);
             $recentActivities = collect();
+            $donations = collect();
+            $donationsTotal = 0;
         }
 
         // Avatar source helper: check storage first, then raw value
@@ -354,6 +360,14 @@
                                 <div class="flex justify-between items-center">
                                     <span class="text-gray-600 text-sm md:text-base">Total Dilihat</span>
                                     <span class="font-semibold text-primary text-sm md:text-base">{{ number_format($totalViews ?? 0) }}</span>
+                                </div>
+
+                                <!-- NEW: Total Donasi -->
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600 text-sm md:text-base">Total Donasi</span>
+                                    <span class="font-semibold text-primary text-sm md:text-base">
+                                        Rp {{ number_format($donationsTotal ?? 0, 0, ',', '.') }}
+                                    </span>
                                 </div>
                             </div>
 
@@ -505,7 +519,7 @@
                                     </a>
                                 </div>
 
-                                <!-- Popular Posts -->
+                                <!-- Popular Posts + Donation History -->
                                 <div class="bg-white rounded-2xl shadow-lg p-4 md:p-6">
                                     <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
                                         <i class="fas fa-fire text-orange-500 mr-2 md:mr-3"></i>
@@ -540,6 +554,44 @@
                                             <p class="text-gray-500 text-sm">Belum ada postingan populer</p>
                                         </div>
                                         @endforelse
+                                    </div>
+
+                                    <!-- NEW: Donation History (recent donations) -->
+                                    <div class="mt-6 border-t pt-6">
+                                        <h4 class="text-sm font-semibold text-gray-700 mb-3">Riwayat Donasi Terbaru</h4>
+
+                                        @if(isset($donations) && $donations->count())
+                                            <div class="space-y-3">
+                                                @foreach($donations as $don)
+                                                    <div class="flex items-center justify-between p-3 border border-gray-100 rounded-lg">
+                                                        <div class="flex-1 min-w-0">
+                                                            <div class="text-sm font-medium text-gray-800">
+                                                                {{ $don->status ? ucfirst($don->status) : 'Selesai' }}
+                                                            </div>
+                                                            <div class="text-xs text-gray-500">
+                                                                {{ optional($don->created_at)->format('d M Y H:i') }}
+                                                                @if($don->campaign_id)
+                                                                    • Kampanye #{{ $don->campaign_id }}
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <div class="ml-4 text-right">
+                                                            <div class="text-sm font-semibold text-green-700">
+                                                                Rp {{ number_format($don->amount ?? 0, 0, ',', '.') }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            <div class="mt-4 text-sm text-gray-600">
+                                                Menampilkan {{ $donations->count() }} donasi terbaru • Total: Rp {{ number_format($donationsTotal ?? 0, 0, ',', '.') }}
+                                            </div>
+                                        @else
+                                            <div class="text-center py-6 text-gray-500">
+                                                <i class="fas fa-heart text-gray-300 text-2xl mb-2"></i>
+                                                <p>Belum ada riwayat donasi.</p>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

@@ -61,19 +61,7 @@ class Campaign extends Model
         return $this->hasMany(FarmerPlantOrder::class);
     }
 
-    public function getProgressPercentageAttribute()
-    {
-        if (empty($this->target_trees) || $this->target_trees <= 0) {
-            return 0;
-        }
-
-        $percentage = round(($this->current_trees / $this->target_trees) * 100);
-
-        // Clamp to 0-100 to avoid negative or overflow values
-        $percentage = (int) max(0, min(100, $percentage));
-
-        return $percentage;
-    }
+     
 
     public function getDaysLeftAttribute()
     {
@@ -101,4 +89,28 @@ class Campaign extends Model
         }
         return null;
     }
+
+
+    public function getTotalDonationsAttribute()
+    {
+        return $this->donations()->where('status', 'completed')->sum('amount');
+    }
+
+    public function getProgressPercentageAttribute()
+    {
+        $fundingGoal = $this->target_trees * $this->tree_price;
+        return $fundingGoal > 0 ? min(100, round(($this->total_donations / $fundingGoal) * 100, 2)) : 0;
+    }
+
+    public function getCurrentTreesAttribute()
+    {
+        return $this->tree_price > 0 ? floor($this->total_donations / $this->tree_price) : 0;
+    }
+
+    public function getTotalDonorsAttribute()
+    {
+        return $this->donations()->where('status', 'completed')->distinct('user_id')->count('user_id');
+    }
+
+    
 }

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany; // Tambahkan ini
 use Illuminate\Database\Eloquent\Relations\HasOne; // Tambahkan ini
+use App\Models\Donation; // ...added
 
 class User extends Authenticatable
 {
@@ -70,5 +71,11 @@ class User extends Authenticatable
     public function farmer(): HasOne
     {
         return $this->hasOne(Farmer::class);
+    }
+
+    // Relationship dengan Donation
+    public function donations(): HasMany
+    {
+        return $this->hasMany(Donation::class);
     }
 }

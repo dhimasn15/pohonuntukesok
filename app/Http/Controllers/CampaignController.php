@@ -15,11 +15,53 @@ class CampaignController extends Controller
 {
     public function index()
     {
-        $campaigns = Campaign::with('user')
-            ->latest()
+        $campaigns = Campaign::with('donations')
+            ->orderBy('created_at', 'desc')
             ->paginate(12);
-
+        
+        // Tambahkan data progress ke setiap campaign
+        foreach ($campaigns as $campaign) {
+            $campaign->progress_data = $this->calculateCampaignProgress($campaign);
+            $campaign->days_left = $this->calculateDaysLeft($campaign);
+        }
+        
         return view('kampanye', compact('campaigns'));
+    }
+
+    private function calculateCampaignProgress($campaign)
+    {
+        $totalDonations = DB::table('donations')
+            ->where('campaign_id', $campaign->id)
+            ->where('status', 'completed')
+            ->sum('amount');
+        
+        $treePrice = $campaign->tree_price ?? 100000;
+        $fundingGoal = $campaign->target_trees * $treePrice;
+        $progressPercentage = $fundingGoal > 0 ? min(100, round(($totalDonations / $fundingGoal) * 100, 2)) : 0;
+        
+        return [
+            'total_donations' => $totalDonations,
+            'progress_percentage' => $progressPercentage,
+            'funding_goal' => $fundingGoal,
+            'current_trees' => $treePrice > 0 ? floor($totalDonations / $treePrice) : 0,
+            'total_donors' => DB::table('donations')
+                ->where('campaign_id', $campaign->id)
+                ->where('status', 'completed')
+                ->distinct('user_id')
+                ->count('user_id')
+        ];
+    }
+    
+    private function calculateDaysLeft($campaign)
+    {
+        if (!$campaign->end_date) {
+            return 0;
+        }
+        
+        $endDate = \Carbon\Carbon::parse($campaign->end_date);
+        $now = \Carbon\Carbon::now();
+        
+        return max(0, $now->diffInDays($endDate, false));
     }
 
     public function create()

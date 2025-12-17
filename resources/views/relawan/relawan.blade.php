@@ -7,6 +7,19 @@
 	<link rel="icon" type="image/png" href="{{ asset('img/logo-tittle.png') }}">
 	<script src="https://cdn.tailwindcss.com"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script>
+        tailwind.config = { 
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2D4F2B',
+                        secondary: '#81C784',
+                        accent: '#FFAB00',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body class="bg-gradient-to-br from-gray-50 via-white to-green-50 min-h-screen font-sans">
 	@include('layouts.navigation')
@@ -40,10 +53,10 @@
 					<p class="text-sm text-gray-600">Terima kasih telah menjadi bagian dari PohonUntukEsok. Berikut ringkasan aktivitas Anda.</p>
 				</div>
 				<div class="flex gap-3 items-center">
-					<a href="{{ route('relawan.daftar') }}" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
+					<a href="{{ \Illuminate\Support\Facades\Route::has('relawan.daftar') ? route('relawan.daftar') : '#' }}" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
 						<i class="fas fa-user-plus mr-2"></i> Daftar Kegiatan
 					</a>
-					<a href="{{ route('relawan.profile') ?? '#' }}" class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">
+					<a href="{{ \Illuminate\Support\Facades\Route::has('relawan.profile') ? route('relawan.profile') : '#' }}" class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">
 						<i class="fas fa-user-cog mr-2"></i> Pengaturan
 					</a>
 				</div>
@@ -79,15 +92,15 @@
 				<div class="bg-white rounded-2xl shadow p-5">
 					<h3 class="font-semibold mb-3">Aksi Cepat</h3>
 					<div class="flex flex-col gap-3">
-						<a href="{{ route('relawan.events') ?? '#' }}" class="px-4 py-3 bg-primary text-white rounded-lg flex items-center justify-between">
+						<a href="{{ \Illuminate\Support\Facades\Route::has('relawan.events') ? route('relawan.events') : '#' }}" class="px-4 py-3 bg-primary text-white rounded-lg flex items-center justify-between">
 							<span><i class="fas fa-calendar-alt mr-2"></i> Lihat Semua Event</span>
 							<i class="fas fa-chevron-right"></i>
 						</a>
-						<a href="{{ route('relawan.tasks.create') ?? '#' }}" class="px-4 py-3 border border-gray-200 rounded-lg flex items-center justify-between">
+						<a href="{{ \Illuminate\Support\Facades\Route::has('relawan.tasks.create') ? route('relawan.tasks.create') : '#' }}" class="px-4 py-3 border border-gray-200 rounded-lg flex items-center justify-between">
 							<span><i class="fas fa-tasks mr-2"></i> Tambah Aktivitas</span>
 							<i class="fas fa-plus"></i>
 						</a>
-						<a href="{{ route('relawan.logs') ?? '#' }}" class="px-4 py-3 border border-gray-200 rounded-lg flex items-center justify-between">
+						<a href="{{ \Illuminate\Support\Facades\Route::has('relawan.logs') ? route('relawan.logs') : '#' }}" class="px-4 py-3 border border-gray-200 rounded-lg flex items-center justify-between">
 							<span><i class="fas fa-clock mr-2"></i> Catat Jam Kerja</span>
 							<i class="fas fa-chevron-right"></i>
 						</a>
@@ -109,7 +122,7 @@
 				<div class="bg-white rounded-2xl shadow p-5">
 					<div class="flex items-center justify-between mb-4">
 						<h2 class="text-lg font-semibold">Tugas Saya</h2>
-						<a href="{{ route('relawan.tasks') ?? '#' }}" class="text-sm text-gray-500 hover:underline">Lihat semua</a>
+						<a href="{{ \Illuminate\Support\Facades\Route::has('relawan.tasks') ? route('relawan.tasks') : '#' }}" class="text-sm text-gray-500 hover:underline">Lihat semua</a>
 					</div>
 
 					@if($tasks->count())
@@ -139,7 +152,7 @@
 										@endif
 									</td>
 									<td class="py-3">
-										<a href="{{ route('relawan.tasks.show', $task->id ?? '#') }}" class="text-sm text-primary hover:underline">Detail</a>
+										<a href="{{ \Illuminate\Support\Facades\Route::has('relawan.tasks.show') ? route('relawan.tasks.show', $task->id ?? '#') : '#' }}" class="text-sm text-primary hover:underline">Detail</a>
 									</td>
 								</tr>
 								@endforeach
@@ -156,7 +169,7 @@
 				<div class="bg-white rounded-2xl shadow p-5">
 					<div class="flex items-center justify-between mb-4">
 						<h2 class="text-lg font-semibold">Event Mendatang</h2>
-						<a href="{{ route('relawan.events') ?? '#' }}" class="text-sm text-gray-500 hover:underline">Lihat semua</a>
+						<a href="{{ \Illuminate\Support\Facades\Route::has('relawan.events') ? route('relawan.events') : '#' }}" class="text-sm text-gray-500 hover:underline">Lihat semua</a>
 					</div>
 
 					@if($upcomingEvents->count())
@@ -167,7 +180,7 @@
 										<div class="font-semibold">{{ $ev->title ?? ($ev->name ?? 'Event') }}</div>
 										<div class="text-xs text-gray-500">{{ isset($ev->date) ? \Carbon\Carbon::parse($ev->date)->format('d M Y') : '-' }} • {{ $ev->location ?? 'Lokasi belum ditentukan' }}</div>
 									</div>
-									<a href="{{ route('relawan.events.show', $ev->id ?? '#') }}" class="text-sm text-green-600 hover:underline">Daftar / Detail</a>
+									<a href="{{ \Illuminate\Support\Facades\Route::has('relawan.events.show') ? route('relawan.events.show', $ev->id ?? '#') : '#' }}" class="text-sm text-green-600 hover:underline">Daftar / Detail</a>
 								</li>
 							@endforeach
 						</ul>

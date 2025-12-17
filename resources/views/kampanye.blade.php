@@ -38,7 +38,6 @@
         .card-modern {
             transition: all 0.3s ease;
             position: relative;
-                    @include('layouts.footer')
             height: 100%;
             overflow: hidden;
             pointer-events: none;
@@ -68,18 +67,39 @@
             }
         }
 
-        .progress-bar {
-            height: 8px;
-            border-radius: 4px;
-            background: #e5e7eb;
-            overflow: hidden;
-        }
+        /* Tambahkan di bagian CSS */
+.progress-animated {
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #81C784, #2D4F2B);
-            transition: width 0.5s ease;
-        }
+.progress-animated::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Animasi untuk update realtime */
+@keyframes pulseUpdate {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.updated {
+    animation: pulseUpdate 0.5s ease-in-out;
+}
 
         .status-badge {
             padding: 4px 12px;
@@ -173,11 +193,68 @@
             background: rgba(255, 255, 255, 0.95);
             border-color: #FFAB00;
         }
+
+        /* New Styles for Better Card Layout */
+        .line-clamp-2 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
+        .line-clamp-1 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+        }
+
+        .category-badge {
+            background: linear-gradient(135deg, #81C784, #2D4F2B);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .enhanced-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Progress bar styles */
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, rgba(16,185,129,0.12), rgba(34,197,94,0.06));
+            border-radius: 999px;
+            overflow: hidden;
+            border: 1px solid rgba(34,197,94,0.08);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #34D399, #059669);
+            border-radius: 999px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: inset 0 -2px 6px rgba(0,0,0,0.08);
+        }
+
+        .progress-fill.updated {
+            transform: scaleY(1.02);
+            transition: transform 0.25s ease;
+        }
     </style>
+    <!-- CSRF untuk fetch/ajax -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="bg-gradient-to-br from-gray-50 via-white to-green-50">
     <!-- Navigation -->
-    <!-- Include Navigation -->
     @include('layouts.navigation')
     
     <!-- Include Auth Modal -->
@@ -273,137 +350,232 @@
         </div>
     </section>
 
-    
     <!-- Campaign List -->
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            @if(session('success'))
-                <div class="mb-8 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg" data-aos="fade-up">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @foreach($campaigns as $campaign)
-                <div class="campaign-card bg-white rounded-2xl shadow-lg overflow-hidden" data-status="{{ $campaign->status }}" data-aos="fade-up">
-                    <div class="relative h-48">
-                        @if($campaign->image)
-    <img src="{{ asset('storage/' . $campaign->image) }}" 
-         alt="{{ $campaign->title }}" 
-         class="w-full h-full object-cover">
-@else
-    <div class="w-full h-full bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center">
-        <i class="fas fa-tree text-6xl text-green-300"></i>
-    </div>
-@endif
-                        <div class="absolute top-4 left-4">
-                            <span class="status-badge status-{{ $campaign->status }}">
-                                <i class="fas fa-circle mr-1 text-xs"></i>
-                                {{ $campaign->status_badge['text'] }}
-                            </span>
-                        </div>
-                        <div class="absolute top-4 right-4">
-                            <span class="category-badge px-3 py-1 rounded-full text-white text-xs font-semibold">
-                                {{ ucfirst($campaign->category) }}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center text-gray-500 text-sm mb-3">
-                            <i class="far fa-calendar mr-2"></i>
-                            <span>{{ $campaign->days_left }} Hari Lagi</span>
-                            <span class="mx-2">•</span>
-                            <i class="fas fa-map-marker-alt mr-1"></i>
-                            <span>{{ $campaign->location }}</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-primary transition-colors">
-                            {{ $campaign->title }}
-                        </h3>
-                        <p class="text-gray-600 mb-4 text-sm">
-                            {{ Str::limit($campaign->description, 120) }}
-                        </p>
-                        
-                        <div class="mb-4">
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="font-bold text-green-700">{{ $campaign->progress_percentage }}% Terkumpul</span>
-                                <span>{{ number_format($campaign->current_trees) }}/{{ number_format($campaign->target_trees) }} pohon</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: {{ $campaign->progress_percentage }}%"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="flex justify-between items-center text-sm text-gray-600">
-                            <span><i class="fas fa-users mr-1"></i> {{ number_format($campaign->total_donors) }} Donatur</span>
-                            <span><i class="fas fa-tree mr-1"></i> {{ number_format($campaign->current_trees) }} Tertanam</span>
-                        </div>
-                        
-                        <div class="mt-6 flex gap-3">
-                            @if($campaign->status === 'active')
-                                <a href="{{ route('kampanye.show', $campaign) }}" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-700 transition-colors text-center text-sm font-semibold">
-                                    Donasi
-                                </a>
-                                <a href="{{ route('kampanye.show', $campaign) }}" class="px-4 py-2 border border-primary text-primary rounded-lg hover:bg-green-50 transition-colors text-center">
-                                    <i class="fas fa-info"></i>
-                                </a>
-                            @else
-                                <button class="w-full px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm font-semibold cursor-not-allowed" disabled>
-                                    {{ $campaign->status === 'completed' ? 'Kampanye Selesai' : 'Segera Hadir' }}
-                                </button>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-
-                @if($campaigns->isEmpty())
-                <div class="col-span-full text-center py-12" data-aos="fade-up">
-                    <i class="fas fa-tree text-6xl text-gray-300 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-600 mb-2">Belum ada kampanye</h3>
-                    <p class="text-gray-500 mb-6">Jadilah yang pertama membuat kampanye penanaman pohon!</p>
-                    <a href="{{ route('buat') }}" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-green-700 transition-colors">
-                        Buat Kampanye Pertama
-                    </a>
-                </div>
-                @endif
+    <!-- Campaign List Section -->
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        @if(session('success'))
+            <div class="mb-8 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg" data-aos="fade-up">
+                {{ session('success') }}
             </div>
+        @endif
 
-            <!-- Pagination -->
-            @if($campaigns->hasPages())
-            <div class="mt-12 flex justify-center" data-aos="fade-up">
-                <div class="flex space-x-2">
-                    @if($campaigns->onFirstPage())
-                        <span class="px-4 py-2 bg-gray-100 text-gray-400 rounded-lg cursor-not-allowed">
-                            <i class="fas fa-chevron-left"></i>
-                        </span>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach($campaigns as $campaign)
+            <div class="campaign-card bg-white rounded-2xl shadow-lg overflow-hidden" data-status="{{ $campaign->status }}" data-aos="fade-up" data-campaign-id="{{ $campaign->id }}">
+                <div class="relative h-48">
+                    @if($campaign->image)
+                        <img src="{{ asset('storage/' . $campaign->image) }}" 
+                             alt="{{ $campaign->title }}" 
+                             class="w-full h-full object-cover">
                     @else
-                        <a href="{{ $campaigns->previousPageUrl() }}" class="px-4 py-2 bg-white text-primary border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
-                            <i class="fas fa-chevron-left"></i>
-                        </a>
+                        <div class="w-full h-full bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center">
+                            <i class="fas fa-tree text-6xl text-green-300"></i>
+                        </div>
                     @endif
-
-                    @foreach($campaigns->getUrlRange(1, $campaigns->lastPage()) as $page => $url)
-                        @if($page == $campaigns->currentPage())
-                            <span class="px-4 py-2 bg-primary text-white rounded-lg">{{ $page }}</span>
-                        @else
-                            <a href="{{ $url }}" class="px-4 py-2 bg-white text-primary border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors">{{ $page }}</a>
-                        @endif
-                    @endforeach
-
-                    @if($campaigns->hasMorePages())
-                        <a href="{{ $campaigns->nextPageUrl() }}" class="px-4 py-2 bg-white text-primary border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
-                            <i class="fas fa-chevron-right"></i>
-                        </a>
-                    @else
-                        <span class="px-4 py-2 bg-gray-100 text-gray-400 rounded-lg cursor-not-allowed">
-                            <i class="fas fa-chevron-right"></i>
+                    <div class="absolute top-4 left-4">
+                        <span class="status-badge status-{{ $campaign->status }}">
+                            <i class="fas fa-circle mr-1 text-xs"></i>
+                            {{ $campaign->status_badge['text'] }}
                         </span>
-                    @endif
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <span class="category-badge">
+                            {{ ucfirst($campaign->category) }}
+                        </span>
+                    </div>
                 </div>
+                
+                <div class="p-6">
+                    <!-- Judul Kampanye -->
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-primary transition-colors line-clamp-1">
+                        {{ $campaign->title }}
+                    </h3>
+                    
+                    <!-- Deskripsi -->
+                    <p class="text-gray-600 mb-4 text-sm line-clamp-2">
+                        {{ Str::limit($campaign->description, 120) }}
+                    </p>
+                    
+                    <!-- Info Waktu dan Lokasi -->
+                    <div class="flex flex-col gap-1 mb-4">
+                        <!-- Waktu Tersisa -->
+                        <div class="flex items-center text-gray-600 text-xs">
+                            <i class="fas fa-clock mr-2 text-gray-400 text-xs"></i>
+                            <span class="font-medium">
+                                @php
+                                    // Format days_left untuk menghilangkan desimal
+                                    $days_left = is_numeric($campaign->days_left) ? max(0, floor($campaign->days_left)) : 0;
+                                @endphp
+                                {{ $days_left }}
+                                <span class="font-normal">Hari Lagi</span>
+                            </span>
+                        </div>
+                        
+                        <!-- Lokasi -->
+                        <div class="flex items-start text-gray-600 text-xs">
+                            <i class="fas fa-map-marker-alt mr-2 mt-0.5 text-gray-400 text-xs"></i>
+                            <span class="line-clamp-2 leading-tight">
+                                {{ $campaign->location }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Bar Real-Time -->
+                    @php
+                        // Hitung total donasi dari database (tidak memfilter status agar konsisten dengan kampanye-detail)
+                        $totalDonations = DB::table('donations')
+                            ->where('campaign_id', $campaign->id)
+                            ->sum('amount');
+
+                        // Harga per pohon (fallback)
+                        $treePrice = $campaign->tree_price ?? 100000;
+
+                        // Hitung target funding
+                        $fundingGoal = ($campaign->target_trees ?? 0) * $treePrice;
+
+                        // Hitung persentase progress (2 desimal untuk presisi)
+                        $progressPercentage = $fundingGoal > 0 ? min(100, round(($totalDonations / $fundingGoal) * 100, 2)) : 0;
+
+                        // Fungsi format Rupiah (jaga agar tidak redeclare)
+                        if (!function_exists('formatRupiah')) {
+                            function formatRupiah($amount) {
+                                return 'Rp ' . number_format($amount, 0, ',', '.');
+                            }
+                        }
+
+                        // Hitung jumlah pohon berdasarkan donasi
+                        $calculatedCurrentTrees = $treePrice > 0 ? floor($totalDonations / $treePrice) : 0;
+
+                        // Hitung jumlah donatur (distinct user_id, tanpa filter status)
+                        $totalDonors = DB::table('donations')
+                            ->where('campaign_id', $campaign->id)
+                            ->distinct('user_id')
+                            ->count('user_id');
+                    @endphp
+
+                    <!-- Progress Bar -->
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span id="progressPercentage-{{ $campaign->id }}" class="font-bold text-green-700">
+                                {{ $progressPercentage }}% Terkumpul
+                            </span>
+                            <span id="progressAmount-{{ $campaign->id }}" class="text-gray-600">
+                                {{ formatRupiah($totalDonations) }} / {{ formatRupiah($fundingGoal) }}
+                            </span>
+                        </div>
+                        
+                        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ $progressPercentage }}">
+                            <div id="progressBar-{{ $campaign->id }}" 
+                                 class="progress-fill progress-animated" 
+                                 style="width: {{ $progressPercentage }}%;"
+                                 data-percentage="{{ $progressPercentage }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mt-2 text-xs text-gray-600 flex justify-between">
+                            <span>
+                                <span id="currentTrees-{{ $campaign->id }}">{{ number_format($calculatedCurrentTrees) }} pohon terkumpul</span> 
+                            </span>
+                            <span>
+                                Target: 
+                                <span id="targetTrees-{{ $campaign->id }}">{{ number_format($campaign->target_trees ?? 0) }}</span> 
+                                pohon
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="flex justify-between items-center text-xs text-gray-500 mt-2">
+                        <span>
+                            <i class="fas fa-users mr-1 text-gray-400"></i> 
+                            <span id="totalDonors-{{ $campaign->id }}">
+                                {{ number_format($totalDonors) }}
+                            </span> 
+                            Donatur
+                        </span>
+                        <span>
+                            <i class="fas fa-tree mr-1 text-gray-400"></i> 
+                            <span id="plantedTrees-{{ $campaign->id }}">
+                                {{ number_format($calculatedCurrentTrees) }}
+                            </span> 
+                            Tertanam
+                        </span>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="mt-6 flex gap-3">
+                        @if($campaign->status === 'active')
+                            <a href="{{ route('kampanye.show', $campaign) }}" 
+                               class="flex-1 px-4 py-3 bg-gradient-to-r from-primary to-green-700 text-white rounded-lg hover:shadow-md transition-all text-center text-sm font-semibold flex items-center justify-center">
+                                <i class="fas fa-donate mr-2"></i> Donasi Sekarang
+                            </a>
+                            <a href="{{ route('kampanye.show', $campaign) }}" 
+                               class="px-4 py-3 border border-primary text-primary rounded-lg hover:bg-green-50 transition-colors text-center flex items-center justify-center">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        @else
+                            <button class="w-full px-4 py-3 bg-gray-100 text-gray-600 rounded-lg text-sm font-semibold cursor-not-allowed" disabled>
+                                @if($campaign->status === 'completed')
+                                    <i class="fas fa-check-circle mr-2"></i> Kampanye Selesai
+                                @else
+                                    <i class="fas fa-clock mr-2"></i> Segera Hadir
+                                @endif
+                            </button>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @endforeach
+
+            @if($campaigns->isEmpty())
+            <div class="col-span-full text-center py-12" data-aos="fade-up">
+                <i class="fas fa-tree text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-2xl font-bold text-gray-600 mb-2">Belum ada kampanye</h3>
+                <p class="text-gray-500 mb-6">Jadilah yang pertama membuat kampanye penanaman pohon!</p>
+                <a href="{{ route('buat') }}" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-green-700 transition-colors">
+                    Buat Kampanye Pertama
+                </a>
             </div>
             @endif
         </div>
-    </section>
+
+        <!-- Pagination -->
+        @if($campaigns->hasPages())
+        <div class="mt-12 flex justify-center" data-aos="fade-up">
+            <div class="flex space-x-2">
+                @if($campaigns->onFirstPage())
+                    <span class="px-4 py-2 bg-gray-100 text-gray-400 rounded-lg cursor-not-allowed">
+                        <i class="fas fa-chevron-left"></i>
+                    </span>
+                @else
+                    <a href="{{ $campaigns->previousPageUrl() }}" class="px-4 py-2 bg-white text-primary border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                @endif
+
+                @foreach($campaigns->getUrlRange(1, $campaigns->lastPage()) as $page => $url)
+                    @if($page == $campaigns->currentPage())
+                        <span class="px-4 py-2 bg-primary text-white rounded-lg">{{ $page }}</span>
+                    @else
+                        <a href="{{ $url }}" class="px-4 py-2 bg-white text-primary border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors">{{ $page }}</a>
+                    @endif
+                @endforeach
+
+                @if($campaigns->hasMorePages())
+                    <a href="{{ $campaigns->nextPageUrl() }}" class="px-4 py-2 bg-white text-primary border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                @else
+                    <span class="px-4 py-2 bg-gray-100 text-gray-400 rounded-lg cursor-not-allowed">
+                        <i class="fas fa-chevron-right"></i>
+                    </span>
+                @endif
+            </div>
+        </div>
+        @endif
+    </div>
+</section>
 
     <!-- Stats Section -->
     <section class="py-16 bg-primary text-white">
@@ -590,6 +762,174 @@
 
             lastScroll = currentScroll;
         });
+
+
+        // Tambahkan di bagian JavaScript sebelum penutup  
+// Real-time progress update with WebSocket/Polling
+class CampaignProgressUpdater {
+    constructor() {
+        this.campaigns = [];
+        this.pollingInterval = 30000; // 30 detik
+        this.initialize();
+    }
+
+    initialize() {
+        // Kumpulkan semua campaign yang ada di halaman
+        document.querySelectorAll('[data-campaign-id]').forEach(card => {
+            const campaignId = card.getAttribute('data-campaign-id');
+            this.campaigns.push(campaignId);
+        });
+
+        if (this.campaigns.length > 0) {
+            this.startPolling();
+            this.setupEventListeners();
+        }
+    }
+
+    setupEventListeners() {
+        // Update progress ketika ada interaksi donasi di halaman yang sama
+        document.addEventListener('donationSuccess', (event) => {
+            if (event.detail && event.detail.campaignId) {
+                this.updateCampaignProgress(event.detail.campaignId);
+            }
+        });
+
+        // Juga update progress secara manual jika diperlukan
+        const donationButtons = document.querySelectorAll('[href*="kampanye"]');
+        donationButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const url = button.getAttribute('href');
+                const campaignId = this.extractCampaignIdFromUrl(url);
+                if (campaignId) {
+                    // Simulasikan update setelah donasi
+                    setTimeout(() => {
+                        this.updateCampaignProgress(campaignId);
+                    }, 2000);
+                }
+            });
+        });
+    }
+
+    extractCampaignIdFromUrl(url) {
+        const match = url.match(/kampanye\/(\d+)/);
+        return match ? match[1] : null;
+    }
+
+    startPolling() {
+        // Polling untuk update real-time
+        setInterval(() => {
+            this.updateAllCampaignsProgress();
+        }, this.pollingInterval);
+
+        // Update pertama saat halaman dimuat
+        setTimeout(() => {
+            this.updateAllCampaignsProgress();
+        }, 5000);
+    }
+
+    async updateAllCampaignsProgress() {
+        try {
+            const response = await fetch('/api/campaigns/progress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    campaign_ids: this.campaigns
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                this.updateProgressData(data);
+            }
+        } catch (error) {
+            console.error('Error updating progress:', error);
+        }
+    }
+
+    async updateCampaignProgress(campaignId) {
+        try {
+            const response = await fetch(`/api/campaigns/${campaignId}/progress`);
+            if (response.ok) {
+                const data = await response.json();
+                this.updateSingleCampaign(campaignId, data);
+            }
+        } catch (error) {
+            console.error('Error updating campaign progress:', error);
+        }
+    }
+
+    updateProgressData(data) {
+        data.forEach(campaign => {
+            this.updateSingleCampaign(campaign.id, campaign);
+        });
+    }
+
+    updateSingleCampaign(campaignId, campaignData) {
+        const elements = {
+            percentage: document.getElementById(`progressPercentage-${campaignId}`),
+            amount: document.getElementById(`progressAmount-${campaignId}`),
+            bar: document.getElementById(`progressBar-${campaignId}`),
+            trees: document.getElementById(`currentTrees-${campaignId}`),
+            target: document.getElementById(`targetTrees-${campaignId}`),
+            donors: document.getElementById(`totalDonors-${campaignId}`),
+            planted: document.getElementById(`plantedTrees-${campaignId}`)
+        };
+
+        // Animate progress bar
+        if (elements.bar) {
+            const currentWidth = parseFloat(elements.bar.style.width) || 0;
+            const newWidth = campaignData.progress_percentage;
+            
+            // Animate width change
+            elements.bar.style.width = `${newWidth}%`;
+            elements.bar.setAttribute('data-percentage', newWidth);
+            
+            // Add pulse animation
+            elements.bar.classList.add('updated');
+            setTimeout(() => {
+                elements.bar.classList.remove('updated');
+            }, 500);
+        }
+
+        // Update text with animation
+        this.animateValueChange(elements.percentage, `${campaignData.progress_percentage}% Terkumpul`);
+        this.animateValueChange(elements.amount, `${campaignData.formatted_amount} / ${campaignData.formatted_goal}`);
+        this.animateValueChange(elements.trees, campaignData.current_trees_formatted);
+        this.animateValueChange(elements.planted, campaignData.current_trees_formatted);
+        this.animateValueChange(elements.donors, campaignData.total_donors_formatted);
+    }
+
+    animateValueChange(element, newValue) {
+        if (element && element.textContent !== newValue) {
+            element.classList.add('updated');
+            element.textContent = newValue;
+            setTimeout(() => {
+                element.classList.remove('updated');
+            }, 500);
+        }
+    }
+}
+
+// Inisialisasi ketika halaman dimuat
+document.addEventListener('DOMContentLoaded', () => {
+    new CampaignProgressUpdater();
+});
+
+// Event dispatcher untuk donasi sukses (dipanggil dari halaman donasi)
+function triggerDonationSuccess(campaignId, amount) {
+    const event = new CustomEvent('donationSuccess', {
+        detail: { campaignId, amount }
+    });
+    document.dispatchEvent(event);
+}
+
+// Format Rupiah helper
+function formatRupiah(amount) {
+    return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+} 
     </script>
 </body>
 </html>

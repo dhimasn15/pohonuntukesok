@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\BlogPost; // gunakan BlogPost (sesuai view)
+use App\Models\Donation; // ...added
 
 class UserProfilController extends Controller
 {
@@ -66,6 +67,14 @@ class UserProfilController extends Controller
             ->take(5)
             ->get();
 
+        // --- New: donation data for profile ---
+        $donations = Donation::where('user_id', $user->id)
+            ->latest()
+            ->take(10)
+            ->get();
+
+        $donationsTotal = Donation::where('user_id', $user->id)->sum('amount');
+
         return view('profil-user', [
             'userPosts' => $userPosts,
             'userPostsPaginated' => $userPostsPaginated,
@@ -73,6 +82,9 @@ class UserProfilController extends Controller
             'publishedPosts' => $publishedPosts,
             'recentActivities' => $recentActivities,
             'popularUserPosts' => $popularUserPosts,
+            // new variables:
+            'donations' => $donations,
+            'donationsTotal' => $donationsTotal,
         ]);
     }
 }

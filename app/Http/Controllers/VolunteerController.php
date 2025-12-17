@@ -14,7 +14,7 @@ class VolunteerController extends Controller
         $existing = Volunteer::where('user_id', Auth::id())->first();
         if ($existing) {
             if ($existing->isApproved()) {
-                return redirect()->route('home')->with('info', 'Anda sudah terdaftar sebagai relawan.');
+                return redirect()->route('relawan.dashboard')->with('info', 'Anda sudah terdaftar sebagai relawan.');
             } elseif ($existing->isPending()) {
                 return redirect()->route('home')->with('info', 'Pendaftaran relawan Anda sedang menunggu persetujuan.');
             }
@@ -59,5 +59,18 @@ class VolunteerController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
+    }
+
+    // Tambahkan method dashboard untuk route relawan.dashboard
+    public function dashboard()
+    {
+        $volunteer = Volunteer::where('user_id', Auth::id())->first();
+
+        if (! $volunteer) {
+            return redirect()->route('relawan.create')->with('info', 'Silakan daftar sebagai relawan terlebih dahulu.');
+        }
+
+        // Ubah view menjadi relawan.relawan (file relawan/relawan.blade.php)
+        return view('relawan.relawan', compact('volunteer'));
     }
 }
